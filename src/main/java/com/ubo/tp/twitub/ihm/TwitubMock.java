@@ -133,10 +133,6 @@ public class TwitubMock {
 			}
 		});
 
-		JTextArea consol = new JTextArea("Send Twit");
-		consol.setPreferredSize(new Dimension(100, 50));
-
-
 		//
 		// Ajout des composants à la fenêtre
 		this.mFrame.add(dbLabel, new GridBagConstraints(0, 0, 2, 1, 1, 1, GridBagConstraints.CENTER,
@@ -151,8 +147,6 @@ public class TwitubMock {
 				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
 		this.mFrame.add(sendTwitButton, new GridBagConstraints(1, 3, 1, 1, 1, 1, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
-
-		this.mFrame.add(consol);
 
 	}
 
