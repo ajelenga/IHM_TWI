@@ -60,7 +60,7 @@ public class ConsoleWindow extends JFrame {
         JMenuItem aboutMenuItem = new JMenuItem("À propos", aboutIcon);
         aboutMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(ConsoleWindow.this, "M2 UBO TILL\nDépartement Informatique", "À propos", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(ConsoleWindow.this, "M2 UBO TILL\nDépartement Informatique UBO", "À propos", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         helpMenu.add(aboutMenuItem);
