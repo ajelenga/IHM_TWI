@@ -100,7 +100,7 @@ public class Twitub implements IObserversControler {
                 UserCreateView userCreateView = new UserCreateView(userCreateControler);
                 //   TwitubMainView.this.mFrame = userCreateView.getJrame();
 
-                Twitub.this.mMainView.getmFrame().add(userCreateView.getJrame());
+                Twitub.this.mMainView.getmFrame().add(userCreateView.getJpanel());
 
 // Rafraîchir la frame
                 Twitub.this.mMainView.getmFrame().revalidate();

@@ -19,44 +19,46 @@ public class UserConnexionView {
 
     private JPanel createPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(Color.WHITE);
+        panel.setBackground(new Color(255, 250, 240));
         GridBagConstraints constraints = new GridBagConstraints();
 
-        JLabel titleLabel = new JLabel("Formulaire de connexion");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
-        titleLabel.setForeground(Color.BLACK);
+        JLabel titleLabel = new JLabel("Connexion");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        titleLabel.setForeground(new Color(41, 128, 185));
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.gridwidth = 3;
-        constraints.insets = new Insets(20, 0, 10, 0);
+        constraints.insets = new Insets(40, 0, 20, 0);
         panel.add(titleLabel, constraints);
 
-        JLabel loginLabel = new JLabel("login :");
-        loginLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        loginLabel.setForeground(Color.BLACK);
+        JLabel loginLabel = new JLabel("Nom d'utilisateur :");
+        loginLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        loginLabel.setForeground(new Color(44, 62, 80));
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.gridwidth = 1;
-        constraints.insets = new Insets(10, 0, 10, 10);
+        constraints.insets = new Insets(20, 0, 10, 20);
         panel.add(loginLabel, constraints);
 
         JTextField loginField = new JTextField(20);
+        loginField.setFont(new Font("Arial", Font.PLAIN, 20));
         constraints.gridx = 1;
         constraints.gridy = 1;
         constraints.gridwidth = 2;
-        constraints.insets = new Insets(10, 0, 10, 0);
+        constraints.insets = new Insets(20, 0, 10, 0);
         panel.add(loginField, constraints);
 
-        JLabel passwordLabel = new JLabel("password :");
-        passwordLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        passwordLabel.setForeground(Color.BLACK);
+        JLabel passwordLabel = new JLabel("Mot de passe :");
+        passwordLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        passwordLabel.setForeground(new Color(44, 62, 80));
         constraints.gridx = 0;
         constraints.gridy = 2;
         constraints.gridwidth = 1;
-        constraints.insets = new Insets(10, 0, 10, 10);
+        constraints.insets = new Insets(10, 0, 10, 20);
         panel.add(passwordLabel, constraints);
 
-        JTextField passwordField = new JTextField(20);
+        JPasswordField passwordField = new JPasswordField(20);
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 20));
         constraints.gridx = 1;
         constraints.gridy = 2;
         constraints.gridwidth = 2;
@@ -65,7 +67,7 @@ public class UserConnexionView {
 
         JButton connexionButton = new JButton("Connexion");
         connexionButton.setBackground(Color.ORANGE);
-        connexionButton.setForeground(Color.BLUE);
+        connexionButton.setForeground(Color.BLACK); // Modifier la couleur du texte en noir
         connexionButton.setFont(new Font("Arial", Font.BOLD, 18));
         connexionButton.addActionListener(new ActionListener() {
             @Override
@@ -80,8 +82,10 @@ public class UserConnexionView {
         constraints.insets = new Insets(20, 0, 0, 0);
         panel.add(connexionButton, constraints);
 
+
         return panel;
     }
+
 
     public JPanel getJpanel() {
         return jpanel;
