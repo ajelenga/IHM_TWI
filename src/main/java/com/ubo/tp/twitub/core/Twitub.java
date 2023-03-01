@@ -26,9 +26,8 @@ import java.io.File;
 public class Twitub implements IObserversControler {
 
 
-
     /**
-    *les controller de l'appli
+     * les controller de l'appli
      */
     protected UserCreateControler userCreateControler;
 
@@ -64,7 +63,7 @@ public class Twitub implements IObserversControler {
     /**
      * Idnique si le mode bouchoné est activé.
      */
-    protected boolean mIsMockEnabled = true;
+    protected boolean mIsMockEnabled = false;
 
     /**
      * Nom de la classe de l'UI.
@@ -93,30 +92,29 @@ public class Twitub implements IObserversControler {
         this.mMainView = new TwitubMainView(this.mDatabase, this.mEntityManager);
 
 
-
-        this.mFramePrincipale= this.mMainView.getmFrame();
+        this.mFramePrincipale = this.mMainView.getmFrame();
         this.mMainView.addCreateListenre(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        Container contentPane = Twitub.this.mMainView.getmFrame().getContentPane();
-                        contentPane.removeAll();
-                        UserCreateView userCreateView = new UserCreateView(userCreateControler);
-                        //   TwitubMainView.this.mFrame = userCreateView.getJrame();
-
-                        Twitub.this.mMainView.getmFrame().add(userCreateView.getJrame());
-
-// Rafraîchir la frame
-                        Twitub.this.mMainView.getmFrame().revalidate();
-                        Twitub.this.mMainView.getmFrame().repaint();
-                        System.out.println("eeeaaaaaa");
-                    }
-                });
-
-
-        this.mMainView.addConnexionListenre(       new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Container contentPane = Twitub.this.mMainView.getmFrame().getContentPane();
                 contentPane.removeAll();
-                UserConnexionView userCreateView = new UserConnexionView(Twitub.this.mMainView.getmFrame(),Twitub.this.userConnexionControler);
+                UserCreateView userCreateView = new UserCreateView(userCreateControler);
+                //   TwitubMainView.this.mFrame = userCreateView.getJrame();
+
+                Twitub.this.mMainView.getmFrame().add(userCreateView.getJrame());
+
+// Rafraîchir la frame
+                Twitub.this.mMainView.getmFrame().revalidate();
+                Twitub.this.mMainView.getmFrame().repaint();
+                System.out.println("eeeaaaaaa");
+            }
+        });
+
+
+        this.mMainView.addConnexionListenre(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Container contentPane = Twitub.this.mMainView.getmFrame().getContentPane();
+                contentPane.removeAll();
+                UserConnexionView userCreateView = new UserConnexionView(Twitub.this.mMainView.getmFrame(), Twitub.this.userConnexionControler);
 
                 Twitub.this.mMainView.getmFrame().getContentPane().add(userCreateView.getjpanel());
 // Rafraîchir la frame
@@ -139,9 +137,6 @@ public class Twitub implements IObserversControler {
     }
 
 
-
-
-
     /**
      * Initialisation du look and feel de l'application.
      */
@@ -152,7 +147,7 @@ public class Twitub implements IObserversControler {
      * Initialisation de l'interface graphique.
      */
     protected void initGui() {
-     //  this.mMainView
+        //  this.mMainView
     }
 
     /**
