@@ -156,74 +156,78 @@ public class TwitubMainView {
         menuBar.add(fileMenu);
         menuBar.add(helpMenu);
         mFrame.setJMenuBar(menuBar);
-        mFrame.setSize(500,250);
+        mFrame.setSize(500, 250);
 
         mFrame.setLayout(new GridBagLayout());
         JMenu menu;
-        JMenuItem e1, e2, e3;
+        JMenuItem inscription, accueil, connexion;
         JMenuBar menubar = new JMenuBar();
 
         menu = new JMenu("Menu");
-        e1 = new JMenuItem("Inscription");
-        e2 = new JMenuItem("Connexion");
-        e3 = new JMenuItem("Annuler");
+        inscription = new JMenuItem("Inscription");
+        connexion = new JMenuItem("Connexion");
+        accueil = new JMenuItem("Accueil");
 
-        menu.add(e1);
-
-        menu.add(e2);
-        menu.add(e3);
-
+        menu.add(accueil);
+        menu.add(inscription);
+        menu.add(connexion);
+        // Ajout du menu à la barre de menu
         menubar.add(menu);
-        JButton btnConnexion = createButton("Connexion");
-        JTextField textField1 = createTextField("Login", new Point(100, 40));
-        JTextField textField2 = createTextField("Mot de passe", new Point(20, 80));
         mFrame.setJMenuBar(menubar);
 
-        e1.addActionListener(new ActionListener() {
+        inscription.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Container contentPane = TwitubMainView.this.mFrame.getContentPane();
                 contentPane.removeAll();
-                UserCreateView userCreateView = new UserCreateView(TwitubMainView.this.mFramePrincipale,TwitubMainView.this.mDatabase);
-             //   TwitubMainView.this.mFrame = userCreateView.getJrame();
+                UserCreateView userCreateView = new UserCreateView(TwitubMainView.this.mFramePrincipale, TwitubMainView.this.mDatabase);
+                //   TwitubMainView.this.mFrame = userCreateView.getJrame();
 
-                TwitubMainView.this.mFrame=userCreateView.getJrame();
-// Rafraîchir la frame
+                TwitubMainView.this.mFrame = userCreateView.getJrame();
+                // Rafraîchir la frame
                 TwitubMainView.this.mFrame.revalidate();
                 TwitubMainView.this.mFrame.repaint();
                 System.out.println("eee");
             }
         });
 
-        e2.addActionListener(new ActionListener() {
+        connexion.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 Container contentPane = TwitubMainView.this.mFrame.getContentPane();
                 contentPane.removeAll();
-                UserConnexionView userCreateView = new UserConnexionView(TwitubMainView.this.mFramePrincipale,TwitubMainView.this.mDatabase);
-                TwitubMainView.this.mFrame=userCreateView.getJrame();
-// Rafraîchir la frame
+                UserConnexionView userCreateView = new UserConnexionView(TwitubMainView.this.mFramePrincipale, TwitubMainView.this.mDatabase);
+                TwitubMainView.this.mFrame = userCreateView.getJrame();
+                // Rafraîchir la frame
                 TwitubMainView.this.mFrame.revalidate();
-
                 TwitubMainView.this.mFrame.repaint();
                 System.out.println("eee");
             }
         });
 
+        accueil.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Container contentPane = TwitubMainView.this.mFrame.getContentPane();
+                contentPane.removeAll();
+                TwitubMainView.this.mFrame.revalidate();
+                TwitubMainView.this.mFrame.repaint();
+            }
+        });
 
-        ConsoleWatch  consleConsoleWatch = new ConsoleWatch(consoleTextArea);
+
+        ConsoleWatch consleConsoleWatch = new ConsoleWatch(consoleTextArea);
         this.mDatabase.addObserver(consleConsoleWatch);
 
     }
 
-    private JTextField createTextField(String name, Point p){
+    private JTextField createTextField(String name, Point p) {
         JTextField textField = new JTextField(name);
-        textField.setBounds(p.x,p.y,200,28);
+        textField.setBounds(p.x, p.y, 200, 28);
         return textField;
     }
 
-    private JButton createButton(String name){
+    private JButton createButton(String name) {
         JButton btn = new JButton(name);
-        btn.setBounds(20,120,200,28);
+        btn.setBounds(20, 120, 200, 28);
         return btn;
     }
 
