@@ -63,7 +63,7 @@ public class Twitub implements IObserversControler {
     /**
      * Idnique si le mode bouchoné est activé.
      */
-    protected boolean mIsMockEnabled = false;
+    protected boolean mIsMockEnabled = true;
 
     /**
      * Nom de la classe de l'UI.
@@ -125,7 +125,7 @@ public class Twitub implements IObserversControler {
         });
 
 
-        this.mMainView.showGUI();
+        this.mMainView.showGUI(this);
 
         // Initialisation de l'IHM
         this.initGui();
@@ -156,8 +156,14 @@ public class Twitub implements IObserversControler {
      * <b>Le chemin doit obligatoirement avoir été saisi et être valide avant de
      * pouvoir utiliser l'application</b>
      */
+    private File exchangeDirectory;
+
     protected void initDirectory() {
-        this.initDirectory("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\BDD");
+        if (exchangeDirectory != null) {
+            this.initDirectory(exchangeDirectory.getAbsolutePath());
+        } else {
+            this.initDirectory("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\BDD");
+        }
     }
 
 

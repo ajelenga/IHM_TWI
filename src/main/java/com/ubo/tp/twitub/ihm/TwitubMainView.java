@@ -1,6 +1,7 @@
 package main.java.com.ubo.tp.twitub.ihm;
 
 import main.java.com.ubo.tp.twitub.core.EntityManager;
+import main.java.com.ubo.tp.twitub.core.Twitub;
 import main.java.com.ubo.tp.twitub.datamodel.ConsoleWatch;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
@@ -65,11 +66,14 @@ public class TwitubMainView {
 
     }
 
+    Twitub twitub;
+
 
     /**
      * Lance l'afficahge de l'IHM.
      */
-    public void showGUI() {
+    public void showGUI(Twitub twitubp) {
+        this.twitub = twitubp;
         // Init auto de l'IHM au cas ou ;)
         if (mFrame == null) {
             this.initGUI();
@@ -137,6 +141,8 @@ public class TwitubMainView {
                     exchangeDirectory = fileChooser.getSelectedFile();
                     println("Répertoire d'échange sélectionné : " + exchangeDirectory.getAbsolutePath());
                     fileChooserString = exchangeDirectory.getAbsolutePath();
+                    System.out.println(fileChooserString);
+                    twitub.initDirectory(fileChooserString);
                 }
             }
         });
@@ -182,6 +188,8 @@ public class TwitubMainView {
         menubar.add(menu);
         menubar.add(helpMenu);
         mFrame.setJMenuBar(menubar);
+        mFrame.getContentPane().setBackground(new Color(255, 250, 240));
+
 
     }
 
