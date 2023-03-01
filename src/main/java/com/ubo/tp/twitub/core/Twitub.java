@@ -1,12 +1,12 @@
 package main.java.com.ubo.tp.twitub.core;
 
-import main.java.com.ubo.tp.twitub.datamodel.ConsoleWatch;
 import main.java.com.ubo.tp.twitub.datamodel.Database;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
 import main.java.com.ubo.tp.twitub.events.file.IWatchableDirectory;
 import main.java.com.ubo.tp.twitub.events.file.WatchableDirectory;
 import main.java.com.ubo.tp.twitub.ihm.TwitubMainView;
 import main.java.com.ubo.tp.twitub.ihm.TwitubMock;
+import main.java.com.ubo.tp.twitub.ihm.twitFolder.controler.UserController;
 
 import java.io.File;
 
@@ -44,12 +44,17 @@ public class Twitub {
     /**
      * Idnique si le mode bouchoné est activé.
      */
-    protected boolean mIsMockEnabled = true;
+    protected boolean mIsMockEnabled = false;
 
     /**
      * Nom de la classe de l'UI.
      */
     protected String mUiClassName;
+
+    /**
+     * Controlleur login.
+     */
+    protected UserController mUserControler;
 
     /**
      * Constructeur.
@@ -61,13 +66,16 @@ public class Twitub {
         // Initialisation de la base de données
         this.initDatabase();
 
+        // Initialisation du controlleur
+        this.initControler();
+
         if (this.mIsMockEnabled) {
             // Initialisation du bouchon de travail
             this.initMock();
         }
 
-            this.mMainView = new TwitubMainView(this.mDatabase, this.mEntityManager);
-            this.mMainView.showGUI();
+        this.mMainView = new TwitubMainView(this.mEntityManager);
+        this.mMainView.showGUI(this.mUserControler);
 
 
         // Initialisation de l'IHM
@@ -76,6 +84,11 @@ public class Twitub {
         // Initialisation du répertoire d'échange
         this.initDirectory();
 
+    }
+
+    //initialisation du controlleur
+    public void initControler() {
+        this.mUserControler = new UserController(this.mDatabase);
     }
 
     /**

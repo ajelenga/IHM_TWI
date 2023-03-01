@@ -1,0 +1,42 @@
+menu.add(inscription);
+        // inscription.addActionListener(new ActionListener() {
+        //   public void actionPerformed(ActionEvent e) {
+        //      Container contentPane = TwitubMainView.this.mFrame.getContentPane();
+        //      contentPane.removeAll();
+        //       UserCreateView userCreateView = new UserCreateView(TwitubMainView.this.mFramePrincipale, TwitubMainView.this.mDatabase);
+        //   TwitubMainView.this.mFrame = userCreateView.getJrame();
+
+        //       TwitubMainView.this.mFrame = userCreateView.getJrame();
+        // Rafraîchir la frame
+        //        TwitubMainView.this.mFrame.revalidate();
+        //        TwitubMainView.this.mFrame.repaint();
+        //         System.out.println("eee");
+        //     }
+        // });
+        menu.add(connexion);
+        // connexion.addActionListener(new ActionListener() {
+        //  public void actionPerformed(ActionEvent e) {
+        //   Container contentPane = TwitubMainView.this.mFrame.getContentPane();
+        //   contentPane.removeAll();
+        //   UserConnexionView userCreateView = new UserConnexionView(TwitubMainView.this.mFramePrincipale, TwitubMainView.this.mDatabase);
+        //  TwitubMainView.this.mFrame = userCreateView.getJrame();
+        // Rafraîchir la frame
+        //   TwitubMainView.this.mFrame.revalidate();
+        //    TwitubMainView.this.mFrame.repaint();
+        //   System.out.println("eee");
+        //}
+        // });
+
+
+
+        // a la fin
+
+        //ConsoleWatch consleConsoleWatch = new ConsoleWatch(consoleTextArea);
+        //this.mDatabase.addObserver(consleConsoleWatch);
+
+
+        // Ajouter la zone de texte à un JScrollPane pour ajouter des barres de défilement
+                //scrollPane = new JScrollPane(consoleTextArea);
+                // Ajouter le JScrollPane à la JFrame
+                //mFrame.getContentPane().add(scrollPane);
+                //mFramePrincipale = mFrame;

@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.twitub.object;
+package main.java.com.ubo.tp.twitub.ihm.twitFolder.object;
 
 import java.awt.*;
 
