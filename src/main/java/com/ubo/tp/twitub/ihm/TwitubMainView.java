@@ -1,11 +1,14 @@
 package main.java.com.ubo.tp.twitub.ihm;
 
 import main.java.com.ubo.tp.twitub.core.EntityManager;
+import main.java.com.ubo.tp.twitub.core.Twitub;
 import main.java.com.ubo.tp.twitub.datamodel.ConsoleWatch;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
+import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateControler;
 import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
+import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionControler;
 import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
 
 import javax.swing.*;
@@ -25,6 +28,12 @@ import static java.sql.DriverManager.println;
  * Classe de la vue principale de l'application.
  */
 public class TwitubMainView {
+
+    ActionListener connexionListener;
+
+    ActionListener createListener;
+
+    UserCreateControler userCreateControler;
 
     /**
      * ChoixFile
@@ -57,7 +66,11 @@ public class TwitubMainView {
     public TwitubMainView(IDatabase database, EntityManager entityManager) {
         this.mDatabase = database;
         this.mEntityManager = entityManager;
+        this.userCreateControler = new UserCreateControler(this.mDatabase);
+
     }
+
+
 
     /**
      * Lance l'afficahge de l'IHM.
@@ -76,7 +89,7 @@ public class TwitubMainView {
                 JFrame frame = TwitubMainView.this.mFrame;
                 // Configurer la JFrame
                 TwitubMainView.this.mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                TwitubMainView.this.mFrame.setSize(800, 600);
+                TwitubMainView.this.mFrame.setSize(1200, 800);
                 TwitubMainView.this.mFrame.setLocationRelativeTo(null);
                 TwitubMainView.this.mFrame.setVisible(true);
             }
@@ -179,36 +192,12 @@ public class TwitubMainView {
         JTextField textField2 = createTextField("Mot de passe", new Point(20, 80));
         mFrame.setJMenuBar(menubar);
 
-        e1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Container contentPane = TwitubMainView.this.mFrame.getContentPane();
-                contentPane.removeAll();
-                UserCreateView userCreateView = new UserCreateView(TwitubMainView.this.mFramePrincipale,TwitubMainView.this.mDatabase);
-             //   TwitubMainView.this.mFrame = userCreateView.getJrame();
+        e1.addActionListener(createListener);
 
-                TwitubMainView.this.mFrame=userCreateView.getJrame();
-// Rafraîchir la frame
-                TwitubMainView.this.mFrame.revalidate();
-                TwitubMainView.this.mFrame.repaint();
-                System.out.println("eee");
-            }
-        });
+        e2.addActionListener(connexionListener);
 
-        e2.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
-                Container contentPane = TwitubMainView.this.mFrame.getContentPane();
-                contentPane.removeAll();
-                UserConnexionView userCreateView = new UserConnexionView(TwitubMainView.this.mFramePrincipale,TwitubMainView.this.mDatabase);
-                TwitubMainView.this.mFrame=userCreateView.getJrame();
-// Rafraîchir la frame
-                TwitubMainView.this.mFrame.revalidate();
-
-                TwitubMainView.this.mFrame.repaint();
-                System.out.println("eee");
-            }
-        });
-
+        
 
         ConsoleWatch  consleConsoleWatch = new ConsoleWatch(consoleTextArea);
         this.mDatabase.addObserver(consleConsoleWatch);
@@ -219,6 +208,15 @@ public class TwitubMainView {
         JTextField textField = new JTextField(name);
         textField.setBounds(p.x,p.y,200,28);
         return textField;
+    }
+
+    public void addConnexionListenre(ActionListener connexionListener)
+    {
+
+        this.connexionListener = connexionListener;
+
+
+
     }
 
     private JButton createButton(String name){
@@ -301,5 +299,17 @@ public class TwitubMainView {
         Twit newTwit = new Twit(randomUser, "Twit fictif!! #Mock #test ;)");
 
         return newTwit;
+    }
+
+    public JFrame getmFrame() {
+        return mFrame;
+    }
+
+    public void setmFrame(JFrame jrame) {
+        this.mFrame= jrame;
+    }
+
+    public void addCreateListenre(ActionListener createListener) {
+        this.createListener = createListener;
     }
 }

@@ -1,8 +1,6 @@
 package main.java.com.ubo.tp.twitub.ihm.inscription;
 
-import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
 import main.java.com.ubo.tp.twitub.datamodel.User;
-import main.java.com.ubo.tp.twitub.ihm.TwitubMainView;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoView;
 
 import javax.swing.*;
@@ -16,14 +14,16 @@ public class UserConnexionView {
 
     UserConnexionControler userConnexionControler;
 
-    public JFrame jrame;
+    JFrame jFrame;
 
-    private IDatabase database;
+    public JPanel jpanel;
 
-    public UserConnexionView(JFrame jframe,IDatabase mDatabase) {
-        this.database = mDatabase;
-        userConnexionControler = new UserConnexionControler(database);
-        this.jrame = jframe;
+    public UserConnexionView(JFrame jFrame, UserConnexionControler userConnexionControler) {
+
+        this.jFrame = jFrame;
+        this.userConnexionControler = userConnexionControler;
+
+        this.jpanel = new JPanel(new GridBagLayout());
 
 
 
@@ -65,29 +65,26 @@ public class UserConnexionView {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("connexxxion "+ jtfpassword.getText()+jtfLogin.getText());
                 User u = UserConnexionView.this.userConnexionControler.connect(jtfpassword.getText(),jtfLogin.getText());
-                if(u!=null){
 
-                    espacePersoView =  new EspacePersoView(UserConnexionView.this.jrame,u);
-                    UserConnexionView.this.jrame = espacePersoView.getFrame();
-                }
             }
         });
 
-        this.jrame.add(labpassword, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 200, 110), 100, 0));
-        this.jrame.add(jtfpassword, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 200, 0), 100, 0));
-
-        this.jrame.add(labLogin, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 100, 70), 100, 0));
-        this.jrame.add(jtfLogin, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 100, 0), 100, 0));
-        this.jrame.add(btconnexion, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
+        this.jpanel.add(labpassword, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.jpanel.add(jtfpassword, new GridBagConstraints(2, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 100, 0));
+
+        this.jpanel.add(labLogin, new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.jpanel.add(jtfLogin, new GridBagConstraints(2, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 100, 0));
+        this.jpanel.add(btconnexion, new GridBagConstraints(2  , 3, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
     }
 
 
-    public JFrame getJrame() {
-        return jrame;
+
+    public JPanel getjpanel() {
+        return jpanel;
     }
 }

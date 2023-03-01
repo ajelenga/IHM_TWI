@@ -11,13 +11,12 @@ public class UserCreateView {
 
     UserCreateControler userCreateControler;
 
-    public JFrame jrame;
+    public JPanel jpanel;
 
-    private IDatabase database;
-    public UserCreateView(JFrame jframe, IDatabase mDatabase) {
-        this.database = mDatabase;
-        userCreateControler = new UserCreateControler(database);
-        this.jrame = jframe;
+
+    public UserCreateView(UserCreateControler userCreateControler) {
+        this.userCreateControler = userCreateControler;
+        this.jpanel = new JPanel(new GridBagLayout());
 
 
         JLabel labtitre = new JLabel("Formulaire d'inscription");
@@ -60,20 +59,20 @@ public class UserCreateView {
             }
         });
 
-        this.jrame.add(labprenom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
+        this.jpanel.add(labprenom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(0, 0, 200, 70), 100, 0));
-        this.jrame.add(jtfprenom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
+        this.jpanel.add(jtfprenom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(0, 0, 200, 0), 100, 0));
 
-        this.jrame.add(labnom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
+        this.jpanel.add(labnom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(0, 0, 100, 70), 100, 0));
-        this.jrame.add(jtfnom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
+        this.jpanel.add(jtfnom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(0, 0, 100, 0), 100, 0));
-        this.jrame.add(btajout, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
+        this.jpanel.add(btajout, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 100, 0));
     }
 
-    public JFrame getJrame() {
-        return jrame;
+    public JPanel getJrame() {
+        return jpanel;
     }
 }
