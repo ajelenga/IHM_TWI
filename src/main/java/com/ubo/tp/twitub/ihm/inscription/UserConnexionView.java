@@ -1,7 +1,6 @@
 package main.java.com.ubo.tp.twitub.ihm.inscription;
 
 import main.java.com.ubo.tp.twitub.datamodel.User;
-import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,82 +8,82 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserConnexionView {
+    private final JPanel jpanel;
+    private final UserConnexionController userConnexionController;
 
-    EspacePersoView espacePersoView;
+    public UserConnexionView(JFrame jFrameP, UserConnexionController userConnexionController) {
 
-    UserConnexionControler userConnexionControler;
-
-    JFrame jFrame;
-
-    public JPanel jpanel;
-
-    public UserConnexionView(JFrame jFrame, UserConnexionControler userConnexionControler) {
-
-        this.jFrame = jFrame;
-        this.userConnexionControler = userConnexionControler;
-
-        this.jpanel = new JPanel(new GridBagLayout());
-
-
-
-
-        JLabel labtitre = new JLabel("Formulaire de connexion");
-        labtitre.setBounds(60, 10, 300, 30);
-        labtitre.setFont(new Font("Arial", Font.BOLD, 22));
-        labtitre.setForeground(Color.white);
-
-
-        JLabel labLogin = new JLabel("login :");
-        labLogin.setBounds(20, 60, 300, 30);
-        labLogin.setFont(new Font("Arial", Font.BOLD, 18));
-        labLogin.setForeground(Color.BLACK);
-
-
-        JTextField jtfLogin = new JTextField();
-        jtfLogin.setBounds(130, 60, 200, 25);
-
-
-        JLabel labpassword = new JLabel("password :");
-        labpassword.setBounds(20, 100, 300, 30);
-        labpassword.setFont(new Font("Arial", Font.BOLD, 18));
-        labpassword.setForeground(Color.BLACK);
-
-
-        JTextField jtfpassword = new JTextField();
-        jtfpassword.setBounds(130, 100, 200, 25);
-
-
-        JButton btconnexion = new JButton("Connexion");
-        btconnexion.setBounds(150, 360, 150, 30);
-        btconnexion.setBackground(Color.orange);
-        btconnexion.setFont(new Font("Arial", Font.BOLD, 18));
-        btconnexion.setForeground(Color.blue);
-        btconnexion.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                System.out.println("connexxxion "+ jtfpassword.getText()+jtfLogin.getText());
-                User u = UserConnexionView.this.userConnexionControler.connect(jtfpassword.getText(),jtfLogin.getText());
-
-            }
-        });
-
-        this.jpanel.add(labpassword, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.jpanel.add(jtfpassword, new GridBagConstraints(2, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 100, 0));
-
-        this.jpanel.add(labLogin, new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        this.jpanel.add(jtfLogin, new GridBagConstraints(2, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 100, 0));
-        this.jpanel.add(btconnexion, new GridBagConstraints(2  , 3, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.userConnexionController = userConnexionController;
+        this.jpanel = createPanel();
     }
 
+    private JPanel createPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(Color.WHITE);
+        GridBagConstraints constraints = new GridBagConstraints();
 
+        JLabel titleLabel = new JLabel("Formulaire de connexion");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        titleLabel.setForeground(Color.BLACK);
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 3;
+        constraints.insets = new Insets(20, 0, 10, 0);
+        panel.add(titleLabel, constraints);
 
-    public JPanel getjpanel() {
+        JLabel loginLabel = new JLabel("login :");
+        loginLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        loginLabel.setForeground(Color.BLACK);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(10, 0, 10, 10);
+        panel.add(loginLabel, constraints);
+
+        JTextField loginField = new JTextField(20);
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        constraints.gridwidth = 2;
+        constraints.insets = new Insets(10, 0, 10, 0);
+        panel.add(loginField, constraints);
+
+        JLabel passwordLabel = new JLabel("password :");
+        passwordLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        passwordLabel.setForeground(Color.BLACK);
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(10, 0, 10, 10);
+        panel.add(passwordLabel, constraints);
+
+        JTextField passwordField = new JTextField(20);
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        constraints.gridwidth = 2;
+        constraints.insets = new Insets(10, 0, 10, 0);
+        panel.add(passwordField, constraints);
+
+        JButton connexionButton = new JButton("Connexion");
+        connexionButton.setBackground(Color.ORANGE);
+        connexionButton.setForeground(Color.BLUE);
+        connexionButton.setFont(new Font("Arial", Font.BOLD, 18));
+        connexionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                User user = userConnexionController.connect(passwordField.getText(), loginField.getText());
+                System.out.println("Connexion " + passwordField.getText() + loginField.getText());
+            }
+        });
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(20, 0, 0, 0);
+        panel.add(connexionButton, constraints);
+
+        return panel;
+    }
+
+    public JPanel getJpanel() {
         return jpanel;
     }
 }

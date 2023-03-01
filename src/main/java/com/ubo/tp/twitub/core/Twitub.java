@@ -8,7 +8,7 @@ import main.java.com.ubo.tp.twitub.ihm.TwitubMainView;
 import main.java.com.ubo.tp.twitub.ihm.TwitubMock;
 import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateControler;
 import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
-import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionControler;
+import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionController;
 import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
 import main.java.com.ubo.tp.twitub.ihm.interf.IObserversControler;
 
@@ -31,7 +31,7 @@ public class Twitub implements IObserversControler {
      */
     protected UserCreateControler userCreateControler;
 
-    protected UserConnexionControler userConnexionControler;
+    protected UserConnexionController userConnexionController;
 
 
     protected JFrame mFramePrincipale;
@@ -86,9 +86,9 @@ public class Twitub implements IObserversControler {
         }
         this.userCreateControler = new UserCreateControler(mDatabase);
 
-        this.userConnexionControler = new UserConnexionControler(mDatabase);
+        this.userConnexionController = new UserConnexionController(mDatabase);
 
-        this.userConnexionControler.addObserver(this);
+        this.userConnexionController.addObserver(this);
         this.mMainView = new TwitubMainView(this.mDatabase, this.mEntityManager);
 
 
@@ -114,9 +114,9 @@ public class Twitub implements IObserversControler {
             public void actionPerformed(ActionEvent e) {
                 Container contentPane = Twitub.this.mMainView.getmFrame().getContentPane();
                 contentPane.removeAll();
-                UserConnexionView userCreateView = new UserConnexionView(Twitub.this.mMainView.getmFrame(), Twitub.this.userConnexionControler);
+                UserConnexionView userCreateView = new UserConnexionView(Twitub.this.mMainView.getmFrame(), Twitub.this.userConnexionController);
 
-                Twitub.this.mMainView.getmFrame().getContentPane().add(userCreateView.getjpanel());
+                Twitub.this.mMainView.getmFrame().getContentPane().add(userCreateView.getJpanel());
 // Rafraîchir la frame
                 Twitub.this.mMainView.getmFrame().revalidate();
                 Twitub.this.mMainView.getmFrame().repaint();

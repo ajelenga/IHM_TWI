@@ -1,15 +1,11 @@
 package main.java.com.ubo.tp.twitub.ihm;
 
 import main.java.com.ubo.tp.twitub.core.EntityManager;
-import main.java.com.ubo.tp.twitub.core.Twitub;
 import main.java.com.ubo.tp.twitub.datamodel.ConsoleWatch;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateControler;
-import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
-import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionControler;
-import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -45,7 +41,6 @@ public class TwitubMainView {
     protected JFrame mFrame;
 
 
-
     /**
      * Base de donénes de l'application.
      */
@@ -69,7 +64,6 @@ public class TwitubMainView {
         this.userCreateControler = new UserCreateControler(this.mDatabase);
 
     }
-
 
 
     /**
@@ -116,7 +110,6 @@ public class TwitubMainView {
         consoleTextArea.setPreferredSize(new Dimension(1000, 50));
 
 
-
         // Configurer le menu
         JMenu menu;
         menu = new JMenu("Menu");
@@ -128,7 +121,7 @@ public class TwitubMainView {
 
         inscription = new JMenuItem("Inscription");
         connexion = new JMenuItem("Connexion");
-        
+
         menu.add(inscription);
         menu.add(connexion);
 
@@ -170,7 +163,7 @@ public class TwitubMainView {
         inscription.addActionListener(createListener);
         connexion.addActionListener(connexionListener);
 
-        ConsoleWatch  consleConsoleWatch = new ConsoleWatch(consoleTextArea);
+        ConsoleWatch consleConsoleWatch = new ConsoleWatch(consoleTextArea);
         this.mDatabase.addObserver(consleConsoleWatch);
 
         Action HomeMenu = new AbstractAction("Accueil") {
@@ -192,24 +185,22 @@ public class TwitubMainView {
 
     }
 
-    private JTextField createTextField(String name, Point p){
+    private JTextField createTextField(String name, Point p) {
         JTextField textField = new JTextField(name);
-        textField.setBounds(p.x,p.y,200,28);
+        textField.setBounds(p.x, p.y, 200, 28);
         return textField;
     }
 
-    public void addConnexionListenre(ActionListener connexionListener)
-    {
+    public void addConnexionListenre(ActionListener connexionListener) {
 
         this.connexionListener = connexionListener;
 
 
-
     }
 
-    private JButton createButton(String name){
+    private JButton createButton(String name) {
         JButton btn = new JButton(name);
-        btn.setBounds(20,120,200,28);
+        btn.setBounds(20, 120, 200, 28);
         return btn;
     }
 
@@ -294,7 +285,7 @@ public class TwitubMainView {
     }
 
     public void setmFrame(JFrame jrame) {
-        this.mFrame= jrame;
+        this.mFrame = jrame;
     }
 
     public void addCreateListenre(ActionListener createListener) {
