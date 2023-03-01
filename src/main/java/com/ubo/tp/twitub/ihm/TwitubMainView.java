@@ -5,6 +5,8 @@ import main.java.com.ubo.tp.twitub.datamodel.ConsoleWatch;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
+import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
+import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
@@ -32,6 +34,8 @@ public class TwitubMainView {
      * Fenetre du bouchon
      */
     protected JFrame mFrame;
+
+    protected JFrame mFramePrincipale;
 
     /**
      * Base de donénes de l'application.
@@ -92,6 +96,10 @@ public class TwitubMainView {
 
         // Créer une zone de texte pour la console
         consoleTextArea = new JTextArea();
+        consoleTextArea.setLineWrap(true);
+        consoleTextArea.setColumns(25);
+        consoleTextArea.setRows(2);
+
 
         consoleTextArea.setEditable(false);
         consoleTextArea.setPreferredSize(new Dimension(1000, 50));
@@ -102,6 +110,8 @@ public class TwitubMainView {
 
         // Ajouter le JScrollPane à la JFrame
         //mFrame.getContentPane().add(scrollPane);
+
+        mFramePrincipale = mFrame;
 
         // Configurer le menu
         JMenu fileMenu = new JMenu("Fichier");
@@ -132,7 +142,7 @@ public class TwitubMainView {
         fileMenu.add(exitMenuItem);
 
         JMenu helpMenu = new JMenu("?");
-        ImageIcon aboutIconContent = new ImageIcon("H:\\Documents\\IHM_TWI\\src\\main\\resources\\images\\logo_50.jpg");
+        ImageIcon aboutIconContent = new ImageIcon("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\src\\main\\resources\\images\\logo_50.jpg");
 
         JMenuItem aboutMenuItem = new JMenuItem("À propos", aboutIcon);
         aboutMenuItem.addActionListener(new ActionListener() {
@@ -146,16 +156,75 @@ public class TwitubMainView {
         menuBar.add(fileMenu);
         menuBar.add(helpMenu);
         mFrame.setJMenuBar(menuBar);
+        mFrame.setSize(500,250);
 
         mFrame.setLayout(new GridBagLayout());
-        //
-        // Gestion de la base de données
+        JMenu menu;
+        JMenuItem e1, e2, e3;
+        JMenuBar menubar = new JMenuBar();
 
-        this.mFrame.add(consoleTextArea);
+        menu = new JMenu("Menu");
+        e1 = new JMenuItem("Inscription");
+        e2 = new JMenuItem("Connexion");
+        e3 = new JMenuItem("Annuler");
+
+        menu.add(e1);
+
+        menu.add(e2);
+        menu.add(e3);
+
+        menubar.add(menu);
+        JButton btnConnexion = createButton("Connexion");
+        JTextField textField1 = createTextField("Login", new Point(100, 40));
+        JTextField textField2 = createTextField("Mot de passe", new Point(20, 80));
+        mFrame.setJMenuBar(menubar);
+
+        e1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Container contentPane = TwitubMainView.this.mFrame.getContentPane();
+                contentPane.removeAll();
+                UserCreateView userCreateView = new UserCreateView(TwitubMainView.this.mFramePrincipale,TwitubMainView.this.mDatabase);
+             //   TwitubMainView.this.mFrame = userCreateView.getJrame();
+
+                TwitubMainView.this.mFrame=userCreateView.getJrame();
+// Rafraîchir la frame
+                TwitubMainView.this.mFrame.revalidate();
+                TwitubMainView.this.mFrame.repaint();
+                System.out.println("eee");
+            }
+        });
+
+        e2.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                Container contentPane = TwitubMainView.this.mFrame.getContentPane();
+                contentPane.removeAll();
+                UserConnexionView userCreateView = new UserConnexionView(TwitubMainView.this.mFramePrincipale,TwitubMainView.this.mDatabase);
+                TwitubMainView.this.mFrame=userCreateView.getJrame();
+// Rafraîchir la frame
+                TwitubMainView.this.mFrame.revalidate();
+
+                TwitubMainView.this.mFrame.repaint();
+                System.out.println("eee");
+            }
+        });
+
 
         ConsoleWatch  consleConsoleWatch = new ConsoleWatch(consoleTextArea);
         this.mDatabase.addObserver(consleConsoleWatch);
 
+    }
+
+    private JTextField createTextField(String name, Point p){
+        JTextField textField = new JTextField(name);
+        textField.setBounds(p.x,p.y,200,28);
+        return textField;
+    }
+
+    private JButton createButton(String name){
+        JButton btn = new JButton(name);
+        btn.setBounds(20,120,200,28);
+        return btn;
     }
 
 

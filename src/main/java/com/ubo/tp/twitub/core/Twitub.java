@@ -98,8 +98,9 @@ public class Twitub {
      * pouvoir utiliser l'application</b>
      */
     protected void initDirectory() {
-        this.initDirectory("H:\\Documents\\IHM_TWI\\BDD");
+        this.initDirectory("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\BDD");
     }
+
 
     /**
      * Indique si le fichier donné est valide pour servire de répertoire

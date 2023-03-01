@@ -138,6 +138,18 @@ public class Database implements IDatabase {
 		}
 	}
 
+// est ce qu'on a le droit de toucher à cette partie, normalement NON !!!!!!!!!!!!!!!!
+	public boolean getUser(User user) {
+		for(User u : this.mUsers){
+			if(u.getName() == user.getName()){
+				return true;
+			}
+		}
+		return false;
+		// Le ré-ajout va écraser l'ancienne copie.
+
+	}
+
 	/**
 	 * @{inheritDoc
 	 */
