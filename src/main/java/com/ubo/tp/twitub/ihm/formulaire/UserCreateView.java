@@ -44,6 +44,24 @@ public class UserCreateView {
         JTextField jtfprenom = new JTextField();
         jtfprenom.setBounds(130, 100, 200, 25);
 
+        JLabel labTag = new JLabel("Tag :");
+        labTag.setBounds(20, 100, 300, 30);
+        labTag.setFont(new Font("Arial", Font.BOLD, 18));
+        labTag.setForeground(Color.BLACK);
+
+
+        JTextField jtfTag = new JTextField();
+        jtfTag.setBounds(130, 100, 200, 25);
+
+        JLabel labMdp = new JLabel("Password :");
+        labMdp.setBounds(20, 100, 300, 30);
+        labMdp.setFont(new Font("Arial", Font.BOLD, 18));
+        labMdp.setForeground(Color.BLACK);
+
+
+        JTextField jtfMdp = new JTextField();
+        jtfMdp.setBounds(130, 100, 200, 25);
+
 
         JButton btajout = new JButton("Enregistrer");
         btajout.setBounds(150, 360, 150, 30);
@@ -59,17 +77,28 @@ public class UserCreateView {
             }
         });
 
-        this.jpanel.add(labprenom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 200, 70), 100, 0));
-        this.jpanel.add(jtfprenom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 200, 0), 100, 0));
+        this.jpanel.add(labprenom, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
+        this.jpanel.add(jtfprenom, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
 
-        this.jpanel.add(labnom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 100, 70), 100, 0));
-        this.jpanel.add(jtfnom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 100, 0), 100, 0));
-        this.jpanel.add(btajout, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 100, 0));
+        this.jpanel.add(labnom, new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
+        this.jpanel.add(jtfnom, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
+
+        this.jpanel.add(labTag, new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
+        this.jpanel.add(jtfTag, new GridBagConstraints(1, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
+
+        this.jpanel.add(labMdp, new GridBagConstraints(0, 3, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
+        this.jpanel.add(jtfMdp, new GridBagConstraints(1, 3, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
+
+        this.jpanel.add(btajout, new GridBagConstraints(0, 4, 1, 1, 1, 1, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 50, 0));
     }
 
     public JPanel getJrame() {
