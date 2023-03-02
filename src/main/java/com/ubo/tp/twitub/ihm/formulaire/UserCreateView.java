@@ -1,11 +1,15 @@
 package main.java.com.ubo.tp.twitub.ihm.formulaire;
 
 import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
+import main.java.com.ubo.tp.twitub.datamodel.Twit;
+import main.java.com.ubo.tp.twitub.datamodel.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.UUID;
 
 public class UserCreateView {
 
@@ -73,7 +77,17 @@ public class UserCreateView {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                     System.out.println(jtfprenom.getText()+jtfnom.getText());
-                    UserCreateView.this.userCreateControler.inscription(jtfprenom.getText(),jtfnom.getText());
+                    if (jtfprenom.getText().isEmpty() || jtfTag.getText().isEmpty()){
+                        System.out.println("valeur null");
+                        JOptionPane.showMessageDialog(UserCreateView.this.jpanel, "Information manquantes pour créer un compte, merci de bien vouloir renseigner les champs (Tag et nom)", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        User user = UserCreateView.this.userCreateControler.inscription(jtfTag.getText(), jtfMdp.getText(),jtfnom.getText(),jtfprenom.getText());
+                        if(user!=null){
+                            JOptionPane.showMessageDialog(UserCreateView.this.jpanel, "Bravo, inscription OK !", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            JOptionPane.showMessageDialog(UserCreateView.this.jpanel, "Inscription no efféctuée, le tag saisi existe dèja  !", "warnig", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
             }
         });
 

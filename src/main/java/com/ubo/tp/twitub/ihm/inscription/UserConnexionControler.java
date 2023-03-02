@@ -5,6 +5,7 @@ import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoControler;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoView;
 import main.java.com.ubo.tp.twitub.ihm.interf.IObserversControler;
 
@@ -16,13 +17,18 @@ import java.util.UUID;
 
 public class UserConnexionControler {
 
+    EspacePersoView espacePersoView;
+
+    EspacePersoControler espacePersoControler;
     protected final Set<IObserversControler> mObservers;
 
     JPanel jpanel;
     IDatabase database;
-    public UserConnexionControler(IDatabase database) {
+    public UserConnexionControler(IDatabase database,EspacePersoControler espacePersoControler) {
         this.database = database;
         mObservers = new HashSet<>();
+        this.espacePersoControler = espacePersoControler;
+
     }
 
     public User connect(String nom, String prenom) {
@@ -34,8 +40,8 @@ public class UserConnexionControler {
             System.out.println(u.getName()+" value "+ u.getName().equals(nom));
             if(u.getName().equals(nom)){
                 System.out.println("connexter");
-                EspacePersoView espacePersoView =  new EspacePersoView(u);
-                jpanel = espacePersoView.getJpanel();
+                EspacePersoView espacePersoView =  new EspacePersoView(u,espacePersoControler);
+                jpanel = espacePersoView.getjPanel();
                 this.notifyObservers();
                 return u;
             }
@@ -58,5 +64,9 @@ public class UserConnexionControler {
         for (IObserversControler observer : mObservers) {
             observer.update(jpanel);
         }
+    }
+
+    public JPanel getJpanel(){
+        return jpanel;
     }
 }
