@@ -1,6 +1,7 @@
 package main.java.com.ubo.tp.twitub.ihm.inscription;
 
 import main.java.com.ubo.tp.twitub.datamodel.User;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoControler;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoView;
 
 import javax.swing.*;
@@ -10,17 +11,17 @@ import java.awt.event.ActionListener;
 
 public class UserConnexionView {
 
-    EspacePersoView espacePersoView;
+    EspacePersoControler espacePersoControler;
 
     UserConnexionControler userConnexionControler;
 
-    JFrame jFrame;
+
 
     public JPanel jpanel;
 
-    public UserConnexionView(JFrame jFrame, UserConnexionControler userConnexionControler) {
+    public UserConnexionView(UserConnexionControler userConnexionControler, EspacePersoControler espacePersoControler) {
 
-        this.jFrame = jFrame;
+        this.espacePersoControler = espacePersoControler;
         this.userConnexionControler = userConnexionControler;
 
         this.jpanel = new JPanel(new GridBagLayout());
@@ -80,8 +81,12 @@ public class UserConnexionView {
                 GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 100, 0));
         this.jpanel.add(btconnexion, new GridBagConstraints(2  , 3, 1, 1, 1, 1, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        this.espacePersoControler.setJpanel(this.jpanel);
     }
 
+    public UserConnexionView() {
+
+    }
 
 
     public JPanel getjpanel() {

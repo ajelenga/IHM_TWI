@@ -89,7 +89,7 @@ public class TwitubMainView {
                 JFrame frame = TwitubMainView.this.mFrame;
                 // Configurer la JFrame
                 TwitubMainView.this.mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                TwitubMainView.this.mFrame.setSize(1200, 800);
+                TwitubMainView.this.mFrame.setSize(1500, 1200);
                 TwitubMainView.this.mFrame.setLocationRelativeTo(null);
                 TwitubMainView.this.mFrame.setVisible(true);
             }
@@ -102,6 +102,7 @@ public class TwitubMainView {
     protected void initGUI() {
         // Création de la fenetre principale
         mFrame = new JFrame("Twitub");
+
 
         // Charger les icônes des fichiers
         ImageIcon exitIcon = new ImageIcon("H:\\Documents\\IHM_TWI\\src\\main\\resources\\images\\exitIcon_20.png");

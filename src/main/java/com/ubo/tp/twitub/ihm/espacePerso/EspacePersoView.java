@@ -1,49 +1,126 @@
 package main.java.com.ubo.tp.twitub.ihm.espacePerso;
 
+import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.TwitubMainView;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.profil.ProfilView;
+import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
 import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
 import main.java.com.ubo.tp.twitub.ihm.interf.IObserversControler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
-public class EspacePersoView{
+public class EspacePersoView {
 
+    private EspacePersoControler espacePersoControler;
     private User user;
+    private JPanel jPanel;
+    private JTextField messageField;
 
-    public JPanel jPanel;
 
 
-    public EspacePersoView(User user) {
-
+    public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
+        this.espacePersoControler = espacePersoControler;
         this.user = user;
 
-        System.out.println("Bienvenue dans ton espace personnel");
-        this.jPanel = new JPanel(new GridBagLayout());
+        // Création des composants
+        JLabel welcomeLabel = new JLabel("Bienvenue dans ton espace personnel, " + user.getName());
+        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        welcomeLabel.setHorizontalAlignment(JLabel.CENTER);
 
-// Rafraîchir la frame
+        messageField = new JTextField(20);
+        JButton publierButton = new JButton("Publier");
+        publierButton.addActionListener(e -> publierMessage());
 
-        System.out.println("eee");
+        JButton deconnexionButton = new JButton("Déconnexion");
+        deconnexionButton.addActionListener(e -> deconnecter());
 
+        JButton profilButton = new JButton("Mon profil");
+        profilButton.addActionListener(e -> afficherProfil());
 
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel("Bienvenue dans ton espace !" +user.getName());
-        this.jPanel.add(label);
+        // Organisation des composants dans la JPanel
+        jPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 3;
+        c.weightx = 1.0;
+        c.anchor = GridBagConstraints.NORTH;
+        c.insets = new Insets(10, 10, 20, 10);
+        jPanel.add(welcomeLabel, c);
 
-        this.jPanel.add(panel, new GridBagConstraints(1, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 100, 0));
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.weightx = 0.0;
+        c.anchor = GridBagConstraints.LINE_END;
+        c.insets = new Insets(0, 10, 10, 10);
+        jPanel.add(new JLabel("Message :"), c);
 
-        this.jPanel.revalidate();
-        this.jPanel.repaint();
+        c.gridx = 1;
+        c.gridy = 1;
+        c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(0, 0, 10, 10);
+        jPanel.add(messageField, c);
 
+        c.gridx = 2;
+        c.gridy = 1;
+        c.weightx = 0.0;
+        c.fill = GridBagConstraints.NONE;
+        c.insets = new Insets(0, 0, 10, 10);
+        jPanel.add(publierButton, c);
 
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 3;
+        c.weightx = 1.0;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(20, 10, 10, 10);
+        jPanel.add(deconnexionButton, c);
 
+        c.gridx = 0;
+        c.gridy = 3;
+        c.gridwidth = 3;
+        c.weightx = 1.0;
+        c.insets = new Insets(10, 10, 10, 10);
+        jPanel.add(profilButton, c);
     }
 
-    public JPanel getJpanel() {
+    public JPanel getJPanel() {
         return jPanel;
     }
 
+    private void publierMessage() {
+        String message = messageField.getText();
+        Twit twit = new Twit(this.user,message);
+        this.espacePersoControler.database.addTwit(twit);
+        JOptionPane.showMessageDialog(EspacePersoView.this.jPanel, "Tweet publié "+ message, "Info", JOptionPane.INFORMATION_MESSAGE);
 
+    }
+
+    private void deconnecter() {
+        this.jPanel.removeAll();
+        this.espacePersoControler.deconnecter();
+
+    }
+
+    private void afficherProfil() {
+        // Créer une nouvelle instance de la vue du profil avec l'utilisateur actuel
+        ProfilView profilView = new ProfilView(user);
+
+        // Ouvrir la vue du profil dans une nouvelle fenêtre
+        JFrame frame = new JFrame("Profil");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(profilView.getJPanel());
+        frame.pack();
+        frame.setVisible(true);
+
+    }
+
+    public JPanel getjPanel(){
+        return this.jPanel;
+    }
 }
