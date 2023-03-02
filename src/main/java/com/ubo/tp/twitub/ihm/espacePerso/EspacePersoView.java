@@ -97,7 +97,7 @@ public class EspacePersoView {
         String message = messageField.getText();
         Twit twit = new Twit(this.user,message);
         this.espacePersoControler.database.addTwit(twit);
-        JOptionPane.showMessageDialog(EspacePersoView.this.jPanel, "Tweet publié "+ message, "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(EspacePersoView.this.jPanel, "Tweet publié ok "+ message, "Info", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
