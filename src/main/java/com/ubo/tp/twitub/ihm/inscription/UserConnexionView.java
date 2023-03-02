@@ -23,6 +23,7 @@ public class UserConnexionView {
         this.userConnexionControler = userConnexionControler;
 
         this.jpanel = createPanel();
+        this.espacePersoControler.setJpanel(this.jpanel);
     }
 
     private JPanel createPanel() {

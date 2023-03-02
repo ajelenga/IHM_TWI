@@ -74,6 +74,7 @@ public class TwitubMainView {
      */
     public void showGUI(Twitub twitubp) {
         // Init auto de l'IHM au cas ou ;)
+        this.twitub = twitubp;
         if (mFrame == null) {
             this.initGUI();
         }
