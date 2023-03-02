@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.twitub.ihm.espacePerso;
+package main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet;
 
 import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
@@ -13,22 +13,26 @@ public class TweetsView implements IDatabaseObserver {
     private Set<Twit> listFollows;
     private JPanel jPanel;
 
-    JLabel userTagLabel;
+    private JLabel userTagLabel;
+    private JLabel notificationLabel;
 
     public TweetsView(Set<Twit> tweet) {
         this.listFollows = tweet;
 
         // Création des composants
-        JLabel userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
-
+        userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
+        notificationLabel = new JLabel("");
 
         // Organisation des composants dans la JPanel
         jPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+        jPanel.setBackground(new Color(255, 250, 240));
         c.gridx = 0;
         c.gridy = 0;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(userTagLabel, c);
+        c.gridx = 1;
+        jPanel.add(notificationLabel, c);
 
     }
 
@@ -40,9 +44,10 @@ public class TweetsView implements IDatabaseObserver {
     public void notifyTwitAdded(Twit addedTwit) {
 
         this.jPanel.removeAll();
-        System.out.print(this.listFollows.size());
         this.listFollows.add(addedTwit);
-        JLabel userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
+        userTagLabel.setText("Tweet : " + this.listFollows.size());
+        notificationLabel.setText("New tweet added !");
+        notificationLabel.setForeground(Color.RED);
 
         // Organisation des composants dans la JPanel
         GridBagConstraints c = new GridBagConstraints();
@@ -50,6 +55,11 @@ public class TweetsView implements IDatabaseObserver {
         c.gridy = 0;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(userTagLabel, c);
+        c.gridx = 1;
+        jPanel.add(notificationLabel, c);
+
+        jPanel.revalidate();
+        jPanel.repaint();
 
     }
 
