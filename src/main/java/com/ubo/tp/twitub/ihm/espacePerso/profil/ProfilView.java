@@ -1,5 +1,6 @@
 package main.java.com.ubo.tp.twitub.ihm.espacePerso.profil;
 
+import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 
 import javax.swing.*;

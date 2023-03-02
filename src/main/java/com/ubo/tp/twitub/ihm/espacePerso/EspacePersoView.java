@@ -1,9 +1,11 @@
 package main.java.com.ubo.tp.twitub.ihm.espacePerso;
 
+import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.TwitubMainView;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.profil.ProfilView;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet.TweetsView;
 import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
 import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
 import main.java.com.ubo.tp.twitub.ihm.interf.IObserversControler;
@@ -12,19 +14,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class EspacePersoView {
+public class EspacePersoView  {
 
     private EspacePersoControler espacePersoControler;
     private User user;
     private JPanel jPanel;
     private JTextField messageField;
 
+    TweetsView tweetsView;
+
+
 
 
     public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
+
+        this.espacePersoControler.database.addObserver(tweetsView);
         this.espacePersoControler = espacePersoControler;
         this.user = user;
-
+        TweetsView tweetsView = new TweetsView(this.espacePersoControler.database.getTwits());
         // Création des composants
         JLabel welcomeLabel = new JLabel("Bienvenue dans ton espace personnel, " + user.getName());
         welcomeLabel.setFont(new Font("Serif", Font.BOLD, 40));
@@ -39,6 +46,9 @@ public class EspacePersoView {
 
         JButton profilButton = new JButton("Mon profil");
         profilButton.addActionListener(e -> afficherProfil());
+
+        JButton profilListTweet = new JButton("Mes tweets");
+        profilListTweet.addActionListener(e -> afficherTweet());
 
         // Organisation des composants dans la JPanel
         jPanel = new JPanel(new GridBagLayout());
@@ -87,7 +97,17 @@ public class EspacePersoView {
         c.weightx = 1.0;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(profilButton, c);
+
+
+        c.gridx = 0;
+        c.gridy = 4;
+        c.gridwidth = 3;
+        c.weightx = 1.0;
+        c.insets = new Insets(10, 10, 10, 10);
+        jPanel.add(profilListTweet, c);
     }
+
+
 
     public JPanel getJPanel() {
         return jPanel;
@@ -118,6 +138,17 @@ public class EspacePersoView {
         frame.pack();
         frame.setVisible(true);
 
+    }
+
+    private void afficherTweet() {
+
+        System.out.println("affihcer les tweet");
+        // Ouvrir la vue du profil dans une nouvelle fenêtre
+        JFrame frame = new JFrame("Tweets");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(tweetsView.getJPanel());
+        frame.pack();
+        frame.setVisible(true);
     }
 
     public JPanel getjPanel(){
