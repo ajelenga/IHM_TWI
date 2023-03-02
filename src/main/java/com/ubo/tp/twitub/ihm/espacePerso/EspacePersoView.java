@@ -18,24 +18,44 @@ public class EspacePersoView {
     public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
         this.espacePersoControler = espacePersoControler;
         this.user = user;
+        this.jPanel = createPanel();
+    }
 
+    public JPanel getJPanel() {
+        return jPanel;
+    }
+
+    private JPanel createPanel() {
         // Création des composants
+
         JLabel welcomeLabel = new JLabel("Bienvenue dans ton espace personnel, " + user.getName());
-        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 40));
+        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        welcomeLabel.setForeground(new Color(41, 128, 185));
         welcomeLabel.setHorizontalAlignment(JLabel.CENTER);
 
         messageField = new JTextField(20);
+        messageField.setFont(new Font("Arial", Font.PLAIN, 20));
         JButton publierButton = new JButton("Publier");
+        publierButton.setBackground(Color.ORANGE);
+        publierButton.setForeground(Color.BLACK);
+        publierButton.setFont(new Font("Arial", Font.BOLD, 18));
         publierButton.addActionListener(e -> publierMessage());
 
         JButton deconnexionButton = new JButton("Déconnexion");
+        deconnexionButton.setBackground(Color.ORANGE);
+        deconnexionButton.setForeground(Color.BLACK);
+        deconnexionButton.setFont(new Font("Arial", Font.BOLD, 18));
         deconnexionButton.addActionListener(e -> deconnecter());
 
         JButton profilButton = new JButton("Mon profil");
+        profilButton.setBackground(Color.ORANGE);
+        profilButton.setForeground(Color.BLACK);
+        profilButton.setFont(new Font("Arial", Font.BOLD, 18));
         profilButton.addActionListener(e -> afficherProfil());
 
         // Organisation des composants dans la JPanel
         jPanel = new JPanel(new GridBagLayout());
+        jPanel.setBackground(new Color(255, 250, 240));
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
@@ -51,7 +71,10 @@ public class EspacePersoView {
         c.weightx = 0.0;
         c.anchor = GridBagConstraints.LINE_END;
         c.insets = new Insets(0, 10, 10, 10);
-        jPanel.add(new JLabel("Message :"), c);
+        JLabel messageLabel = new JLabel("Message :");
+        messageLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        messageLabel.setForeground(new Color(44, 62, 80));
+        jPanel.add(messageLabel, c);
 
         c.gridx = 1;
         c.gridy = 1;
@@ -81,9 +104,7 @@ public class EspacePersoView {
         c.weightx = 1.0;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(profilButton, c);
-    }
 
-    public JPanel getJPanel() {
         return jPanel;
     }
 
