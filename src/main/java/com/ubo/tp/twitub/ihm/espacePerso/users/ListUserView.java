@@ -1,24 +1,26 @@
-package main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet;
+package main.java.com.ubo.tp.twitub.ihm.espacePerso.users;
 
-import main.java.com.ubo.tp.twitub.datamodel.*;
+import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
+import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
+import main.java.com.ubo.tp.twitub.datamodel.Twit;
+import main.java.com.ubo.tp.twitub.datamodel.User;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoControler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 import java.util.Set;
 
-public class TweetsView implements IDatabaseObserver {
-
-    private Set<Twit> listFollows;
+public class ListUserView  implements IDatabaseObserver {
+    private Set<User> listUsers;
     private JPanel jPanel;
+    public ListUserView(Set<User> lu) {
+        this.listUsers = lu;
+        String display="";
+        for (User u : listUsers){
+            display = display +" "+u.getName()+" ";
+        }
 
-    JLabel userTagLabel;
-
-    public TweetsView(Set<Twit> tweet) {
-        this.listFollows = tweet;
-
-        // Création des composants
-        JLabel userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
+        JLabel userTagLabel = new JLabel("Tweet : " + display);
 
 
         // Organisation des composants dans la JPanel
@@ -28,7 +30,6 @@ public class TweetsView implements IDatabaseObserver {
         c.gridy = 0;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(userTagLabel, c);
-
     }
 
     public JPanel getJPanel() {
@@ -37,18 +38,6 @@ public class TweetsView implements IDatabaseObserver {
 
     @Override
     public void notifyTwitAdded(Twit addedTwit) {
-
-        this.jPanel.removeAll();
-        System.out.print(this.listFollows.size());
-        this.listFollows.add(addedTwit);
-        JLabel userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
-
-        // Organisation des composants dans la JPanel
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(10, 10, 10, 10);
-        jPanel.add(userTagLabel, c);
 
     }
 
