@@ -3,6 +3,7 @@ package main.java.com.ubo.tp.twitub.ihm.espacePerso;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.profil.ProfilView;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.users.ListUserView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,10 +14,13 @@ public class EspacePersoView {
     private User user;
     private JPanel jPanel;
     private JTextField messageField;
+    private TweetsView tweetsView;
 
 
     public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
         this.espacePersoControler = espacePersoControler;
+        this.tweetsView = new TweetsView(this.espacePersoControler.database.getTwits());
+        this.espacePersoControler.database.addObserver(this.tweetsView);
         this.user = user;
         this.jPanel = createPanel();
     }
@@ -52,6 +56,18 @@ public class EspacePersoView {
         profilButton.setForeground(Color.BLACK);
         profilButton.setFont(new Font("Arial", Font.BOLD, 18));
         profilButton.addActionListener(e -> afficherProfil());
+
+        JButton profilListTweet = new JButton("Mes tweets");
+        profilListTweet.setBackground(Color.ORANGE);
+        profilListTweet.setForeground(Color.BLACK);
+        profilListTweet.setFont(new Font("Arial", Font.BOLD, 18));
+        profilListTweet.addActionListener(e -> afficherTweet());
+
+        JButton ListUser = new JButton("Les utilisateurs");
+        ListUser.setBackground(Color.ORANGE);
+        ListUser.setForeground(Color.BLACK);
+        ListUser.setFont(new Font("Arial", Font.BOLD, 18));
+        ListUser.addActionListener(e -> afficherUser());
 
         // Organisation des composants dans la JPanel
         jPanel = new JPanel(new GridBagLayout());
@@ -105,7 +121,34 @@ public class EspacePersoView {
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(profilButton, c);
 
+        c.gridx = 0;
+        c.gridy = 4;
+        c.gridwidth = 3;
+        c.weightx = 1.0;
+        c.insets = new Insets(10, 10, 10, 10);
+        jPanel.add(profilListTweet, c);
+
+        c.gridx = 0;
+        c.gridy = 5;
+        c.gridwidth = 3;
+        c.weightx = 1.0;
+        c.insets = new Insets(10, 10, 10, 10);
+        jPanel.add(ListUser, c);
+
         return jPanel;
+    }
+
+    private void afficherUser() {
+        // Créer une nouvelle instance de la vue du profil avec l'utilisateur actuel
+        ListUserView listUserView = new ListUserView(this.espacePersoControler.database.getUsers());
+
+        // Ouvrir la vue du profil dans une nouvelle fenêtre
+        JFrame frame = new JFrame("Liste des utilisateurs");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(listUserView.getJPanel());
+        frame.pack();
+        frame.setVisible(true);
+
     }
 
     private void publierMessage() {
@@ -133,6 +176,19 @@ public class EspacePersoView {
         frame.pack();
         frame.setVisible(true);
 
+    }
+
+
+    private void afficherTweet() {
+
+        System.out.println("affihcer les tweet");
+        // Ouvrir la vue du profil dans une nouvelle fenêtre
+        JFrame frame = new JFrame("Tweets");
+        frame.setPreferredSize(new Dimension(200, 100));
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(tweetsView.getJPanel());
+        frame.pack();
+        frame.setVisible(true);
     }
 
     public JPanel getjPanel() {
