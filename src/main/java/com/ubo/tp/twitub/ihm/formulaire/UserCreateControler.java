@@ -8,8 +8,8 @@ import java.util.*;
 public class UserCreateControler {
 
 
-
     IDatabase database;
+
     public UserCreateControler(IDatabase database) {
         this.database = database;
     }

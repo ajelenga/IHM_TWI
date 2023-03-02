@@ -13,45 +13,96 @@ import java.util.UUID;
 
 public class UserCreateView {
 
-    UserCreateControler userCreateControler;
-
-    public JPanel jpanel;
-
+    private JPanel jpanel;
+    private UserCreateControler userCreateControler;
 
     public UserCreateView(UserCreateControler userCreateControler) {
         this.userCreateControler = userCreateControler;
-        this.jpanel = new JPanel(new GridBagLayout());
+        this.jpanel = createPanel();
+    }
+
+    public JPanel createPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(255, 250, 240));
+        GridBagConstraints constraints = new GridBagConstraints();
 
 
-        JLabel labtitre = new JLabel("Formulaire d'inscription");
-        labtitre.setBounds(60, 10, 300, 30);
-        labtitre.setFont(new Font("Arial", Font.BOLD, 22));
-        labtitre.setForeground(Color.white);
-
+        JLabel titleLabel = new JLabel("Création de compte");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        titleLabel.setForeground(new Color(41, 128, 185));
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        constraints.gridwidth = 3;
+        constraints.insets = new Insets(40, 0, 20, 0);
+        panel.add(titleLabel, constraints);
 
         JLabel labnom = new JLabel("Nom :");
-        labnom.setBounds(20, 60, 300, 30);
-        labnom.setFont(new Font("Arial", Font.BOLD, 18));
-        labnom.setForeground(Color.BLACK);
+        labnom.setFont(new Font("Arial", Font.BOLD, 22));
+        labnom.setForeground(new Color(44, 62, 80));
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(20, 0, 10, 20);
+        panel.add(labnom, constraints);
 
-
-        JTextField jtfnom = new JTextField();
-        jtfnom.setBounds(130, 60, 200, 25);
-
+        JTextField jtfnom = new JTextField(20);
+        jtfnom.setFont(new Font("Arial", Font.PLAIN, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        constraints.gridwidth = 2;
+        constraints.insets = new Insets(20, 0, 10, 0);
+        panel.add(jtfnom, constraints);
 
         JLabel labprenom = new JLabel("Prénom :");
-        labprenom.setBounds(20, 100, 300, 30);
-        labprenom.setFont(new Font("Arial", Font.BOLD, 18));
-        labprenom.setForeground(Color.BLACK);
+        labprenom.setFont(new Font("Arial", Font.BOLD, 22));
+        labprenom.setForeground(new Color(44, 62, 80));
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(10, 0, 10, 20);
+        panel.add(labprenom, constraints);
 
-
-        JTextField jtfprenom = new JTextField();
-        jtfprenom.setBounds(130, 100, 200, 25);
+        JTextField jtfprenom = new JTextField(20);
+        jtfprenom.setFont(new Font("Arial", Font.PLAIN, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        constraints.gridwidth = 2;
+        constraints.insets = new Insets(10, 0, 10, 0);
+        panel.add(jtfprenom, constraints);
 
         JLabel labTag = new JLabel("Tag :");
-        labTag.setBounds(20, 100, 300, 30);
-        labTag.setFont(new Font("Arial", Font.BOLD, 18));
-        labTag.setForeground(Color.BLACK);
+        labTag.setFont(new Font("Arial", Font.BOLD, 22));
+        labTag.setForeground(new Color(44, 62, 80));
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(10, 0, 10, 20);
+        panel.add(labTag, constraints);
+
+        JTextField jtfTag = new JTextField(20);
+        jtfTag.setFont(new Font("Arial", Font.PLAIN, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        constraints.gridwidth = 2;
+        constraints.insets = new Insets(10, 0, 10, 0);
+        panel.add(jtfTag, constraints);
+
+        JLabel labMdp = new JLabel("Mot de passe :");
+        labMdp.setFont(new Font("Arial", Font.BOLD, 22));
+        labMdp.setForeground(new Color(44, 62, 80));
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(10, 0, 10, 20);
+        panel.add(labMdp, constraints);
+
+        JPasswordField jtfMdp = new JPasswordField(20);
+        jtfMdp.setFont(new Font("Arial", Font.PLAIN, 20));
+        constraints.gridx = 1;
+        constraints.gridy = 4;
+        constraints.gridwidth = 2;
+        constraints.insets = new Insets(10, 0, 10, 0);
+        panel.add(jtfMdp, constraints);
 
 
         JTextField jtfTag = new JTextField();
@@ -68,10 +119,9 @@ public class UserCreateView {
 
 
         JButton btajout = new JButton("Enregistrer");
-        btajout.setBounds(150, 360, 150, 30);
-        btajout.setBackground(Color.orange);
+        btajout.setBackground(Color.ORANGE);
+        btajout.setForeground(Color.BLACK);
         btajout.setFont(new Font("Arial", Font.BOLD, 18));
-        btajout.setForeground(Color.blue);
         btajout.addActionListener(new ActionListener() {
 
             @Override
@@ -90,32 +140,21 @@ public class UserCreateView {
                     }
             }
         });
+        constraints.gridx = 1;
+        constraints.gridy = 5;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(20, 0, 0, 0);
+        panel.add(btajout, constraints);
 
-        this.jpanel.add(labprenom, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
-        this.jpanel.add(jtfprenom, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
+        this.jpanel.add(labprenom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 200, 70), 100, 0));
+        this.jpanel.add(jtfprenom, new GridBagConstraints(0, 0, 0, 0, 0, 0, GridBagConstraints.CENTER,
+                GridBagConstraints.NONE, new Insets(0, 0, 200, 0), 100, 0));
 
-        this.jpanel.add(labnom, new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
-        this.jpanel.add(jtfnom, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
-
-        this.jpanel.add(labTag, new GridBagConstraints(0, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
-        this.jpanel.add(jtfTag, new GridBagConstraints(1, 2, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
-
-        this.jpanel.add(labMdp, new GridBagConstraints(0, 3, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
-        this.jpanel.add(jtfMdp, new GridBagConstraints(1, 3, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 110, 0));
-
-        this.jpanel.add(btajout, new GridBagConstraints(0, 4, 1, 1, 1, 1, GridBagConstraints.CENTER,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 50, 0));
+        return panel;
     }
 
-    public JPanel getJrame() {
+    public JPanel getJpanel() {
         return jpanel;
     }
 }

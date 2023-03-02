@@ -9,7 +9,7 @@ import main.java.com.ubo.tp.twitub.ihm.TwitubMock;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoControler;
 import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateControler;
 import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
-import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionControler;
+import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionController;
 import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
 import main.java.com.ubo.tp.twitub.ihm.interf.IObserversControler;
 
@@ -32,7 +32,7 @@ public class Twitub implements IObserversControler {
      */
     protected UserCreateControler userCreateControler;
 
-    protected UserConnexionControler userConnexionControler;
+    protected UserConnexionController userConnexionController;
 
     protected EspacePersoControler espacePersoControler;
 
@@ -66,7 +66,7 @@ public class Twitub implements IObserversControler {
     /**
      * Idnique si le mode bouchoné est activé.
      */
-    protected boolean mIsMockEnabled = false;
+    protected boolean mIsMockEnabled = true;
 
     /**
      * Nom de la classe de l'UI.
@@ -89,6 +89,7 @@ public class Twitub implements IObserversControler {
         }
         this.userCreateControler = new UserCreateControler(mDatabase);
 
+        this.userConnexionControler = new UserConnexionControler(mDatabase);
 
 
         this.espacePersoControler = new EspacePersoControler(mDatabase);
@@ -109,7 +110,7 @@ public class Twitub implements IObserversControler {
                 UserCreateView userCreateView = new UserCreateView(userCreateControler);
                 //   TwitubMainView.this.mFrame = userCreateView.getJrame();
 
-                Twitub.this.mMainView.getmFrame().add(userCreateView.getJrame());
+                Twitub.this.mMainView.getmFrame().add(userCreateView.getJpanel());
 
 // Rafraîchir la frame
                 Twitub.this.mMainView.getmFrame().revalidate();
@@ -125,7 +126,7 @@ public class Twitub implements IObserversControler {
                 contentPane.removeAll();
                 UserConnexionView userCreateView = new UserConnexionView( Twitub.this.userConnexionControler,Twitub.this.espacePersoControler);
 
-                Twitub.this.mMainView.getmFrame().getContentPane().add(userCreateView.getjpanel());
+                Twitub.this.mMainView.getmFrame().getContentPane().add(userCreateView.getJpanel());
 // Rafraîchir la frame
                 Twitub.this.mMainView.getmFrame().revalidate();
                 Twitub.this.mMainView.getmFrame().repaint();
@@ -134,7 +135,7 @@ public class Twitub implements IObserversControler {
         });
 
 
-        this.mMainView.showGUI();
+        this.mMainView.showGUI(this);
 
         // Initialisation de l'IHM
         this.initGui();
@@ -165,8 +166,14 @@ public class Twitub implements IObserversControler {
      * <b>Le chemin doit obligatoirement avoir été saisi et être valide avant de
      * pouvoir utiliser l'application</b>
      */
+    private File exchangeDirectory;
+
     protected void initDirectory() {
-        this.initDirectory("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\BDD");
+        if (exchangeDirectory != null) {
+            this.initDirectory(exchangeDirectory.getAbsolutePath());
+        } else {
+            this.initDirectory("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\BDD");
+        }
     }
 
 
