@@ -90,10 +90,9 @@ public class Twitub implements IObserversControler {
         this.userCreateControler = new UserCreateControler(mDatabase);
 
 
-
         this.espacePersoControler = new EspacePersoControler(mDatabase);
 
-        this.userConnexionControler = new UserConnexionControler(mDatabase,espacePersoControler);
+        this.userConnexionControler = new UserConnexionControler(mDatabase, espacePersoControler);
 
         this.espacePersoControler.addObserver(this);
 
@@ -123,7 +122,7 @@ public class Twitub implements IObserversControler {
             public void actionPerformed(ActionEvent e) {
                 Container contentPane = Twitub.this.mMainView.getmFrame().getContentPane();
                 contentPane.removeAll();
-                UserConnexionView userCreateView = new UserConnexionView( Twitub.this.userConnexionControler,Twitub.this.espacePersoControler);
+                UserConnexionView userCreateView = new UserConnexionView(Twitub.this.userConnexionControler, Twitub.this.espacePersoControler);
 
                 Twitub.this.mMainView.getmFrame().getContentPane().add(userCreateView.getjpanel());
 // Rafraîchir la frame
@@ -134,7 +133,7 @@ public class Twitub implements IObserversControler {
         });
 
 
-        this.mMainView.showGUI();
+        this.mMainView.showGUI(this);
 
         // Initialisation de l'IHM
         this.initGui();
