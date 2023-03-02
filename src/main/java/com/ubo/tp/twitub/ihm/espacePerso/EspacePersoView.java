@@ -2,15 +2,10 @@ package main.java.com.ubo.tp.twitub.ihm.espacePerso;
 
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
-import main.java.com.ubo.tp.twitub.ihm.TwitubMainView;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.profil.ProfilView;
-import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
-import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
-import main.java.com.ubo.tp.twitub.ihm.interf.IObserversControler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class EspacePersoView {
 
@@ -18,7 +13,6 @@ public class EspacePersoView {
     private User user;
     private JPanel jPanel;
     private JTextField messageField;
-
 
 
     public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
@@ -95,9 +89,9 @@ public class EspacePersoView {
 
     private void publierMessage() {
         String message = messageField.getText();
-        Twit twit = new Twit(this.user,message);
+        Twit twit = new Twit(this.user, message);
         this.espacePersoControler.database.addTwit(twit);
-        JOptionPane.showMessageDialog(EspacePersoView.this.jPanel, "Tweet publié "+ message, "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(EspacePersoView.this.jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -120,7 +114,7 @@ public class EspacePersoView {
 
     }
 
-    public JPanel getjPanel(){
+    public JPanel getjPanel() {
         return this.jPanel;
     }
 }
