@@ -3,6 +3,7 @@ package main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +19,18 @@ public class TweetsView implements IDatabaseObserver {
 
     private ListViewT listViewT;
 
+    private JTextField messageField;
+
     public TweetsView(Set<Twit> tweet) {
         this.listFollows = tweet;
+
+        messageField = new JTextField(20);
+        messageField.setFont(new Font("Arial", Font.PLAIN, 20));
+        JButton publierButton = new JButton("Publier");
+        publierButton.setBackground(Color.ORANGE);
+        publierButton.setForeground(Color.BLACK);
+        publierButton.setFont(new Font("Arial", Font.BOLD, 18));
+        publierButton.addActionListener(e -> rechercherTweet());
 
         // Création des composants
       //  userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
@@ -39,6 +50,10 @@ public class TweetsView implements IDatabaseObserver {
 
     }
 
+    private void rechercherTweet() {
+            System.out.println("okkkkkkkkkkk");
+    }
+
     public JPanel getJPanel() {
         return jPanel;
     }
@@ -46,8 +61,12 @@ public class TweetsView implements IDatabaseObserver {
     @Override
     public void notifyTwitAdded(Twit addedTwit) {
 
+        GridBagConstraints constraints = new GridBagConstraints();
+
         this.jPanel.removeAll();
         this.listFollows.add(addedTwit);
+
+
        // userTagLabel.setText("Tweet : " + this.listFollows.size());
      //   notificationLabel.setText("New tweet added !");
       //  notificationLabel.setForeground(Color.RED);

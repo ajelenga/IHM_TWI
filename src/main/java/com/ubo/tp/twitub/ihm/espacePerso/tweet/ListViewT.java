@@ -15,6 +15,16 @@ public class ListViewT {
 
 
     public ListViewT(Set<Twit> listFollows, JPanel jPanel) {
+        GridBagConstraints constraints = new GridBagConstraints();
+        JLabel passwordLabel = new JLabel("Recherche :");
+        passwordLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        passwordLabel.setForeground(new Color(44, 62, 80));
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.gridwidth = 1;
+        constraints.insets = new Insets(10, 0, 10, 20);
+        this.jpanel.add(passwordLabel);
+
         this.listFollows = listFollows;
         this.jpanel = jPanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
