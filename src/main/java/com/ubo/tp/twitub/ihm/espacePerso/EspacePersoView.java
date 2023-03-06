@@ -3,6 +3,7 @@ package main.java.com.ubo.tp.twitub.ihm.espacePerso;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.profil.ProfilView;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet.TweetsView;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.users.ListUserView;
 
 import javax.swing.*;
@@ -144,6 +145,8 @@ public class EspacePersoView {
 
         // Ouvrir la vue du profil dans une nouvelle fenêtre
         JFrame frame = new JFrame("Liste des utilisateurs");
+        frame.setPreferredSize(new Dimension(500, 500));
+        frame.setBackground(new Color(255, 250, 240));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.add(listUserView.getJPanel());
         frame.pack();
@@ -165,31 +168,40 @@ public class EspacePersoView {
 
     }
 
-    private void afficherProfil() {
-        // Créer une nouvelle instance de la vue du profil avec l'utilisateur actuel
-        ProfilView profilView = new ProfilView(user);
+    private JButton retourButton = new JButton("Retour");
 
-        // Ouvrir la vue du profil dans une nouvelle fenêtre
-        JFrame frame = new JFrame("Profil");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(profilView.getJPanel());
-        frame.pack();
-        frame.setVisible(true);
+
+    private void afficherProfil() {
+        JPanel profilePanel = new ProfilView(user).getJPanel();
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
+        frame.setContentPane(profilePanel);
+        profilePanel.add(retourButton); // On ajoute le bouton de retour
+        retourButton.addActionListener(e -> {
+            frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
+            frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
+            // On rafraîchit l'affichage
+            frame.revalidate();
+            frame.repaint();
+        });
+
+
+        frame.revalidate();
+        frame.repaint();
 
     }
 
 
     private void afficherTweet() {
-
-        System.out.println("affihcer les tweet");
-        // Ouvrir la vue du profil dans une nouvelle fenêtre
-        JFrame frame = new JFrame("Tweets");
-        frame.setPreferredSize(new Dimension(200, 100));
+        JFrame frame = new JFrame("Liste de vos tweets");
+        frame.setPreferredSize(new Dimension(500, 500));
+        frame.setBackground(new Color(255, 250, 240));
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.add(tweetsView.getJPanel());
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
 
     public JPanel getjPanel() {
         return this.jPanel;

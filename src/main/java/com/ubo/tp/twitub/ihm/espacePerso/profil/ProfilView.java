@@ -22,6 +22,7 @@ public class ProfilView {
         // Organisation des composants dans la JPanel
         jPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+        jPanel.setBackground(new Color(255, 250, 240));
         c.gridx = 0;
         c.gridy = 0;
         c.insets = new Insets(10, 10, 10, 10);
