@@ -21,10 +21,11 @@ public class EspacePersoView {
     public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
         this.espacePersoControler = espacePersoControler;
         this.tweetsView = new TweetsView(this.espacePersoControler.database.getTwits());
-        this.listUserView = new ListUserView(this.espacePersoControler.database.getUsers());
+        this.user = user;
+        this.listUserView = new ListUserView(this.espacePersoControler.database.getUsers(),this.user);
         this.espacePersoControler.database.addObserver(this.tweetsView);
         this.espacePersoControler.database.addObserver(this.listUserView);
-        this.user = user;
+
         this.jPanel = createPanel();
     }
 

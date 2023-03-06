@@ -2,6 +2,7 @@ package main.java.com.ubo.tp.twitub.ihm.espacePerso.users;
 
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoView;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,11 +14,14 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class ListUserT {
+
+    private User user;
     private Set<User> listUsers;
 
     private JPanel jpanel;
 
-    public ListUserT(Set<User> listUsers, JPanel jpanel) {
+    public ListUserT(Set<User> listUsers, JPanel jpanel,User user1) {
+        this.user = user1;
         this.listUsers = listUsers;
         this.jpanel = jpanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
@@ -54,6 +58,17 @@ public class ListUserT {
         searchButtonConstraints.insets = new Insets(10, 10, 10, 10);
         this.jpanel.add(searchButton, searchButtonConstraints);
 
+        // Ajouter un bouton pour suivre
+        JButton suivreButton = new JButton("Suivre");
+        suivreButton.setFont(new Font("Arial", Font.BOLD, 22));
+        suivreButton.setForeground(new Color(44, 62, 80));
+        GridBagConstraints suivreButtonConstraints = new GridBagConstraints();
+        suivreButtonConstraints.gridx = 1;
+        suivreButtonConstraints.gridy = 2;
+        suivreButtonConstraints.fill = GridBagConstraints.NONE;
+        suivreButtonConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(suivreButton, suivreButtonConstraints);
+
         // Créer un JPanel pour afficher les tweets dans le JScrollPane
         JPanel usersPanel = new JPanel();
         usersPanel.setLayout(new BoxLayout(usersPanel, BoxLayout.PAGE_AXIS));
@@ -62,7 +77,9 @@ public class ListUserT {
             User u = it.next();
             JLabel tweetLabel = new JLabel(u.getName());
             usersPanel.add(tweetLabel);
+
         }
+
 
         // Ajouter le JPanel avec les tweets au JScrollPane
         JScrollPane scrollPane = new JScrollPane(usersPanel);
@@ -85,11 +102,38 @@ public class ListUserT {
                     User u = it.next();
                     if (u.getName().contains(searchText)) {
                         JLabel tweetLabel = new JLabel(u.getName());
+
                         usersPanel.add(tweetLabel);
+                        System.out.println("Resultats utilisateurs"+u);
                     }
                 }
                 jpanel.revalidate();
                 jpanel.repaint();
+            }
+        });
+
+
+        suivreButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String searchText = searchField.getText();
+
+                for (Iterator<User> it = listUsers.iterator(); it.hasNext(); ) {
+                    User u = it.next();
+                    if (u.getName().contains(searchText)) {
+
+                        ListUserT.this.user.addFollowing(u.getUserTag())    ;
+                        System.out.println(u.getUserTag());
+                        System.out.println(ListUserT.this.user.getFollows().size());
+                    }
+                }
+
+                String res = "";
+                for (String f : ListUserT.this.user.getFollows() ) {
+                    System.out.println(res);
+                   res = res +" "+ f + " ";
+
+                }
+                JOptionPane.showMessageDialog(ListUserT.this.jpanel, "tag follows " + res , "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 

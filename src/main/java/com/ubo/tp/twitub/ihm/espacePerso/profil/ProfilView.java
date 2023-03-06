@@ -16,7 +16,12 @@ public class ProfilView {
         // Création des composants
         JLabel userTagLabel = new JLabel("Pseudo : " + user.getUserTag());
         JLabel nameLabel = new JLabel("Nom : " + user.getName());
-        JLabel followsLabel = new JLabel("Abonnements : " + user.getFollows());
+        String res = " ";
+        for(String  u : this.user.getFollows()){
+                res = res +"  ||   "+ u +"";
+        }
+        JLabel followsLabel = new JLabel("Abonnements : " + res);
+
         JLabel avatarLabel = new JLabel(new ImageIcon(user.getAvatarPath()));
 
         // Organisation des composants dans la JPanel

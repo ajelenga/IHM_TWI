@@ -3,13 +3,14 @@ package main.java.com.ubo.tp.twitub.ihm.espacePerso.users;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
-import main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet.ListViewT;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Set;
 
 public class ListUserView implements IDatabaseObserver {
+
+    private User user;
     private Set<User> listUsers;
     private JPanel jPanel;
 
@@ -17,7 +18,8 @@ public class ListUserView implements IDatabaseObserver {
 
     private JTextField messageField;
 
-    public ListUserView(Set<User> lu) {
+    public ListUserView(Set<User> lu, User user) {
+        this.user = user;
         this.listUsers = lu;
 
         messageField = new JTextField(20);
@@ -42,7 +44,7 @@ public class ListUserView implements IDatabaseObserver {
         //  jPanel.add(userTagLabel, c);
         //c.gridx = 1;
         //jPanel.add(notificationLabel, c);
-        this.listUserT = new ListUserT(this.listUsers,jPanel);
+        this.listUserT = new ListUserT(this.listUsers,jPanel,user);
     }
 
 
@@ -77,7 +79,7 @@ public class ListUserView implements IDatabaseObserver {
         this.jPanel.removeAll();
         this.listUsers.add(addedUser);
 
-        this.listUserT = new ListUserT(this.listUsers,jPanel);
+        this.listUserT = new ListUserT(this.listUsers,jPanel,this.user);
         jPanel.revalidate();
         jPanel.repaint();
 
