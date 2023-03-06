@@ -24,7 +24,7 @@ public class EspacePersoView {
         this.espacePersoControler = espacePersoControler;
         this.user = user;
         this.listUserView = new ListUserView(this.espacePersoControler.database.getUsers(),this.user);
-        this.espacePersoControler.database.addObserver(this.tweetsView);
+   //     this.espacePersoControler.database.addObserver(this.tweetsView);
         this.espacePersoControler.database.addObserver(this.listUserView);
 
         this.jPanel = createPanel();

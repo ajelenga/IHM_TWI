@@ -66,7 +66,7 @@ public class Twitub implements IObserversControler {
     /**
      * Idnique si le mode bouchoné est activé.
      */
-    protected boolean mIsMockEnabled = true;
+    protected boolean mIsMockEnabled = false;
 
     /**
      * Nom de la classe de l'UI.
