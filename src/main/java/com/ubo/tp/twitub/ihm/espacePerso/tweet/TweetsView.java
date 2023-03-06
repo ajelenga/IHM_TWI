@@ -22,19 +22,19 @@ public class TweetsView implements IDatabaseObserver {
         this.listFollows = tweet;
 
         // Création des composants
-        userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
-        notificationLabel = new JLabel("");
+      //  userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
+      //  notificationLabel = new JLabel("");
 
         // Organisation des composants dans la JPanel
         jPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        jPanel.setBackground(new Color(255, 250, 240));
-        c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(10, 10, 10, 10);
-        jPanel.add(userTagLabel, c);
-        c.gridx = 1;
-        jPanel.add(notificationLabel, c);
+        //GridBagConstraints c = new GridBagConstraints();
+       // jPanel.setBackground(new Color(255, 250, 240));
+        //c.gridx = 0;
+       // c.gridy = 0;
+       // c.insets = new Insets(10, 10, 10, 10);
+      //  jPanel.add(userTagLabel, c);
+        //c.gridx = 1;
+        //jPanel.add(notificationLabel, c);
         this.listViewT = new ListViewT(this.listFollows,jPanel);
 
     }
@@ -48,18 +48,18 @@ public class TweetsView implements IDatabaseObserver {
 
         this.jPanel.removeAll();
         this.listFollows.add(addedTwit);
-        userTagLabel.setText("Tweet : " + this.listFollows.size());
-        notificationLabel.setText("New tweet added !");
-        notificationLabel.setForeground(Color.RED);
+       // userTagLabel.setText("Tweet : " + this.listFollows.size());
+     //   notificationLabel.setText("New tweet added !");
+      //  notificationLabel.setForeground(Color.RED);
 
         // Organisation des composants dans la JPanel
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(10, 10, 10, 10);
-        jPanel.add(userTagLabel, c);
-        c.gridx = 1;
-        jPanel.add(notificationLabel, c);
+     //   GridBagConstraints c = new GridBagConstraints();
+      //  c.gridx = 0;
+     //   c.gridy = 0;
+    //    c.insets = new Insets(10, 10, 10, 10);
+       // jPanel.add(userTagLabel, c);
+     //   c.gridx = 1;
+    //    jPanel.add(notificationLabel, c);
         this.listViewT = new ListViewT(this.listFollows,jPanel);
         jPanel.revalidate();
         jPanel.repaint();

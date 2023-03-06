@@ -10,7 +10,7 @@ import java.util.Set;
 import static java.awt.Color.black;
 import static java.awt.Color.red;
 
-public class ListViewT {
+public class ListViewT extends JFrame {
 
     private Set<Twit> listFollows;
 
@@ -18,28 +18,33 @@ public class ListViewT {
 
 
     public ListViewT(Set<Twit> listFollows, JPanel jPanel) {
-        System.out.println("ooooooooooooo"+ listFollows.size());
         this.listFollows = listFollows;
         this.jpanel = jPanel;
-        this.jpanel.setBackground(red);
-        JPanel jpanel1 = new JPanel();
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBackground(black);
-        this.jpanel.add(scrollPane);
+        this.jpanel.setBackground(Color.red);
 
+        // Ajouter un titre au JPanel
+        JLabel titleLabel = new JLabel("Liste de vos tweets");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.jpanel.add(titleLabel);
+
+        // Créer un JPanel pour afficher les tweets dans le JScrollPane
+        JPanel tweetsPanel = new JPanel();
+        tweetsPanel.setLayout(new BoxLayout(tweetsPanel, BoxLayout.PAGE_AXIS));
 
         for (Iterator<Twit> it = this.listFollows.iterator(); it.hasNext(); ) {
             Twit f = it.next();
-            System.out.println("fffffffff"+f.getText().toString());
-            JLabel user = new JLabel("Tweet : " + f.getText().toString() );
-            scrollPane.add(user);
+            JLabel tweetLabel = new JLabel("Tweet: " + f.getText());
+            tweetsPanel.add(tweetLabel);
         }
 
-
-        this.jpanel.add(jpanel1);
-
-
+        // Ajouter le JPanel avec les tweets au JScrollPane
+        JScrollPane scrollPane = new JScrollPane(tweetsPanel);
+        scrollPane.setBackground(Color.black);
+        scrollPane.setSize(100, 200);
+        this.jpanel.add(scrollPane);
     }
+
 
 
 }
