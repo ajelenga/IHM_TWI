@@ -17,7 +17,7 @@ public class ListViewT {
     public ListViewT(Set<Twit> listFollows, JPanel jPanel) {
         this.listFollows = listFollows;
         this.jpanel = jPanel;
-        this.jpanel.setBackground(Color.red);
+        this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
 
         // Ajouter un titre au JPanel
