@@ -16,6 +16,8 @@ public class TweetsView implements IDatabaseObserver {
     private JLabel userTagLabel;
     private JLabel notificationLabel;
 
+    private ListViewT listViewT;
+
     public TweetsView(Set<Twit> tweet) {
         this.listFollows = tweet;
 
@@ -33,6 +35,7 @@ public class TweetsView implements IDatabaseObserver {
         jPanel.add(userTagLabel, c);
         c.gridx = 1;
         jPanel.add(notificationLabel, c);
+        this.listViewT = new ListViewT(this.listFollows,jPanel);
 
     }
 
@@ -57,7 +60,7 @@ public class TweetsView implements IDatabaseObserver {
         jPanel.add(userTagLabel, c);
         c.gridx = 1;
         jPanel.add(notificationLabel, c);
-
+        this.listViewT = new ListViewT(this.listFollows,jPanel);
         jPanel.revalidate();
         jPanel.repaint();
 
