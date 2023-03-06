@@ -57,7 +57,7 @@ public class ListViewT {
 
         for (Iterator<Twit> it = this.listFollows.iterator(); it.hasNext(); ) {
             Twit f = it.next();
-            JLabel tweetLabel = new JLabel("Tweet: " + f.getText());
+            JLabel tweetLabel = new JLabel(f.getText());
             tweetsPanel.add(tweetLabel);
         }
 
@@ -81,7 +81,7 @@ public class ListViewT {
                 for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
                     Twit f = it.next();
                     if (f.getText().contains(searchText)) {
-                        JLabel tweetLabel = new JLabel("Tweet: " + f.getText());
+                        JLabel tweetLabel = new JLabel(f.getText());
                         tweetsPanel.add(tweetLabel);
                     }
                 }
