@@ -1,8 +1,8 @@
 package main.java.com.ubo.tp.twitub.ihm.espacePerso.users;
 
+import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
-import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoView;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,14 +13,18 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ListUserT {
+public class ListUserT implements IDatabaseObserver {
 
     private User user;
     private Set<User> listUsers;
 
     private JPanel jpanel;
 
-    public ListUserT(Set<User> listUsers, JPanel jpanel,User user1) {
+    public JPanel getJpanel() {
+        return jpanel;
+    }
+
+    public ListUserT(Set<User> listUsers, JPanel jpanel, User user1) {
         this.user = user1;
         this.listUsers = listUsers;
         this.jpanel = jpanel;
@@ -104,7 +108,7 @@ public class ListUserT {
                         JLabel tweetLabel = new JLabel(u.getName());
 
                         usersPanel.add(tweetLabel);
-                        System.out.println("Resultats utilisateurs"+u);
+                        System.out.println("Resultats utilisateurs" + u);
                     }
                 }
                 jpanel.revalidate();
@@ -121,19 +125,19 @@ public class ListUserT {
                     User u = it.next();
                     if (u.getName().contains(searchText)) {
 
-                        ListUserT.this.user.addFollowing(u.getUserTag())    ;
+                        ListUserT.this.user.addFollowing(u.getUserTag());
                         System.out.println(u.getUserTag());
                         System.out.println(ListUserT.this.user.getFollows().size());
                     }
                 }
 
                 String res = "";
-                for (String f : ListUserT.this.user.getFollows() ) {
+                for (String f : ListUserT.this.user.getFollows()) {
                     System.out.println(res);
-                   res = res +" "+ f + " ";
+                    res = res + " " + f + " ";
 
                 }
-                JOptionPane.showMessageDialog(ListUserT.this.jpanel, "tag follows " + res , "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(ListUserT.this.jpanel, "tag follows " + res, "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -176,6 +180,42 @@ public class ListUserT {
             }
         });
 
+
+    }
+
+    @Override
+    public void notifyTwitAdded(Twit addedTwit) {
+
+    }
+
+    @Override
+    public void notifyTwitDeleted(Twit deletedTwit) {
+
+    }
+
+    @Override
+    public void notifyTwitModified(Twit modifiedTwit) {
+
+    }
+
+    @Override
+    public void notifyUserAdded(User addedUser) {
+        this.jpanel.removeAll();
+        this.listUsers.add(addedUser);
+        new ListUserT(this.listUsers, jpanel, this.user);
+        this.jpanel.revalidate();
+        this.jpanel.repaint();
+
+
+    }
+
+    @Override
+    public void notifyUserDeleted(User deletedUser) {
+
+    }
+
+    @Override
+    public void notifyUserModified(User modifiedUser) {
 
     }
 }
