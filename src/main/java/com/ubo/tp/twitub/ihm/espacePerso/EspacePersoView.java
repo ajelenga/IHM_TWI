@@ -26,10 +26,6 @@ public class EspacePersoView {
         this.jPanel = createPanel();
     }
 
-    public JPanel getJPanel() {
-        return jPanel;
-    }
-
     private JPanel createPanel() {
         // Création des composants
 
@@ -195,7 +191,8 @@ public class EspacePersoView {
         retourButton.addActionListener(e -> {
             frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
             frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
-            tweetsPanel.add(retourButton);
+            //tweetsPanel.add(retourButton);
+
             // On rafraîchit l'affichage
             frame.revalidate();
             frame.repaint();
