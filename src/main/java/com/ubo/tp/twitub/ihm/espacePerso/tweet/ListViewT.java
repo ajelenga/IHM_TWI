@@ -3,7 +3,11 @@ package main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -33,8 +37,6 @@ public class ListViewT {
 
         // Ajouter un JTextField de recherche
         JTextField searchField = new JTextField(20);
-        searchField.setFont(new Font("Arial", Font.BOLD, 22));
-        searchField.setForeground(new Color(44, 62, 80));
         GridBagConstraints searchFieldConstraints = new GridBagConstraints();
         searchFieldConstraints.gridx = 0;
         searchFieldConstraints.gridy = 1;
@@ -44,13 +46,12 @@ public class ListViewT {
 
         // Ajouter un bouton pour effectuer la recherche
         JButton searchButton = new JButton("Rechercher");
+        searchButton.setFont(new Font("Arial", Font.BOLD, 22));
+        searchButton.setForeground(new Color(44, 62, 80));
         GridBagConstraints searchButtonConstraints = new GridBagConstraints();
         searchButtonConstraints.gridx = 1;
         searchButtonConstraints.gridy = 1;
         searchButtonConstraints.fill = GridBagConstraints.NONE;
-        searchButton.setBackground(Color.ORANGE);
-        searchButton.setForeground(Color.BLACK); // Modifier la couleur du texte en noir
-        searchButton.setFont(new Font("Arial", Font.BOLD, 18));
         searchButtonConstraints.insets = new Insets(10, 10, 10, 10);
         this.jpanel.add(searchButton, searchButtonConstraints);
 
@@ -60,7 +61,7 @@ public class ListViewT {
 
         for (Iterator<Twit> it = this.listFollows.iterator(); it.hasNext(); ) {
             Twit f = it.next();
-            JLabel tweetLabel = new JLabel("Tweet: " + f.getText());
+            JLabel tweetLabel = new JLabel(f.getText());
             tweetsPanel.add(tweetLabel);
         }
 
@@ -75,6 +76,64 @@ public class ListViewT {
         scrollPaneConstraints.weighty = 1.0;
         scrollPaneConstraints.insets = new Insets(10, 10, 10, 10);
         this.jpanel.add(scrollPane, scrollPaneConstraints);
+
+        // Ajouter une action pour le bouton de recherche
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String searchText = searchField.getText();
+                tweetsPanel.removeAll();
+                for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
+                    Twit f = it.next();
+                    if (f.getText().contains(searchText)) {
+                        JLabel tweetLabel = new JLabel(f.getText());
+                        tweetsPanel.add(tweetLabel);
+                    }
+                }
+                jpanel.revalidate();
+                jpanel.repaint();
+            }
+        });
+
+        // Créer un JLabel pour afficher le nombre de tweets
+        JLabel tweetCountLabel = new JLabel("(" + listFollows.size() + " tweets)");
+        tweetCountLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        GridBagConstraints tweetCountLabelConstraints = new GridBagConstraints();
+        tweetCountLabelConstraints.gridx = 1;
+        tweetCountLabelConstraints.gridy = 0;
+        tweetCountLabelConstraints.anchor = GridBagConstraints.LINE_END;
+        this.jpanel.add(tweetCountLabel, tweetCountLabelConstraints);
+
+        // Ajouter un DocumentListener pour la recherche en temps réel
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                updateTweetsPanel();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                updateTweetsPanel();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                updateTweetsPanel();
+            }
+
+            // Mettre à jour le JPanel des tweets en fonction du texte de recherche
+            public void updateTweetsPanel() {
+                String searchText = searchField.getText();
+                tweetsPanel.removeAll();
+                for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
+                    Twit f = it.next();
+                    if (f.getText().contains(searchText)) {
+                        JLabel tweetLabel = new JLabel(f.getText());
+                        tweetsPanel.add(tweetLabel);
+                    }
+                }
+                jpanel.revalidate();
+                jpanel.repaint();
+            }
+        });
+
+
     }
 
 
