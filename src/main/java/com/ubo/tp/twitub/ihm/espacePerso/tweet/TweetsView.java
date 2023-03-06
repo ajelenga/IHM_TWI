@@ -5,6 +5,7 @@ import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoView;
 
+import javax.annotation.processing.SupportedSourceVersion;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Set;
@@ -66,19 +67,6 @@ public class TweetsView implements IDatabaseObserver {
         this.jPanel.removeAll();
         this.listFollows.add(addedTwit);
 
-
-       // userTagLabel.setText("Tweet : " + this.listFollows.size());
-     //   notificationLabel.setText("New tweet added !");
-      //  notificationLabel.setForeground(Color.RED);
-
-        // Organisation des composants dans la JPanel
-     //   GridBagConstraints c = new GridBagConstraints();
-      //  c.gridx = 0;
-     //   c.gridy = 0;
-    //    c.insets = new Insets(10, 10, 10, 10);
-       // jPanel.add(userTagLabel, c);
-     //   c.gridx = 1;
-    //    jPanel.add(notificationLabel, c);
         this.listViewT = new ListViewT(this.listFollows,jPanel);
         jPanel.revalidate();
         jPanel.repaint();
