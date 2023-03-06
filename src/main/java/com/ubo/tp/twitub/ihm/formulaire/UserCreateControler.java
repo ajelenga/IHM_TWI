@@ -1,5 +1,6 @@
 package main.java.com.ubo.tp.twitub.ihm.formulaire;
 
+import main.java.com.ubo.tp.twitub.core.EntityManager;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 
@@ -10,7 +11,10 @@ public class UserCreateControler {
 
 
     IDatabase database;
-    public UserCreateControler(IDatabase database) {
+
+    EntityManager mEntityManager;
+    public UserCreateControler(IDatabase database, EntityManager mEntityManager) {
+        this.mEntityManager = mEntityManager;
         this.database = database;
     }
 
@@ -27,6 +31,7 @@ public class UserCreateControler {
         }
 
         this.database.addUser(user);
+        this.mEntityManager.sendUser(user);
         System.out.println("L'utilisateur a bien été ajouté "+user.getName());
         return user;
 

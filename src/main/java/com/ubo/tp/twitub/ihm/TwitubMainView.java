@@ -64,7 +64,7 @@ public class TwitubMainView {
     public TwitubMainView(IDatabase database, EntityManager entityManager) {
         this.mDatabase = database;
         this.mEntityManager = entityManager;
-        this.userCreateControler = new UserCreateControler(this.mDatabase);
+        this.userCreateControler = new UserCreateControler(this.mDatabase,this.mEntityManager);
 
     }
 
