@@ -7,10 +7,7 @@ import java.awt.*;
 import java.util.Iterator;
 import java.util.Set;
 
-import static java.awt.Color.black;
-import static java.awt.Color.red;
-
-public class ListViewT extends JFrame {
+public class ListViewT {
 
     private Set<Twit> listFollows;
 
@@ -20,13 +17,19 @@ public class ListViewT extends JFrame {
     public ListViewT(Set<Twit> listFollows, JPanel jPanel) {
         this.listFollows = listFollows;
         this.jpanel = jPanel;
-        this.jpanel.setBackground(Color.red);
+        this.jpanel.setBackground(new Color(255, 250, 240));
+        this.jpanel.setLayout(new GridBagLayout());
 
         // Ajouter un titre au JPanel
         JLabel titleLabel = new JLabel("Liste de vos tweets");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        this.jpanel.add(titleLabel);
+        GridBagConstraints titleLabelConstraints = new GridBagConstraints();
+        titleLabelConstraints.gridx = 0;
+        titleLabelConstraints.gridy = 0;
+        titleLabelConstraints.fill = GridBagConstraints.HORIZONTAL;
+        titleLabelConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(titleLabel, titleLabelConstraints);
 
         // Créer un JPanel pour afficher les tweets dans le JScrollPane
         JPanel tweetsPanel = new JPanel();
@@ -41,10 +44,15 @@ public class ListViewT extends JFrame {
         // Ajouter le JPanel avec les tweets au JScrollPane
         JScrollPane scrollPane = new JScrollPane(tweetsPanel);
         scrollPane.setBackground(Color.black);
-        scrollPane.setSize(100, 200);
-        this.jpanel.add(scrollPane);
+        GridBagConstraints scrollPaneConstraints = new GridBagConstraints();
+        scrollPaneConstraints.gridx = 0;
+        scrollPaneConstraints.gridy = 1;
+        scrollPaneConstraints.fill = GridBagConstraints.BOTH;
+        scrollPaneConstraints.weightx = 1.0;
+        scrollPaneConstraints.weighty = 1.0;
+        scrollPaneConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(scrollPane, scrollPaneConstraints);
     }
-
 
 
 }
