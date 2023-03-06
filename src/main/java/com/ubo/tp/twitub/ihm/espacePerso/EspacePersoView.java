@@ -183,15 +183,28 @@ public class EspacePersoView {
             frame.revalidate();
             frame.repaint();
         });
-
-
         frame.revalidate();
         frame.repaint();
-
     }
 
-
     private void afficherTweet() {
+        JPanel tweetsPanel = this.tweetsView.getJPanel();
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
+        frame.setContentPane(tweetsPanel);
+        tweetsPanel.add(retourButton); // On ajoute le bouton de retour
+        retourButton.addActionListener(e -> {
+            frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
+            frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
+            tweetsPanel.add(retourButton);
+            // On rafraîchit l'affichage
+            frame.revalidate();
+            frame.repaint();
+        });
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void afficherTweetFake() {
         JFrame frame = new JFrame("Liste de vos tweets");
         frame.setPreferredSize(new Dimension(500, 500));
         frame.setBackground(new Color(255, 250, 240));

@@ -55,6 +55,37 @@ public class ListViewT {
         searchButtonConstraints.insets = new Insets(10, 10, 10, 10);
         this.jpanel.add(searchButton, searchButtonConstraints);
 
+        // Ajouter un JLabel pour l'étiquette "Publier un tweet"
+        JLabel publishLabel = new JLabel("Publier un tweet ");
+        publishLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        publishLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        GridBagConstraints publishLabelConstraints = new GridBagConstraints();
+        publishLabelConstraints.gridx = 0;
+        publishLabelConstraints.gridy = 2;
+        publishLabelConstraints.anchor = GridBagConstraints.LINE_END;
+        publishLabelConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(publishLabel, publishLabelConstraints);
+
+// Ajouter un JTextField pour publier un tweet
+        JTextField publishField = new JTextField(20);
+        GridBagConstraints publishFieldConstraints = new GridBagConstraints();
+        publishFieldConstraints.gridx = 0;
+        publishFieldConstraints.gridy = 3;
+        publishFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        publishFieldConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(publishField, publishFieldConstraints);
+
+        // Ajouter un bouton pour publier un tweet
+        JButton publishButton = new JButton("Publier");
+        publishButton.setFont(new Font("Arial", Font.BOLD, 22));
+        publishButton.setForeground(new Color(44, 62, 80));
+        GridBagConstraints publishButtonConstraints = new GridBagConstraints();
+        publishButtonConstraints.gridx = 1;
+        publishButtonConstraints.gridy = 3;
+        publishButtonConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(publishButton, publishButtonConstraints);
+
+
         // Créer un JPanel pour afficher les tweets dans le JScrollPane
         JPanel tweetsPanel = new JPanel();
         tweetsPanel.setLayout(new BoxLayout(tweetsPanel, BoxLayout.PAGE_AXIS));
@@ -70,7 +101,7 @@ public class ListViewT {
         scrollPane.setBackground(Color.black);
         GridBagConstraints scrollPaneConstraints = new GridBagConstraints();
         scrollPaneConstraints.gridx = 0;
-        scrollPaneConstraints.gridy = 2;
+        scrollPaneConstraints.gridy = 4;
         scrollPaneConstraints.fill = GridBagConstraints.BOTH;
         scrollPaneConstraints.weightx = 1.0;
         scrollPaneConstraints.weighty = 1.0;
@@ -133,8 +164,6 @@ public class ListViewT {
             }
         });
 
-
     }
-
 
 }
