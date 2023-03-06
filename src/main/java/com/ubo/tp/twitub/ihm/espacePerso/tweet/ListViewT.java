@@ -17,7 +17,7 @@ public class ListViewT {
     public ListViewT(Set<Twit> listFollows, JPanel jPanel) {
         this.listFollows = listFollows;
         this.jpanel = jPanel;
-        this.jpanel.setBackground(new Color(255, 250, 240));
+        this.jpanel.setBackground(Color.red);
         this.jpanel.setLayout(new GridBagLayout());
 
         // Ajouter un titre au JPanel
@@ -30,6 +30,29 @@ public class ListViewT {
         titleLabelConstraints.fill = GridBagConstraints.HORIZONTAL;
         titleLabelConstraints.insets = new Insets(10, 10, 10, 10);
         this.jpanel.add(titleLabel, titleLabelConstraints);
+
+        // Ajouter un JTextField de recherche
+        JTextField searchField = new JTextField(20);
+        searchField.setFont(new Font("Arial", Font.BOLD, 22));
+        searchField.setForeground(new Color(44, 62, 80));
+        GridBagConstraints searchFieldConstraints = new GridBagConstraints();
+        searchFieldConstraints.gridx = 0;
+        searchFieldConstraints.gridy = 1;
+        searchFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        searchFieldConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(searchField, searchFieldConstraints);
+
+        // Ajouter un bouton pour effectuer la recherche
+        JButton searchButton = new JButton("Rechercher");
+        GridBagConstraints searchButtonConstraints = new GridBagConstraints();
+        searchButtonConstraints.gridx = 1;
+        searchButtonConstraints.gridy = 1;
+        searchButtonConstraints.fill = GridBagConstraints.NONE;
+        searchButton.setBackground(Color.ORANGE);
+        searchButton.setForeground(Color.BLACK); // Modifier la couleur du texte en noir
+        searchButton.setFont(new Font("Arial", Font.BOLD, 18));
+        searchButtonConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(searchButton, searchButtonConstraints);
 
         // Créer un JPanel pour afficher les tweets dans le JScrollPane
         JPanel tweetsPanel = new JPanel();
@@ -46,7 +69,7 @@ public class ListViewT {
         scrollPane.setBackground(Color.black);
         GridBagConstraints scrollPaneConstraints = new GridBagConstraints();
         scrollPaneConstraints.gridx = 0;
-        scrollPaneConstraints.gridy = 1;
+        scrollPaneConstraints.gridy = 2;
         scrollPaneConstraints.fill = GridBagConstraints.BOTH;
         scrollPaneConstraints.weightx = 1.0;
         scrollPaneConstraints.weighty = 1.0;
