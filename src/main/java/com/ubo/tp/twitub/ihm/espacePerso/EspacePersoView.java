@@ -4,7 +4,7 @@ import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.profil.ProfilView;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet.ListViewT;
-import main.java.com.ubo.tp.twitub.ihm.espacePerso.users.ListUserView;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.users.ListUserT;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,18 +15,14 @@ public class EspacePersoView {
     private EspacePersoControler espacePersoControler;
     private User user;
     private JPanel jPanel;
-    private JTextField messageField;
+    private ListUserT listUserT;
     private ListViewT listViewT;
     Set<Twit> twits;
 
-    private ListUserView listUserView;
+
     public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
         this.espacePersoControler = espacePersoControler;
         this.user = user;
-        this.listUserView = new ListUserView(this.espacePersoControler.database.getUsers(),this.user);
-   //     this.espacePersoControler.database.addObserver(this.tweetsView);
-        this.espacePersoControler.database.addObserver(this.listUserView);
-
         this.jPanel = createPanel();
         this.twits = this.espacePersoControler.database.getTwits();
 
@@ -108,28 +104,6 @@ public class EspacePersoView {
         return jPanel;
     }
 
-    private void afficherUser() {
-        // Créer une nouvelle instance de la vue du profil avec l'utilisateur actuel
-
-        // Ouvrir la vue du profil dans une nouvelle fenêtre
-        JFrame frame = new JFrame("Liste des utilisateurs");
-        frame.setPreferredSize(new Dimension(500, 500));
-        frame.setBackground(new Color(255, 250, 240));
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(listUserView.getJPanel());
-        frame.pack();
-        frame.setVisible(true);
-
-    }
-
-    private void publierMessage() {
-        String message = messageField.getText();
-        Twit twit = new Twit(this.user, message);
-        this.espacePersoControler.database.addTwit(twit);
-        JOptionPane.showMessageDialog(EspacePersoView.this.jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
-
-    }
-
     private void deconnecter() {
         this.jPanel.removeAll();
         this.espacePersoControler.deconnecter();
@@ -165,6 +139,26 @@ public class EspacePersoView {
         frame.setContentPane(tweetsPanel);
         tweetsPanel.add(retourButton1); // On ajoute le bouton de retour
         retourButton1.addActionListener(e -> {
+            frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
+            frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
+
+            // On rafraîchit l'affichage
+            frame.revalidate();
+            frame.repaint();
+        });
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void afficherUser() {
+        this.listUserT = new ListUserT(this.espacePersoControler.database.getUsers(), new JPanel(), this.user);
+        JPanel usersPanel = listUserT.getJpanel();
+        this.espacePersoControler.database.addObserver(this.listUserT);
+
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
+        frame.setContentPane(usersPanel);
+        usersPanel.add(retourButton); // On ajoute le bouton de retour
+        retourButton.addActionListener(e -> {
             frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
             frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
 

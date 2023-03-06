@@ -15,7 +15,8 @@ import java.util.Set;
 
 public class ListViewT implements IDatabaseObserver {
 
-    private final JPanel previousPanel;
+    private JLabel tweetCountLabel;
+
     private Set<Twit> listFollows;
 
     private JPanel jpanel;
@@ -31,7 +32,6 @@ public class ListViewT implements IDatabaseObserver {
         this.jpanel = jPanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
-        this.previousPanel = jPanel;
 
         // Ajouter un titre au JPanel
         JLabel titleLabel = new JLabel("Liste de vos tweets");
@@ -143,25 +143,32 @@ public class ListViewT implements IDatabaseObserver {
                     Twit twit = new Twit(user, message);
                     listFollows.add(twit);
                     JOptionPane.showMessageDialog(jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
+                    int count = 0;
                     for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
                         Twit f = it.next();
-                        JLabel tweetLabel = new JLabel(f.getText());
-                        tweetsPanel.add(tweetLabel);
+                        if (f.getText().contains(searchField.getText())) {
+                            JLabel tweetLabel = new JLabel(f.getText());
+                            tweetsPanel.add(tweetLabel);
+                            count++;
+                        }
                     }
+                    tweetCountLabel.setText("(" + listFollows.size() + " tweets)");
                     jpanel.revalidate();
                     jpanel.repaint();
                 }
             }
         });
 
+
         // Créer un JLabel pour afficher le nombre de tweets
-        JLabel tweetCountLabel = new JLabel("(" + listFollows.size() + " tweets)");
-        tweetCountLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        this.tweetCountLabel = new JLabel("(" + listFollows.size() + " tweets)");
+        this.tweetCountLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         GridBagConstraints tweetCountLabelConstraints = new GridBagConstraints();
         tweetCountLabelConstraints.gridx = 1;
         tweetCountLabelConstraints.gridy = 0;
         tweetCountLabelConstraints.anchor = GridBagConstraints.LINE_END;
-        this.jpanel.add(tweetCountLabel, tweetCountLabelConstraints);
+        this.jpanel.add(this.tweetCountLabel, tweetCountLabelConstraints);
+
 
         // Ajouter un DocumentListener pour la recherche en temps réel
         searchField.getDocument().addDocumentListener(new DocumentListener() {
@@ -181,16 +188,20 @@ public class ListViewT implements IDatabaseObserver {
             public void updateTweetsPanel() {
                 String searchText = searchField.getText();
                 tweetsPanel.removeAll();
+                int count = 0;
                 for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
                     Twit f = it.next();
                     if (f.getText().contains(searchText)) {
                         JLabel tweetLabel = new JLabel(f.getText());
                         tweetsPanel.add(tweetLabel);
+                        count++;
                     }
                 }
+                tweetCountLabel.setText("(" + count + " tweets)");
                 jpanel.revalidate();
                 jpanel.repaint();
             }
+
         });
 
 
