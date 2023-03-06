@@ -2,7 +2,6 @@ package main.java.com.ubo.tp.twitub.ihm.inscription;
 
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoControler;
-import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,6 +57,7 @@ public class UserConnexionView {
         constraints.insets = new Insets(20, 0, 10, 0);
         panel.add(loginField, constraints);
 
+
         JLabel passwordLabel = new JLabel("Mot de passe :");
         passwordLabel.setFont(new Font("Arial", Font.BOLD, 22));
         passwordLabel.setForeground(new Color(44, 62, 80));
@@ -83,11 +83,25 @@ public class UserConnexionView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 User user = userConnexionControler.connect(passwordField.getText(), loginField.getText());
-                if(user == null ){
-                    JOptionPane.showMessageDialog(UserConnexionView.this.jpanel, "password || login invalid", "Info", JOptionPane.INFORMATION_MESSAGE);
-                }
-                System.out.println("Connexion " + passwordField.getText() + loginField.getText());
+                if (user == null) {
+                    // Set red border around login and password text fields
+                    loginField.setBorder(BorderFactory.createLineBorder(Color.RED));
+                    passwordField.setBorder(BorderFactory.createLineBorder(Color.RED));
 
+                    // Remove red border after 2 seconds
+                    Timer timer = new Timer(2000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            loginField.setBorder(UIManager.getBorder("TextField.border"));
+                            passwordField.setBorder(UIManager.getBorder("TextField.border"));
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                } else {
+                    // User connected successfully
+                    // ...
+                }
             }
         });
         constraints.gridx = 1;

@@ -30,7 +30,6 @@ public class EspacePersoView {
 
     private JPanel createPanel() {
         // Création des composants
-
         JLabel welcomeLabel = new JLabel("Bienvenue dans ton espace personnel, " + user.getName());
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28));
         welcomeLabel.setForeground(new Color(41, 128, 185));
@@ -72,37 +71,29 @@ public class EspacePersoView {
         c.insets = new Insets(10, 10, 20, 10);
         jPanel.add(welcomeLabel, c);
 
-
         c.gridx = 0;
-        c.gridy = 2;
-        c.gridwidth = 3;
-        c.weightx = 1.0;
-        c.anchor = GridBagConstraints.CENTER;
-        c.insets = new Insets(20, 10, 10, 10);
-        jPanel.add(deconnexionButton, c);
-
-        c.gridx = 0;
-        c.gridy = 3;
-        c.gridwidth = 3;
-        c.weightx = 1.0;
+        c.gridy = 1;
+        c.gridwidth = 1;
+        c.weightx = 0.5;
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(profilButton, c);
 
-        c.gridx = 0;
-        c.gridy = 4;
-        c.gridwidth = 3;
-        c.weightx = 1.0;
-        c.insets = new Insets(10, 10, 10, 10);
+        c.gridx = 1;
+        c.gridy = 1;
         jPanel.add(profilListTweet, c);
 
-        c.gridx = 0;
-        c.gridy = 5;
-        c.gridwidth = 3;
-        c.weightx = 1.0;
-        c.insets = new Insets(10, 10, 10, 10);
+        c.gridx = 2;
+        c.gridy = 1;
         jPanel.add(ListUser, c);
+
+        c.gridx = 3;
+        c.gridy = 1;
+        jPanel.add(deconnexionButton, c);
+
         return jPanel;
     }
+
 
     private void deconnecter() {
         this.jPanel.removeAll();
