@@ -15,30 +15,45 @@ public class ProfilView {
 
         // Création des composants
         JLabel userTagLabel = new JLabel("Pseudo : " + user.getUserTag());
+        userTagLabel.setFont(new Font("Arial", Font.BOLD, 20));
         JLabel nameLabel = new JLabel("Nom : " + user.getName());
-        String res = " ";
-        for(String  u : this.user.getFollows()){
-                res = res +"  ||   "+ u +"";
+        nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        String res = "";
+        for (String u : this.user.getFollows()) {
+            res = res + "<html><br>" + u + "</br></html>";
         }
-        JLabel followsLabel = new JLabel("Abonnements : " + res);
+        JLabel followsLabel = new JLabel("<html>Abonnements : <br>" + res + "</html>");
 
         JLabel avatarLabel = new JLabel(new ImageIcon(user.getAvatarPath()));
 
         // Organisation des composants dans la JPanel
-        jPanel = new JPanel(new GridBagLayout());
+        JPanel jPanel = new JPanel(new GridBagLayout());
+        this.jPanel = jPanel;
         GridBagConstraints c = new GridBagConstraints();
         jPanel.setBackground(new Color(255, 250, 240));
+
+        // Ajouter un titre au JPanel
+        JLabel titleLabel = new JLabel("Mon profil");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        GridBagConstraints titleLabelConstraints = new GridBagConstraints();
+        titleLabelConstraints.gridx = 0;
+        titleLabelConstraints.gridy = 0;
+        titleLabelConstraints.fill = GridBagConstraints.HORIZONTAL;
+        titleLabelConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jPanel.add(titleLabel, titleLabelConstraints);
+
         c.gridx = 0;
-        c.gridy = 0;
+        c.gridy = 1;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(userTagLabel, c);
 
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         jPanel.add(nameLabel, c);
 
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         jPanel.add(followsLabel, c);
 
         c.gridx = 1;
@@ -46,6 +61,7 @@ public class ProfilView {
         c.gridheight = 3;
         jPanel.add(avatarLabel, c);
     }
+
 
     public JPanel getJPanel() {
         return jPanel;
