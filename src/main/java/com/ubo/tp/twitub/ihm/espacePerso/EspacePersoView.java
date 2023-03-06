@@ -19,10 +19,14 @@ public class EspacePersoView {
     private ListViewT listViewT;
     Set<Twit> twits;
 
-
+    private ListUserView listUserView;
     public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
         this.espacePersoControler = espacePersoControler;
         this.user = user;
+        this.listUserView = new ListUserView(this.espacePersoControler.database.getUsers(),this.user);
+        this.espacePersoControler.database.addObserver(this.tweetsView);
+        this.espacePersoControler.database.addObserver(this.listUserView);
+
         this.jPanel = createPanel();
         this.twits = this.espacePersoControler.database.getTwits();
 
@@ -106,7 +110,6 @@ public class EspacePersoView {
 
     private void afficherUser() {
         // Créer une nouvelle instance de la vue du profil avec l'utilisateur actuel
-        ListUserView listUserView = new ListUserView(this.espacePersoControler.database.getUsers());
 
         // Ouvrir la vue du profil dans une nouvelle fenêtre
         JFrame frame = new JFrame("Liste des utilisateurs");

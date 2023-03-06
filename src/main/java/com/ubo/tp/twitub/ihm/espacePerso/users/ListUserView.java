@@ -9,27 +9,48 @@ import java.awt.*;
 import java.util.Set;
 
 public class ListUserView implements IDatabaseObserver {
+
+    private User user;
     private Set<User> listUsers;
     private JPanel jPanel;
 
-    public ListUserView(Set<User> lu) {
+    private ListUserT listUserT;
+
+    private JTextField messageField;
+
+    public ListUserView(Set<User> lu, User user) {
+        this.user = user;
         this.listUsers = lu;
-        String display = "";
-        for (User u : listUsers) {
-            display = display + " " + u.getName() + " ";
-        }
 
-        JLabel userTagLabel = new JLabel("Tweet : " + display);
+        messageField = new JTextField(20);
+        messageField.setFont(new Font("Arial", Font.PLAIN, 20));
+        JButton publierButton = new JButton("Publier");
+        publierButton.setBackground(Color.ORANGE);
+        publierButton.setForeground(Color.BLACK);
+        publierButton.setFont(new Font("Arial", Font.BOLD, 18));
+        publierButton.addActionListener(e -> rechercherUser());
 
+        // Création des composants
+        //  userTagLabel = new JLabel("Tweet : " + this.listFollows.size());
+        //  notificationLabel = new JLabel("");
 
         // Organisation des composants dans la JPanel
         jPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(10, 10, 10, 10);
-        jPanel.add(userTagLabel, c);
+        //GridBagConstraints c = new GridBagConstraints();
+        // jPanel.setBackground(new Color(255, 250, 240));
+        //c.gridx = 0;
+        // c.gridy = 0;
+        // c.insets = new Insets(10, 10, 10, 10);
+        //  jPanel.add(userTagLabel, c);
+        //c.gridx = 1;
+        //jPanel.add(notificationLabel, c);
+        this.listUserT = new ListUserT(this.listUsers,jPanel,user);
     }
+
+
+        private void rechercherUser() {
+            System.out.println("okkkkkkkkkkk");
+        }
 
     public JPanel getJPanel() {
         return jPanel;
@@ -52,6 +73,15 @@ public class ListUserView implements IDatabaseObserver {
 
     @Override
     public void notifyUserAdded(User addedUser) {
+
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        this.jPanel.removeAll();
+        this.listUsers.add(addedUser);
+
+        this.listUserT = new ListUserT(this.listUsers,jPanel,this.user);
+        jPanel.revalidate();
+        jPanel.repaint();
 
     }
 

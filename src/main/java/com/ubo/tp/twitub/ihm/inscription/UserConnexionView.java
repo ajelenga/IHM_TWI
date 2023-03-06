@@ -2,6 +2,7 @@ package main.java.com.ubo.tp.twitub.ihm.inscription;
 
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.EspacePersoControler;
+import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,6 +83,9 @@ public class UserConnexionView {
             @Override
             public void actionPerformed(ActionEvent e) {
                 User user = userConnexionControler.connect(passwordField.getText(), loginField.getText());
+                if(user == null ){
+                    JOptionPane.showMessageDialog(UserConnexionView.this.jpanel, "password || login invalid", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }
                 System.out.println("Connexion " + passwordField.getText() + loginField.getText());
 
             }
