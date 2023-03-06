@@ -165,6 +165,7 @@ public class EspacePersoView {
     }
 
     private JButton retourButton = new JButton("Retour");
+    private JButton retourButton1 = new JButton("Retour");
 
 
     private void afficherProfil() {
@@ -184,14 +185,14 @@ public class EspacePersoView {
     }
 
     private void afficherTweet() {
-        JPanel tweetsPanel = this.tweetsView.getJPanel();
+        JPanel tweetsPanel = new TweetsView(this.espacePersoControler.database.getTwits()).getJPanel();
+        this.espacePersoControler.database.addObserver(this.tweetsView);
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
         frame.setContentPane(tweetsPanel);
-        tweetsPanel.add(retourButton); // On ajoute le bouton de retour
-        retourButton.addActionListener(e -> {
+        tweetsPanel.add(retourButton1); // On ajoute le bouton de retour
+        retourButton1.addActionListener(e -> {
             frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
             frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
-            //tweetsPanel.add(retourButton);
 
             // On rafraîchit l'affichage
             frame.revalidate();
