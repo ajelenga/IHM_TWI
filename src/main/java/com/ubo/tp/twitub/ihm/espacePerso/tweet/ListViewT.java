@@ -1,6 +1,8 @@
 package main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet;
 
+import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
+import main.java.com.ubo.tp.twitub.datamodel.User;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -11,18 +13,25 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ListViewT {
+public class ListViewT implements IDatabaseObserver {
 
+    private final JPanel previousPanel;
     private Set<Twit> listFollows;
 
     private JPanel jpanel;
+    User user;
 
+    public JPanel getJpanel() {
+        return jpanel;
+    }
 
-    public ListViewT(Set<Twit> listFollows, JPanel jPanel) {
+    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user) {
+        this.user = user;
         this.listFollows = listFollows;
         this.jpanel = jPanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
+        this.previousPanel = jPanel;
 
         // Ajouter un titre au JPanel
         JLabel titleLabel = new JLabel("Liste de vos tweets");
@@ -125,6 +134,26 @@ public class ListViewT {
             }
         });
 
+        publishButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String tweetText = publishField.getText();
+                tweetsPanel.removeAll();
+                if (tweetText != null && !tweetText.isEmpty()) {
+                    String message = publishField.getText();
+                    Twit twit = new Twit(user, message);
+                    listFollows.add(twit);
+                    JOptionPane.showMessageDialog(jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
+                    for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
+                        Twit f = it.next();
+                        JLabel tweetLabel = new JLabel(f.getText());
+                        tweetsPanel.add(tweetLabel);
+                    }
+                    jpanel.revalidate();
+                    jpanel.repaint();
+                }
+            }
+        });
+
         // Créer un JLabel pour afficher le nombre de tweets
         JLabel tweetCountLabel = new JLabel("(" + listFollows.size() + " tweets)");
         tweetCountLabel.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -164,6 +193,45 @@ public class ListViewT {
             }
         });
 
+
     }
 
+
+    @Override
+    public void notifyTwitAdded(Twit addedTwit) {
+        this.jpanel.removeAll();
+        this.listFollows.add(addedTwit);
+        new ListViewT(this.listFollows, this.getJPanel(), this.user);
+        this.jpanel.revalidate();
+        this.jpanel.repaint();
+    }
+
+    @Override
+    public void notifyTwitDeleted(Twit deletedTwit) {
+
+    }
+
+    @Override
+    public void notifyTwitModified(Twit modifiedTwit) {
+
+    }
+
+    @Override
+    public void notifyUserAdded(User addedUser) {
+
+    }
+
+    @Override
+    public void notifyUserDeleted(User deletedUser) {
+
+    }
+
+    @Override
+    public void notifyUserModified(User modifiedUser) {
+
+    }
+
+    public JPanel getJPanel() {
+        return this.jpanel;
+    }
 }

@@ -3,11 +3,12 @@ package main.java.com.ubo.tp.twitub.ihm.espacePerso;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.profil.ProfilView;
-import main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet.TweetsView;
+import main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet.ListViewT;
 import main.java.com.ubo.tp.twitub.ihm.espacePerso.users.ListUserView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Set;
 
 public class EspacePersoView {
 
@@ -15,15 +16,16 @@ public class EspacePersoView {
     private User user;
     private JPanel jPanel;
     private JTextField messageField;
-    private TweetsView tweetsView;
+    private ListViewT listViewT;
+    Set<Twit> twits;
 
 
     public EspacePersoView(User user, EspacePersoControler espacePersoControler) {
         this.espacePersoControler = espacePersoControler;
-        this.tweetsView = new TweetsView(this.espacePersoControler.database.getTwits());
-        this.espacePersoControler.database.addObserver(this.tweetsView);
         this.user = user;
         this.jPanel = createPanel();
+        this.twits = this.espacePersoControler.database.getTwits();
+
     }
 
     private JPanel createPanel() {
@@ -33,14 +35,6 @@ public class EspacePersoView {
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 28));
         welcomeLabel.setForeground(new Color(41, 128, 185));
         welcomeLabel.setHorizontalAlignment(JLabel.CENTER);
-
-        messageField = new JTextField(20);
-        messageField.setFont(new Font("Arial", Font.PLAIN, 20));
-        JButton publierButton = new JButton("Publier");
-        publierButton.setBackground(Color.ORANGE);
-        publierButton.setForeground(Color.BLACK);
-        publierButton.setFont(new Font("Arial", Font.BOLD, 18));
-        publierButton.addActionListener(e -> publierMessage());
 
         JButton deconnexionButton = new JButton("Déconnexion");
         deconnexionButton.setBackground(Color.ORANGE);
@@ -78,30 +72,6 @@ public class EspacePersoView {
         c.insets = new Insets(10, 10, 20, 10);
         jPanel.add(welcomeLabel, c);
 
-        c.gridx = 0;
-        c.gridy = 1;
-        c.gridwidth = 1;
-        c.weightx = 0.0;
-        c.anchor = GridBagConstraints.LINE_END;
-        c.insets = new Insets(0, 10, 10, 10);
-        JLabel messageLabel = new JLabel("Message :");
-        messageLabel.setFont(new Font("Arial", Font.BOLD, 22));
-        messageLabel.setForeground(new Color(44, 62, 80));
-        jPanel.add(messageLabel, c);
-
-        c.gridx = 1;
-        c.gridy = 1;
-        c.weightx = 1.0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(0, 0, 10, 10);
-        jPanel.add(messageField, c);
-
-        c.gridx = 2;
-        c.gridy = 1;
-        c.weightx = 0.0;
-        c.fill = GridBagConstraints.NONE;
-        c.insets = new Insets(0, 0, 10, 10);
-        jPanel.add(publierButton, c);
 
         c.gridx = 0;
         c.gridy = 2;
@@ -131,7 +101,6 @@ public class EspacePersoView {
         c.weightx = 1.0;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(ListUser, c);
-
         return jPanel;
     }
 
@@ -185,8 +154,10 @@ public class EspacePersoView {
     }
 
     private void afficherTweet() {
-        JPanel tweetsPanel = new TweetsView(this.espacePersoControler.database.getTwits()).getJPanel();
-        this.espacePersoControler.database.addObserver(this.tweetsView);
+        this.listViewT = new ListViewT(this.twits, new JPanel(), this.user);
+        JPanel tweetsPanel = listViewT.getJPanel();
+        this.espacePersoControler.database.addObserver(this.listViewT);
+
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
         frame.setContentPane(tweetsPanel);
         tweetsPanel.add(retourButton1); // On ajoute le bouton de retour
@@ -200,17 +171,6 @@ public class EspacePersoView {
         });
         frame.revalidate();
         frame.repaint();
-    }
-
-    private void afficherTweetFake() {
-        JFrame frame = new JFrame("Liste de vos tweets");
-        frame.setPreferredSize(new Dimension(500, 500));
-        frame.setBackground(new Color(255, 250, 240));
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.add(tweetsView.getJPanel());
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 
 
