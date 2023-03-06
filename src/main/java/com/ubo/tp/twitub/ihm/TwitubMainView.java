@@ -64,7 +64,7 @@ public class TwitubMainView {
     public TwitubMainView(IDatabase database, EntityManager entityManager) {
         this.mDatabase = database;
         this.mEntityManager = entityManager;
-        this.userCreateControler = new UserCreateControler(this.mDatabase,this.mEntityManager);
+        this.userCreateControler = new UserCreateControler(this.mDatabase, this.mEntityManager);
 
     }
 
@@ -98,9 +98,9 @@ public class TwitubMainView {
      * Initialisation de l'IHM
      */
     protected void initGUI() {
-        // Création de la fenetre principale
+        // Création de la fenêtre principale
         mFrame = new JFrame("Twitub");
-
+        mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Charger les icônes des fichiers
         ImageIcon exitIcon = new ImageIcon("H:\\Documents\\IHM_TWI\\src\\main\\resources\\images\\exitIcon_20.png");
@@ -114,23 +114,19 @@ public class TwitubMainView {
         consoleTextArea.setEditable(false);
         consoleTextArea.setPreferredSize(new Dimension(1000, 50));
 
-
         // Configurer le menu
-        JMenu menu;
-        menu = new JMenu("Menu");
         JMenuBar menuBar = new JMenuBar();
         mFrame.setJMenuBar(menuBar);
-        mFrame.setSize(500, 250);
-        mFrame.setLayout(new GridBagLayout());
-        JMenuItem inscription, accueil, connexion;
 
-        inscription = new JMenuItem("Inscription");
-        connexion = new JMenuItem("Connexion");
-
-        menu.add(inscription);
-        menu.add(connexion);
-
+        JMenu menu = new JMenu("Menu");
+        JMenuItem inscription = new JMenuItem("Inscription");
+        JMenuItem connexion = new JMenuItem("Connexion");
         JMenuItem chooseExchangeDirMenuItem = new JMenuItem("Choisir un répertoire");
+        JMenuItem exitMenuItem = new JMenuItem("Quitter", exitIcon);
+
+        inscription.addActionListener(createListener);
+        connexion.addActionListener(connexionListener);
+
         chooseExchangeDirMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
@@ -147,51 +143,54 @@ public class TwitubMainView {
                 }
             }
         });
-        menu.add(chooseExchangeDirMenuItem);
-        JMenuItem exitMenuItem = new JMenuItem("Quitter", exitIcon);
+
         exitMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mFrame.dispose();
             }
         });
+
+        menu.add(inscription);
+        menu.add(connexion);
+        menu.add(chooseExchangeDirMenuItem);
         menu.add(exitMenuItem);
 
         JMenu helpMenu = new JMenu("?");
         ImageIcon aboutIconContent = new ImageIcon("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\src\\main\\resources\\images\\logo_50.jpg");
-
         JMenuItem aboutMenuItem = new JMenuItem("À propos", aboutIcon);
+
         aboutMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(mFrame, "M2 UBO TILL\nDépartement Informatique", "À propos", JOptionPane.INFORMATION_MESSAGE, aboutIconContent);
             }
         });
+
         helpMenu.add(aboutMenuItem);
-        mFrame.setLayout(new GridBagLayout());
-        inscription.addActionListener(createListener);
-        connexion.addActionListener(connexionListener);
 
-        ConsoleWatch consleConsoleWatch = new ConsoleWatch(consoleTextArea);
-        this.mDatabase.addObserver(consleConsoleWatch);
-
-        Action HomeMenu = new AbstractAction("Accueil") {
+        Action homeMenuAction = new AbstractAction("Accueil") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Container contentPane = TwitubMainView.this.mFrame.getContentPane();
+                Container contentPane = mFrame.getContentPane();
                 contentPane.removeAll();
-                TwitubMainView.this.mFrame.revalidate();
-                TwitubMainView.this.mFrame.repaint();
+                mFrame.revalidate();
+                mFrame.repaint();
             }
         };
 
-        // Ajout du menu à la barre de menu
-        JMenuBar menubar = new JMenuBar();
-        menubar.add(new JToggleButton(HomeMenu));
-        menubar.add(menu);
-        menubar.add(helpMenu);
-        mFrame.setJMenuBar(menubar);
-        mFrame.getContentPane().setBackground(new Color(255, 250, 240));
+        JToggleButton homeToggleButton = new JToggleButton(homeMenuAction);
+        menuBar.add(homeToggleButton);
+        menuBar.add(menu);
+        menuBar.add(helpMenu);
 
+        mFrame.getContentPane().setBackground(new Color(255, 250, 240));
+        mFrame.setLayout(new GridBagLayout());
+        mFrame.setSize(500, 250);
+
+        // Ajout de l'observateur pour la console
+        ConsoleWatch consoleWatch = new ConsoleWatch(consoleTextArea);
+        mDatabase.addObserver(consoleWatch);
     }
+
 
     private JTextField createTextField(String name, Point p) {
         JTextField textField = new JTextField(name);
