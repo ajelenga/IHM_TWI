@@ -29,24 +29,40 @@ L'utilisateur peut se connecter sur un compte préalablement enregistré.
 L'utilisateur connecté peut se déconnecter de l'application.
 ```
 ### ***SRS-TWB-USR-006*** :
+```
 L'utilisateur connecté peut consulter son profil.
+```
 ### ***SRS-TWB-USR-007*** :
+```
 L'utilisateur connecté peut consulter la liste des utilisateurs enregistrés.
+```
 ### ***SRS-TWB-USR-008*** :
+```
 L'utilisateur connecté peut rechercher un utilisateur.
+```
 ### ***SRS-TWB-USR-009*** :
+```
 L'utilisateur connecté peut s'abonner à un utilisateur.
+```
 ### ***SRS-TWB-USR-010*** :
+```
 L'utilisateur connecté peut se désabonner d'un utilisateur.
+```
 
 # Gestion des twits
 
 ### ***SRS-TWB-TWT-001*** :
+```
 L'utilisateur connecté peut envoyer un twit.
+```
 ### ***SRS-TWB-TWT-002*** :
+```
 Le texte d'un twit ne dépasse pas 250 caractères.
+```
 ### ***SRS-TWB-TWT-003*** :
+```
 L'utilisateur connecté peut rechercher des twits.
+```
 #### Note :
 La recherche de twit s'effectue de la manière suivante :
 - Si le symbole '@' est présent, la recherche retourne les twits émis par cet utilisateur et ceux
@@ -55,5 +71,7 @@ dans lesquels l'utilisateur est cité.
 - Si aucun symbole n'est présent, la recherche s'effectue selon l'union des deux critères
 précédents.
 ### ***SRS-TWB-TWT-004*** :
+```
 Une notification avertit l'utilisateur connecté lorsqu'un utilisateur auquel il est abonné émet
 un twit.
+```
