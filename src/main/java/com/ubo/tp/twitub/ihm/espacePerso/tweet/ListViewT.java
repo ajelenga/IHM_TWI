@@ -14,14 +14,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class ListViewT implements IDatabaseObserver {
-
     private JLabel tweetCountLabel;
-
     private Set<Twit> listFollows;
-
     private JPanel jpanel;
     User user;
-
     public JPanel getJpanel() {
         return jpanel;
     }
@@ -125,8 +121,21 @@ public class ListViewT implements IDatabaseObserver {
                 for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
                     Twit f = it.next();
                     if (f.getText().contains(searchText)) {
-                        JLabel tweetLabel = new JLabel(f.getText());
-                        tweetsPanel.add(tweetLabel);
+                        if(searchText.charAt(0)=='@'){
+                            System.out.println("########  search twit ##########");
+                            if(f.getUserTags().equals(ListViewT.this.user.getUserTag())){
+                                System.out.println("@@@ search twit @@@");
+                                JLabel tweetLabel = new JLabel(f.getText());
+                                tweetsPanel.add(tweetLabel);
+                            }
+
+                        } else if (false) {
+
+                        }else{
+                            JLabel tweetLabel = new JLabel(f.getText());
+                            tweetsPanel.add(tweetLabel);
+                        }
+
                     }
                 }
                 jpanel.revalidate();
@@ -171,11 +180,9 @@ public class ListViewT implements IDatabaseObserver {
                         jpanel.revalidate();
                         jpanel.repaint();
                     }
-
                 }
             }
         });
-
 
         // Créer un JLabel pour afficher le nombre de tweets
         this.tweetCountLabel = new JLabel("(" + listFollows.size() + " tweets)");
@@ -185,8 +192,6 @@ public class ListViewT implements IDatabaseObserver {
         tweetCountLabelConstraints.gridy = 0;
         tweetCountLabelConstraints.anchor = GridBagConstraints.LINE_END;
         this.jpanel.add(this.tweetCountLabel, tweetCountLabelConstraints);
-
-
         // Ajouter un DocumentListener pour la recherche en temps réel
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -196,11 +201,9 @@ public class ListViewT implements IDatabaseObserver {
             public void insertUpdate(DocumentEvent e) {
                 updateTweetsPanel();
             }
-
             public void removeUpdate(DocumentEvent e) {
                 updateTweetsPanel();
             }
-
             // Mettre à jour le JPanel des tweets en fonction du texte de recherche
             public void updateTweetsPanel() {
                 String searchText = searchField.getText();
@@ -208,20 +211,43 @@ public class ListViewT implements IDatabaseObserver {
                 int count = 0;
                 for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
                     Twit f = it.next();
-                    if (f.getText().contains(searchText)) {
-                        JLabel tweetLabel = new JLabel(f.getText());
-                        tweetsPanel.add(tweetLabel);
-                        count++;
+                    System.out.println(f.getText().contains(searchText));
+                    char c = 0;
+                    if( searchText.length()>0){
+                        c= searchText.charAt(0);
+                    }
+                    if (f.getText().contains(recherche(searchText))) {
+                        if('@'==c){
+                            if(f.getTwiter().getUserTag().equals(ListViewT.this.user.getUserTag()) || f.getText().contains(ListViewT.this.user.getUserTag())){
+                                JLabel tweetLabel = new JLabel(f.getText());
+                                tweetsPanel.add(tweetLabel);
+                            }
+                        } else if ('#'==c) {
+                            if(f.getText().contains(searchText)){
+
+                                JLabel tweetLabel = new JLabel(f.getText());
+                                tweetsPanel.add(tweetLabel);
+                            }
+                        }else{
+                            JLabel tweetLabel = new JLabel(f.getText());
+                            tweetsPanel.add(tweetLabel);
+                        }
                     }
                 }
                 tweetCountLabel.setText("(" + count + " tweets)");
                 jpanel.revalidate();
                 jpanel.repaint();
             }
-
         });
+    }
+    private String recherche(String searchText) {
+        if(searchText.length()>1){
+            StringBuilder stringBuilder = new StringBuilder(searchText);
+            stringBuilder.deleteCharAt(0);
+            return stringBuilder.toString();
 
-
+        }
+        return searchText;
     }
 
 
