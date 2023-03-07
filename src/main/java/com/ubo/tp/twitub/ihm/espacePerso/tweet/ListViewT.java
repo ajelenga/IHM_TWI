@@ -141,20 +141,37 @@ public class ListViewT implements IDatabaseObserver {
                 if (tweetText != null && !tweetText.isEmpty()) {
                     String message = publishField.getText();
                     Twit twit = new Twit(user, message);
-                    listFollows.add(twit);
-                    JOptionPane.showMessageDialog(jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
-                    int count = 0;
-                    for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
-                        Twit f = it.next();
-                        if (f.getText().contains(searchField.getText())) {
-                            JLabel tweetLabel = new JLabel(f.getText());
-                            tweetsPanel.add(tweetLabel);
-                            count++;
+                    if(tweetText.toString().length()<250){
+                        listFollows.add(twit);
+                        JOptionPane.showMessageDialog(jPanel, "Tweet publié "+tweetText.toString().length() +"   " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
+                        int count = 0;
+                        for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
+                            Twit f = it.next();
+                            if (f.getText().contains(searchField.getText())) {
+                                JLabel tweetLabel = new JLabel(f.getText());
+                                tweetsPanel.add(tweetLabel);
+                                count++;
+                            }
                         }
+                        tweetCountLabel.setText("(" + listFollows.size() + " tweets)");
+                        jpanel.revalidate();
+                        jpanel.repaint();
+                    }else{
+                        JOptionPane.showMessageDialog(jPanel, "Tweet "+ message +" non publié sa taille est sup à 250" , "Info", JOptionPane.INFORMATION_MESSAGE);
+                        int count = 0;
+                        for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
+                            Twit f = it.next();
+                            if (f.getText().contains(searchField.getText())) {
+                                JLabel tweetLabel = new JLabel(f.getText());
+                                tweetsPanel.add(tweetLabel);
+                                count++;
+                            }
+                        }
+                        tweetCountLabel.setText("(" + listFollows.size() + " tweets)");
+                        jpanel.revalidate();
+                        jpanel.repaint();
                     }
-                    tweetCountLabel.setText("(" + listFollows.size() + " tweets)");
-                    jpanel.revalidate();
-                    jpanel.repaint();
+
                 }
             }
         });
