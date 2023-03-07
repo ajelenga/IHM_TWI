@@ -21,18 +21,18 @@ public class ProfilView {
         userTagLabel.setFont(new Font("Arial", Font.BOLD, 20));
         JLabel nameLabel = new JLabel("Nom : " + user.getName());
         nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        String res = "";
+
+        StringBuilder followsBuilder = new StringBuilder();
         for (String u : this.user.getFollows()) {
-            res = res + "<html><br>" + u + "</br></html>";
+            followsBuilder.append("<br>").append(u).append("</br>");
         }
-        JLabel followsLabel = new JLabel("<html>Abonnements : <br>" + res + "</html>");
+        JLabel followsLabel = new JLabel("<html>Abonnements : <br>" + followsBuilder.toString() + "</html>");
 
         JLabel avatarLabel = new JLabel(new ImageIcon(user.getAvatarPath()));
 
         // Organisation des composants dans la JPanel
         JPanel jPanel = new JPanel(new GridBagLayout());
         this.jPanel = jPanel;
-        GridBagConstraints c = new GridBagConstraints();
         jPanel.setBackground(new Color(255, 250, 240));
 
         // Ajouter un titre au JPanel
@@ -44,11 +44,13 @@ public class ProfilView {
         titleLabelConstraints.gridy = 0;
         titleLabelConstraints.fill = GridBagConstraints.HORIZONTAL;
         titleLabelConstraints.insets = new Insets(10, 10, 10, 10);
-        this.jPanel.add(titleLabel, titleLabelConstraints);
+        jPanel.add(titleLabel, titleLabelConstraints);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(10, 10, 10, 10);
 
         c.gridx = 0;
         c.gridy = 1;
-        c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(userTagLabel, c);
 
         c.gridx = 0;
