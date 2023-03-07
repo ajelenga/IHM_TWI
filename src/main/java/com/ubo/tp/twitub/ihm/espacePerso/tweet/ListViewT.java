@@ -1,5 +1,6 @@
 package main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet;
 
+import main.java.com.ubo.tp.twitub.core.EntityManager;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
@@ -18,14 +19,17 @@ public class ListViewT implements IDatabaseObserver {
     private Set<Twit> listFollows;
     private JPanel jpanel;
     User user;
+
+    EntityManager mEntityManager;
     public JPanel getJpanel() {
         return jpanel;
     }
 
-    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user) {
+    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user, EntityManager mEntityManager) {
         this.user = user;
         this.listFollows = listFollows;
         this.jpanel = jPanel;
+        this.mEntityManager = mEntityManager;
         this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
 
@@ -159,6 +163,7 @@ public class ListViewT implements IDatabaseObserver {
                             if (f.getText().contains(searchField.getText())) {
                                 JLabel tweetLabel = new JLabel(f.getText());
                                 tweetsPanel.add(tweetLabel);
+                                ListViewT.this.mEntityManager.sendTwit(f);
                                 count++;
                             }
                         }
@@ -216,19 +221,24 @@ public class ListViewT implements IDatabaseObserver {
                     if( searchText.length()>0){
                         c= searchText.charAt(0);
                     }
-                    if (f.getText().contains(recherche(searchText))) {
+                    String searchTextWithOutSpecialCara = recherche(searchText);
+                    if (f.getText().contains(searchTextWithOutSpecialCara) ||f.getTwiter().getUserTag().contains(ListViewT.this.user.getUserTag())) {
                         if('@'==c){
-                            if(f.getTwiter().getUserTag().equals(ListViewT.this.user.getUserTag()) || f.getText().contains(ListViewT.this.user.getUserTag())){
+                            System.out.println("@@@@@@@@@@@@@@@@");
+                            System.out.println(f.getText() + f.getTwiter().getUserTag());
+                            if(f.getTwiter().getUserTag().contains(ListViewT.this.user.getUserTag()) || f.getText().contains(ListViewT.this.user.getUserTag())){
                                 JLabel tweetLabel = new JLabel(f.getText());
                                 tweetsPanel.add(tweetLabel);
                             }
                         } else if ('#'==c) {
+                            System.out.println("##############");
                             if(f.getText().contains(searchText)){
 
                                 JLabel tweetLabel = new JLabel(f.getText());
                                 tweetsPanel.add(tweetLabel);
                             }
                         }else{
+                            System.out.println("alalalalalaaaaaaaaaaaaaaaallllllllllllllll");
                             JLabel tweetLabel = new JLabel(f.getText());
                             tweetsPanel.add(tweetLabel);
                         }
@@ -242,9 +252,11 @@ public class ListViewT implements IDatabaseObserver {
     }
     private String recherche(String searchText) {
         if(searchText.length()>1){
-            StringBuilder stringBuilder = new StringBuilder(searchText);
-            stringBuilder.deleteCharAt(0);
-            return stringBuilder.toString();
+            //StringBuilder stringBuilder = new StringBuilder(searchText);
+            searchText = searchText.replaceAll("[@,#]", "");
+            System.out.println(searchText);
+       //     stringBuilder.deleteCharAt(0);
+            return searchText;
 
         }
         return searchText;
@@ -255,7 +267,7 @@ public class ListViewT implements IDatabaseObserver {
     public void notifyTwitAdded(Twit addedTwit) {
         this.jpanel.removeAll();
         this.listFollows.add(addedTwit);
-        new ListViewT(this.listFollows, this.getJPanel(), this.user);
+        new ListViewT(this.listFollows, this.getJPanel(), this.user, this.mEntityManager);
         this.jpanel.revalidate();
         this.jpanel.repaint();
     }

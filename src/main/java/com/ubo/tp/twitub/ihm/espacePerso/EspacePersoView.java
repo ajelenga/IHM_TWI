@@ -100,7 +100,6 @@ public class EspacePersoView {
         this.espacePersoControler.deconnecter();
 
     }
-
     private JButton retourButton = new JButton("Retour");
     private JButton retourButton1 = new JButton("Retour");
 
@@ -122,9 +121,9 @@ public class EspacePersoView {
     }
 
     private void afficherTweet() {
-        this.listViewT = new ListViewT(this.twits, new JPanel(), this.user);
+        this.listViewT = new ListViewT(this.twits, new JPanel(), this.user,this.espacePersoControler.mEntityManager);
         JPanel tweetsPanel = listViewT.getJPanel();
-        this.espacePersoControler.database.addObserver(this.listViewT);
+        this.espacePersoControler.database.addObserver(this.listViewT); // abbonne à la base
 
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
         frame.setContentPane(tweetsPanel);
