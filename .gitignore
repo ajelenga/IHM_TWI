@@ -11,3 +11,8 @@
 /out/*
 /target/*
 /build/*
+/.gradle/*
+/gradlew
+/gradlew.bat
+/gradle/*
+IHM_TWI.iml
