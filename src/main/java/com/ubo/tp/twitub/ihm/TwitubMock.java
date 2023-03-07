@@ -133,6 +133,17 @@ public class TwitubMock {
 			}
 		});
 
+
+		Button addTwitPersoButton = new Button("Add Twit Perso");
+		addTwitPersoButton.setPreferredSize(new Dimension(100, 50));
+		addTwitPersoButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				TwitubMock.this.addTwitPersoInDatabase();
+			}
+		});
+
 		//
 		// Ajout des composants à la fenêtre
 		this.mFrame.add(dbLabel, new GridBagConstraints(0, 0, 2, 1, 1, 1, GridBagConstraints.CENTER,
@@ -147,7 +158,25 @@ public class TwitubMock {
 				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
 		this.mFrame.add(sendTwitButton, new GridBagConstraints(1, 3, 1, 1, 1, 1, GridBagConstraints.EAST,
 				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
+		this.mFrame.add(addTwitPersoButton, new GridBagConstraints(4, 3, 1, 1, 1, 1, GridBagConstraints.EAST,
+				GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 0, 0));
 
+	}
+
+	private void addTwitPersoInDatabase() {
+		if (this.mDatabase.getUsers().size() == 0) {
+			// Création d'un utilisateur
+			this.addUserInDatabase();
+		}
+
+		int userIndex = new Random().nextInt(this.mDatabase.getUsers().size());
+		User randomUser = new ArrayList<User>(this.mDatabase.getUsers()).get(Math.max(0, userIndex - 1));
+
+
+		Twit newTwit = new Twit(randomUser, "Bonjour @junior ça va bien ? )");
+
+
+		this.mDatabase.addTwit(newTwit);
 	}
 
 	/**
@@ -188,6 +217,10 @@ public class TwitubMock {
 	 */
 	protected void addTwitInDatabase() {
 		// Création 'un twit fictif
+
+
+
+
 		Twit newTwit = this.generateTwit();
 
 		// Ajout du twit
