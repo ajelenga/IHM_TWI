@@ -2,10 +2,10 @@
 Projet tweet
 
 **IHM M2-TIIL**
-Spécifications de l'application
+###Spécifications de l'application
 
 # Gestion des utilisateurs
-<u>### ***SRS-TWB-USR-001*** </u>:
+'<u>'### ***SRS-TWB-USR-001***' </u>':
 L'utilisateur peut enregistrer un compte utilisateur dans le système (nom, tag, avatar).
 ### ***SRS-TWB-USR-002*** :
 Lors de l'enregistrement d'un compte utilisateur, le tag et le nom de l'utilisateur sont
