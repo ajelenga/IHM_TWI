@@ -24,7 +24,18 @@ public class ProfilView {
         }
         JLabel followsLabel = new JLabel("<html>Abonnements : <br>" + res + "</html>");
 
-        JLabel avatarLabel = new JLabel(new ImageIcon(user.getAvatarPath()));
+        // Création du JPanel pour l'avatar
+        JPanel avatarPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints avatarConstraints = new GridBagConstraints();
+        avatarConstraints.gridx = 0;
+        avatarConstraints.gridy = 0;
+        avatarConstraints.insets = new Insets(10, 10, 10, 10);
+
+        // Création du JLabel pour l'avatar
+        JLabel avatarLabel = new JLabel(new ImageIcon("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\src\\main\\resources\\images\\avatar.jpg"));
+
+        // Ajout du JLabel de l'avatar au JPanel de l'avatar
+        avatarPanel.add(avatarLabel, avatarConstraints);
 
         // Organisation des composants dans la JPanel
         JPanel jPanel = new JPanel(new GridBagLayout());
@@ -43,23 +54,28 @@ public class ProfilView {
         titleLabelConstraints.insets = new Insets(10, 10, 10, 10);
         this.jPanel.add(titleLabel, titleLabelConstraints);
 
+        // Ajouter le JLabel pour l'avatar au JPanel de l'avatar
         c.gridx = 0;
+        c.gridy = 0;
+        c.gridheight = 3;
+        c.insets = new Insets(10, 10, 10, 10);
+        jPanel.add(avatarPanel, c);
+
+        c.gridx = 1;
         c.gridy = 1;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(userTagLabel, c);
 
-        c.gridx = 0;
+        c.gridx = 1;
         c.gridy = 2;
         jPanel.add(nameLabel, c);
 
-        c.gridx = 0;
+        c.gridx = 1;
         c.gridy = 3;
         jPanel.add(followsLabel, c);
 
-        c.gridx = 1;
-        c.gridy = 0;
-        c.gridheight = 3;
-        jPanel.add(avatarLabel, c);
+        // Définir la taille du JPanel
+        jPanel.setPreferredSize(new Dimension(600, 400));
     }
 
 
