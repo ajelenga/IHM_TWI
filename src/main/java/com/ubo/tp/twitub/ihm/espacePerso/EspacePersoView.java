@@ -101,62 +101,37 @@ public class EspacePersoView {
 
     }
 
-    private JButton retourButton = new JButton("Retour");
-    private JButton retourButton1 = new JButton("Retour");
-
+    private JPanel previousPanel;
 
     private void afficherProfil() {
-        JPanel profilePanel = new ProfilView(user).getJPanel();
+        previousPanel = this.getjPanel(); // On stocke la JPanel précédente
+        JPanel profilePanel = new ProfilView(user, previousPanel).getJPanel();
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
         frame.setContentPane(profilePanel);
-        profilePanel.add(retourButton); // On ajoute le bouton de retour
-        retourButton.addActionListener(e -> {
-            frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
-            frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
-            // On rafraîchit l'affichage
-            frame.revalidate();
-            frame.repaint();
-        });
         frame.revalidate();
         frame.repaint();
     }
 
     private void afficherTweet() {
-        this.listViewT = new ListViewT(this.twits, new JPanel(), this.user);
+        previousPanel = this.getjPanel(); // On stocke la JPanel précédente
+        this.listViewT = new ListViewT(this.twits, new JPanel(), this.user, previousPanel);
         JPanel tweetsPanel = listViewT.getJPanel();
         this.espacePersoControler.database.addObserver(this.listViewT);
 
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
         frame.setContentPane(tweetsPanel);
-        tweetsPanel.add(retourButton1); // On ajoute le bouton de retour
-        retourButton1.addActionListener(e -> {
-            frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
-            frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
-
-            // On rafraîchit l'affichage
-            frame.revalidate();
-            frame.repaint();
-        });
         frame.revalidate();
         frame.repaint();
     }
 
     private void afficherUser() {
-        this.listUserT = new ListUserT(this.espacePersoControler.database.getUsers(), new JPanel(), this.user);
+        previousPanel = this.getjPanel(); // On stocke la JPanel précédente
+        this.listUserT = new ListUserT(this.espacePersoControler.database.getUsers(), new JPanel(), this.user, previousPanel);
         JPanel usersPanel = listUserT.getJpanel();
         this.espacePersoControler.database.addObserver(this.listUserT);
 
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
         frame.setContentPane(usersPanel);
-        usersPanel.add(retourButton); // On ajoute le bouton de retour
-        retourButton.addActionListener(e -> {
-            frame.getContentPane().removeAll(); // On supprime tout ce qui est dans la fenêtre
-            frame.getContentPane().add(this.getjPanel()); // On ajoute la vue de l'espace perso
-
-            // On rafraîchit l'affichage
-            frame.revalidate();
-            frame.repaint();
-        });
         frame.revalidate();
         frame.repaint();
     }

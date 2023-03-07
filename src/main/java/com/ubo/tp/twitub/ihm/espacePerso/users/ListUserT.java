@@ -19,17 +19,19 @@ public class ListUserT implements IDatabaseObserver {
     private Set<User> listUsers;
 
     private JPanel jpanel;
+    private JPanel previousJpanel;
 
     public JPanel getJpanel() {
         return jpanel;
     }
 
-    public ListUserT(Set<User> listUsers, JPanel jpanel, User user1) {
+    public ListUserT(Set<User> listUsers, JPanel jpanel, User user1, JPanel previousJpanel) {
         this.user = user1;
         this.listUsers = listUsers;
         this.jpanel = jpanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
+        this.previousJpanel = previousJpanel;
 
         // Ajouter un titre au JPanel
         JLabel titleLabel = new JLabel("Liste des utilisateurs");
@@ -141,6 +143,25 @@ public class ListUserT implements IDatabaseObserver {
             }
         });
 
+        // Ajouter un bouton retour pour afficher le JPanel précédent
+        JButton backButton = new JButton("Retour");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                jpanel.removeAll();
+                jpanel.add(previousJpanel);
+                jpanel.revalidate();
+                jpanel.repaint();
+            }
+        });
+        backButton.setFont(new Font("Arial", Font.BOLD, 22));
+        backButton.setForeground(new Color(44, 62, 80));
+        GridBagConstraints backButtonConstraints = new GridBagConstraints();
+        backButtonConstraints.gridx = 3;
+        backButtonConstraints.gridy = 0;
+        backButtonConstraints.fill = GridBagConstraints.NONE;
+        backButtonConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(backButton, backButtonConstraints);
+
         // Créer un JLabel pour afficher le nombre de tweets
         JLabel tweetCountLabel = new JLabel("(" + this.listUsers.size() + "Utilisateurs)");
         tweetCountLabel.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -202,7 +223,7 @@ public class ListUserT implements IDatabaseObserver {
     public void notifyUserAdded(User addedUser) {
         this.jpanel.removeAll();
         this.listUsers.add(addedUser);
-        new ListUserT(this.listUsers, jpanel, this.user);
+        new ListUserT(this.listUsers, jpanel, this.user, previousJpanel);
         this.jpanel.revalidate();
         this.jpanel.repaint();
 

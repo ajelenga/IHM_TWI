@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -20,18 +21,20 @@ public class ListViewT implements IDatabaseObserver {
     private Set<Twit> listFollows;
 
     private JPanel jpanel;
+    private JPanel previousJpanel;
     User user;
 
     public JPanel getJpanel() {
         return jpanel;
     }
 
-    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user) {
+    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user, JPanel previousJpanel) {
         this.user = user;
         this.listFollows = listFollows;
         this.jpanel = jPanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
+        this.previousJpanel = previousJpanel;
 
         // Ajouter un titre au JPanel
         JLabel titleLabel = new JLabel("Liste de vos tweets");
@@ -145,10 +148,19 @@ public class ListViewT implements IDatabaseObserver {
                     JOptionPane.showMessageDialog(jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
                     int count = 0;
                     for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
+                        JPanel atweet = new JPanel();
                         Twit f = it.next();
                         if (f.getText().contains(searchField.getText())) {
+
                             JLabel tweetLabel = new JLabel(f.getText());
-                            tweetsPanel.add(tweetLabel);
+                            Date date = new Date(f.getEmissionDate());
+                            JLabel dateLabel = new JLabel(date.toString());
+                            JLabel userLabel = new JLabel(f.getTwiter().toString());
+
+                            atweet.add(tweetLabel);
+                            atweet.add(dateLabel);
+                            atweet.add(userLabel);
+                            tweetsPanel.add(atweet);
                             count++;
                         }
                     }
@@ -204,6 +216,25 @@ public class ListViewT implements IDatabaseObserver {
 
         });
 
+        // Ajouter un bouton retour pour afficher le JPanel précédent
+        JButton backButton = new JButton("Retour");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                jpanel.removeAll();
+                jpanel.add(previousJpanel);
+                jpanel.revalidate();
+                jpanel.repaint();
+            }
+        });
+        backButton.setFont(new Font("Arial", Font.BOLD, 22));
+        backButton.setForeground(new Color(44, 62, 80));
+        GridBagConstraints backButtonConstraints = new GridBagConstraints();
+        backButtonConstraints.gridx = 3;
+        backButtonConstraints.gridy = 0;
+        backButtonConstraints.fill = GridBagConstraints.NONE;
+        backButtonConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jpanel.add(backButton, backButtonConstraints);
+
 
     }
 
@@ -212,7 +243,7 @@ public class ListViewT implements IDatabaseObserver {
     public void notifyTwitAdded(Twit addedTwit) {
         this.jpanel.removeAll();
         this.listFollows.add(addedTwit);
-        new ListViewT(this.listFollows, this.getJPanel(), this.user);
+        new ListViewT(this.listFollows, this.getJPanel(), this.user, previousJpanel);
         this.jpanel.revalidate();
         this.jpanel.repaint();
     }
