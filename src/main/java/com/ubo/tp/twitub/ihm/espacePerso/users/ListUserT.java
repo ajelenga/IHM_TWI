@@ -202,6 +202,7 @@ public class ListUserT implements IDatabaseObserver {
     public void constructionAuser(User f, JPanel usersPanel) {
         JLabel userTagName = new JLabel("@" + f.getUserTag());
         JLabel userNameLabel = new JLabel(f.getName());
+        JLabel followersLabel = new JLabel(f.getFollows().size() + " followers");
         JPanel atweet = new JPanel();
         atweet.setLayout(new GridBagLayout());
         atweet.setPreferredSize(new Dimension(usersPanel.getWidth(), 100));
@@ -224,6 +225,11 @@ public class ListUserT implements IDatabaseObserver {
         gbc.gridy = 1;
         gbc.insets = new Insets(5, 10, 0, 10);
         atweet.add(userTagName, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.insets = new Insets(5, 10, 0, 10);
+        atweet.add(followersLabel, gbc);
 
         // Ajouter le JPanel "atweet" dans le JPanel "tweetsPanel"
         gbc = new GridBagConstraints();

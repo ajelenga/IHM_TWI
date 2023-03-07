@@ -35,6 +35,7 @@ public class ListViewT implements IDatabaseObserver {
         Date date = new Date(f.getEmissionDate());
         JLabel dateLabel = new JLabel(date.toString());
         JLabel userLabel = new JLabel("@" + f.getTwiter().getUserTag());
+        JLabel followersLabel = new JLabel(f.getTwiter().getFollows().size() + " followers");
         JPanel atweet = new JPanel();
         atweet.setLayout(new GridBagLayout());
         atweet.setPreferredSize(new Dimension(tweetsPanel.getWidth(), 100));
@@ -58,11 +59,18 @@ public class ListViewT implements IDatabaseObserver {
         gbc.insets = new Insets(5, 10, 0, 10);
         atweet.add(tweetLabel, gbc);
 
+        gbc.gridx = 2;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.LINE_END;
+        gbc.insets = new Insets(5, 10, 0, 10);
+        atweet.add(followersLabel, gbc);
+
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(0, 0, 5, 10);
         atweet.add(dateLabel, gbc);
 
