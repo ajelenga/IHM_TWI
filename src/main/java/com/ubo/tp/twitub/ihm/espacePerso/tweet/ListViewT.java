@@ -20,18 +20,20 @@ public class ListViewT implements IDatabaseObserver {
     private Set<Twit> listFollows;
 
     private JPanel jpanel;
+    private JPanel previousJpanel;
     User user;
 
     public JPanel getJpanel() {
         return jpanel;
     }
 
-    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user) {
+    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user, JPanel previousJpanel) {
         this.user = user;
         this.listFollows = listFollows;
         this.jpanel = jPanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
+        this.previousJpanel = previousJpanel;
 
         // Ajouter un titre au JPanel
         JLabel titleLabel = new JLabel("Liste de vos tweets");
@@ -166,7 +168,7 @@ public class ListViewT implements IDatabaseObserver {
         GridBagConstraints tweetCountLabelConstraints = new GridBagConstraints();
         tweetCountLabelConstraints.gridx = 1;
         tweetCountLabelConstraints.gridy = 0;
-        tweetCountLabelConstraints.anchor = GridBagConstraints.LINE_END;
+        tweetCountLabelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
         this.jpanel.add(this.tweetCountLabel, tweetCountLabelConstraints);
 
 
@@ -204,6 +206,24 @@ public class ListViewT implements IDatabaseObserver {
 
         });
 
+        // Ajouter un bouton retour pour afficher le JPanel précédent
+        JButton backButton = new JButton("Retour");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                jpanel.removeAll();
+                jpanel.add(previousJpanel);
+                jpanel.revalidate();
+                jpanel.repaint();
+            }
+        });
+        GridBagConstraints backButtonConstraints = new GridBagConstraints();
+        backButtonConstraints.gridx = 0;
+        backButtonConstraints.gridy = 0;
+        backButtonConstraints.fill = GridBagConstraints.NONE;
+        backButtonConstraints.insets = new Insets(10, 10, 10, 10);
+        backButtonConstraints.anchor = GridBagConstraints.LINE_END;
+        this.jpanel.add(backButton, backButtonConstraints);
+
 
     }
 
@@ -212,7 +232,7 @@ public class ListViewT implements IDatabaseObserver {
     public void notifyTwitAdded(Twit addedTwit) {
         this.jpanel.removeAll();
         this.listFollows.add(addedTwit);
-        new ListViewT(this.listFollows, this.getJPanel(), this.user);
+        new ListViewT(this.listFollows, this.getJPanel(), this.user, previousJpanel);
         this.jpanel.revalidate();
         this.jpanel.repaint();
     }
