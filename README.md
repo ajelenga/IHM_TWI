@@ -5,20 +5,29 @@ Projet tweet
 ###Spécifications de l'application
 
 # Gestion des utilisateurs
-```
+
 ### ***SRS-TWB-USR-001***:
+```
 L'utilisateur peut enregistrer un compte utilisateur dans le système (nom, tag, avatar).
 ``` 
 
 ### ***SRS-TWB-USR-002*** :
+```
 Lors de l'enregistrement d'un compte utilisateur, le tag et le nom de l'utilisateur sont
 obligatoires.
+```
 ### ***SRS-TWB-USR-003*** :
+```
 Le tag correspondant à un utilisateur est unique dans le système.
+```
 ### ***SRS-TWB-USR-004*** :
+```
 L'utilisateur peut se connecter sur un compte préalablement enregistré.
+```
 ### ***SRS-TWB-USR-005*** :
+```
 L'utilisateur connecté peut se déconnecter de l'application.
+```
 ### ***SRS-TWB-USR-006*** :
 L'utilisateur connecté peut consulter son profil.
 ### ***SRS-TWB-USR-007*** :
