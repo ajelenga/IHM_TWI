@@ -101,22 +101,13 @@ public class EspacePersoView {
 
     }
 
-    private JButton retourButton = new JButton("Retour");
-    private JButton retourButton1 = new JButton("Retour");
     private JPanel previousPanel;
 
     private void afficherProfil() {
         previousPanel = this.getjPanel(); // On stocke la JPanel précédente
-        JPanel profilePanel = new ProfilView(user).getJPanel();
+        JPanel profilePanel = new ProfilView(user, previousPanel).getJPanel();
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
         frame.setContentPane(profilePanel);
-        profilePanel.add(retourButton); // On ajoute le bouton de retour
-        retourButton.addActionListener(e -> {
-            frame.setContentPane(previousPanel); // On revient sur la JPanel précédente
-            // On rafraîchit l'affichage
-            frame.revalidate();
-            frame.repaint();
-        });
         frame.revalidate();
         frame.repaint();
     }

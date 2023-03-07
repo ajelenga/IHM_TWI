@@ -10,8 +10,11 @@ public class ProfilView {
     private User user;
     private JPanel jPanel;
 
-    public ProfilView(User user) {
+    private JPanel previousPanel;
+
+    public ProfilView(User user, JPanel previousPanel) {
         this.user = user;
+        this.previousPanel = previousPanel;
 
         // Création des composants
         JLabel userTagLabel = new JLabel("Pseudo : " + user.getUserTag());
@@ -24,18 +27,7 @@ public class ProfilView {
         }
         JLabel followsLabel = new JLabel("<html>Abonnements : <br>" + res + "</html>");
 
-        // Création du JPanel pour l'avatar
-        JPanel avatarPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints avatarConstraints = new GridBagConstraints();
-        avatarConstraints.gridx = 0;
-        avatarConstraints.gridy = 0;
-        avatarConstraints.insets = new Insets(10, 10, 10, 10);
-
-        // Création du JLabel pour l'avatar
-        JLabel avatarLabel = new JLabel(new ImageIcon("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\src\\main\\resources\\images\\avatar.jpg"));
-
-        // Ajout du JLabel de l'avatar au JPanel de l'avatar
-        avatarPanel.add(avatarLabel, avatarConstraints);
+        JLabel avatarLabel = new JLabel(new ImageIcon(user.getAvatarPath()));
 
         // Organisation des composants dans la JPanel
         JPanel jPanel = new JPanel(new GridBagLayout());
@@ -54,28 +46,40 @@ public class ProfilView {
         titleLabelConstraints.insets = new Insets(10, 10, 10, 10);
         this.jPanel.add(titleLabel, titleLabelConstraints);
 
-        // Ajouter le JLabel pour l'avatar au JPanel de l'avatar
         c.gridx = 0;
-        c.gridy = 0;
-        c.gridheight = 3;
-        c.insets = new Insets(10, 10, 10, 10);
-        jPanel.add(avatarPanel, c);
-
-        c.gridx = 1;
         c.gridy = 1;
         c.insets = new Insets(10, 10, 10, 10);
         jPanel.add(userTagLabel, c);
 
-        c.gridx = 1;
+        c.gridx = 0;
         c.gridy = 2;
         jPanel.add(nameLabel, c);
 
-        c.gridx = 1;
+        c.gridx = 0;
         c.gridy = 3;
         jPanel.add(followsLabel, c);
 
-        // Définir la taille du JPanel
-        jPanel.setPreferredSize(new Dimension(600, 400));
+        c.gridx = 1;
+        c.gridy = 0;
+        c.gridheight = 3;
+        jPanel.add(avatarLabel, c);
+
+        // Ajouter un bouton retour pour afficher le JPanel précédent
+        JButton backButton = new JButton("Retour");
+        backButton.addActionListener(e -> {
+            jPanel.removeAll();
+            jPanel.add(previousPanel);
+            jPanel.revalidate();
+            jPanel.repaint();
+        });
+        backButton.setFont(new Font("Arial", Font.BOLD, 22));
+        backButton.setForeground(new Color(44, 62, 80));
+        GridBagConstraints backButtonConstraints = new GridBagConstraints();
+        backButtonConstraints.gridx = 3;
+        backButtonConstraints.gridy = 0;
+        backButtonConstraints.fill = GridBagConstraints.NONE;
+        backButtonConstraints.insets = new Insets(10, 10, 10, 10);
+        this.jPanel.add(backButton, backButtonConstraints);
     }
 
 

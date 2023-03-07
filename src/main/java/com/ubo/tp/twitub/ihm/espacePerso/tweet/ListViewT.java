@@ -10,6 +10,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -147,10 +148,19 @@ public class ListViewT implements IDatabaseObserver {
                     JOptionPane.showMessageDialog(jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
                     int count = 0;
                     for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
+                        JPanel atweet = new JPanel();
                         Twit f = it.next();
                         if (f.getText().contains(searchField.getText())) {
+
                             JLabel tweetLabel = new JLabel(f.getText());
-                            tweetsPanel.add(tweetLabel);
+                            Date date = new Date(f.getEmissionDate());
+                            JLabel dateLabel = new JLabel(date.toString());
+                            JLabel userLabel = new JLabel(f.getTwiter().toString());
+
+                            atweet.add(tweetLabel);
+                            atweet.add(dateLabel);
+                            atweet.add(userLabel);
+                            tweetsPanel.add(atweet);
                             count++;
                         }
                     }
@@ -168,7 +178,7 @@ public class ListViewT implements IDatabaseObserver {
         GridBagConstraints tweetCountLabelConstraints = new GridBagConstraints();
         tweetCountLabelConstraints.gridx = 1;
         tweetCountLabelConstraints.gridy = 0;
-        tweetCountLabelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        tweetCountLabelConstraints.anchor = GridBagConstraints.LINE_END;
         this.jpanel.add(this.tweetCountLabel, tweetCountLabelConstraints);
 
 
@@ -216,12 +226,13 @@ public class ListViewT implements IDatabaseObserver {
                 jpanel.repaint();
             }
         });
+        backButton.setFont(new Font("Arial", Font.BOLD, 22));
+        backButton.setForeground(new Color(44, 62, 80));
         GridBagConstraints backButtonConstraints = new GridBagConstraints();
-        backButtonConstraints.gridx = 0;
+        backButtonConstraints.gridx = 3;
         backButtonConstraints.gridy = 0;
         backButtonConstraints.fill = GridBagConstraints.NONE;
         backButtonConstraints.insets = new Insets(10, 10, 10, 10);
-        backButtonConstraints.anchor = GridBagConstraints.LINE_END;
         this.jpanel.add(backButton, backButtonConstraints);
 
 

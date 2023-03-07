@@ -31,6 +31,7 @@ public class ListUserT implements IDatabaseObserver {
         this.jpanel = jpanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
+        this.previousJpanel = previousJpanel;
 
         // Ajouter un titre au JPanel
         JLabel titleLabel = new JLabel("Liste des utilisateurs");
@@ -152,12 +153,13 @@ public class ListUserT implements IDatabaseObserver {
                 jpanel.repaint();
             }
         });
+        backButton.setFont(new Font("Arial", Font.BOLD, 22));
+        backButton.setForeground(new Color(44, 62, 80));
         GridBagConstraints backButtonConstraints = new GridBagConstraints();
-        backButtonConstraints.gridx = 0;
+        backButtonConstraints.gridx = 3;
         backButtonConstraints.gridy = 0;
         backButtonConstraints.fill = GridBagConstraints.NONE;
         backButtonConstraints.insets = new Insets(10, 10, 10, 10);
-        backButtonConstraints.anchor = GridBagConstraints.LINE_END;
         this.jpanel.add(backButton, backButtonConstraints);
 
         // Créer un JLabel pour afficher le nombre de tweets
@@ -166,7 +168,7 @@ public class ListUserT implements IDatabaseObserver {
         GridBagConstraints tweetCountLabelConstraints = new GridBagConstraints();
         tweetCountLabelConstraints.gridx = 1;
         tweetCountLabelConstraints.gridy = 0;
-        tweetCountLabelConstraints.anchor = GridBagConstraints.FIRST_LINE_END;
+        tweetCountLabelConstraints.anchor = GridBagConstraints.LINE_END;
         this.jpanel.add(tweetCountLabel, tweetCountLabelConstraints);
 
         // Ajouter un DocumentListener pour la recherche en temps réel
