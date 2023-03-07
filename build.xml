@@ -1,0 +1,25 @@
+<project>
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="/Users/ajelenga/Documents/M2-TIIL-A/IHM_LS/P_IHM/IHM_TWI/src" destdir="build/classes"/>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="build/jar"/>
+        <jar destfile="build/jar/IHM_TWI.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="main.java.com.ubo.tp.twitub.TwitubLauncher"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run">
+        <java jar="build/jar/IHM_TWI.jar" fork="true"/>
+    </target>
+
+</project>

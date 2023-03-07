@@ -9,3 +9,5 @@
 /.idea
 /BDD/*
 /out/*
+/target/*
+/build/*
