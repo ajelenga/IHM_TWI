@@ -77,12 +77,10 @@ public class ListUserT implements IDatabaseObserver {
 
         // Créer un JPanel pour afficher les tweets dans le JScrollPane
         JPanel usersPanel = new JPanel();
-        usersPanel.setLayout(new BoxLayout(usersPanel, BoxLayout.PAGE_AXIS));
+        usersPanel.setLayout(new GridBagLayout());
 
-        for (Iterator<User> it = this.listUsers.iterator(); it.hasNext(); ) {
-            User u = it.next();
-            JLabel tweetLabel = new JLabel(u.getName());
-            usersPanel.add(tweetLabel);
+        for (User u : this.listUsers) {
+            constructionAuser(u, usersPanel);
 
         }
 
@@ -107,9 +105,7 @@ public class ListUserT implements IDatabaseObserver {
                 for (Iterator<User> it = listUsers.iterator(); it.hasNext(); ) {
                     User u = it.next();
                     if (u.getName().contains(searchText)) {
-                        JLabel tweetLabel = new JLabel(u.getName());
-
-                        usersPanel.add(tweetLabel);
+                        constructionAuser(u, usersPanel);
                         System.out.println("Resultats utilisateurs" + u);
                     }
                 }
@@ -192,8 +188,7 @@ public class ListUserT implements IDatabaseObserver {
                 for (Iterator<User> it = listUsers.iterator(); it.hasNext(); ) {
                     User u = it.next();
                     if (u.getName().contains(searchText)) {
-                        JLabel tweetLabel = new JLabel(u.getName());
-                        usersPanel.add(tweetLabel);
+                        constructionAuser(u, usersPanel);
                     }
                 }
                 jpanel.revalidate();
@@ -202,6 +197,52 @@ public class ListUserT implements IDatabaseObserver {
         });
 
 
+    }
+
+    public void constructionAuser(User f, JPanel usersPanel) {
+        JLabel userTagName = new JLabel("@" + f.getUserTag());
+        JLabel userNameLabel = new JLabel(f.getName());
+        JPanel atweet = new JPanel();
+        atweet.setLayout(new GridBagLayout());
+        atweet.setPreferredSize(new Dimension(usersPanel.getWidth(), 100));
+        atweet.setBackground(new Color(255, 250, 240));
+
+        // Ajouter les labels avec un GridBagConstraints pour les placer en haut
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 10, 0, 10);
+        atweet.add(userNameLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(5, 10, 0, 10);
+        atweet.add(userTagName, gbc);
+
+        // Ajouter le JPanel "atweet" dans le JPanel "tweetsPanel"
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        // Ajouter un espace entre chaque tweet
+
+
+        usersPanel.add(atweet, gbc);
+        Component cc = Box.createRigidArea(new Dimension(0, 10));
+        cc.setBackground(new Color(0, 0, 0));
+        usersPanel.add(cc, gbc);
     }
 
     @Override
