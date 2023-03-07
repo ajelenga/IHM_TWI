@@ -1,10 +1,8 @@
-package main.java.com.ubo.tp.twitub.ihm;
+package com.ubo.tp.twitub.ihm;
 
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 public class ConsoleWindow extends JFrame {
@@ -32,37 +30,27 @@ public class ConsoleWindow extends JFrame {
         JMenu fileMenu = new JMenu("Fichier");
 
         JMenuItem chooseExchangeDirMenuItem = new JMenuItem("Choisir un répertoire");
-        chooseExchangeDirMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-                fileChooser.setDialogTitle("Choisir un répertoire d'échange");
-                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooseExchangeDirMenuItem.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            fileChooser.setDialogTitle("Choisir un répertoire d'échange");
+            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    exchangeDirectory = fileChooser.getSelectedFile();
-                    println("Répertoire d'échange sélectionné : " + exchangeDirectory.getAbsolutePath());
-                }
+            int returnValue = fileChooser.showOpenDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                exchangeDirectory = fileChooser.getSelectedFile();
+                println("Répertoire d'échange sélectionné : " + exchangeDirectory.getAbsolutePath());
             }
         });
         fileMenu.add(chooseExchangeDirMenuItem);
 
         JMenuItem exitMenuItem = new JMenuItem("Quitter", exitIcon);
-        exitMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        exitMenuItem.addActionListener(e -> dispose());
         fileMenu.add(exitMenuItem);
 
         JMenu helpMenu = new JMenu("?");
 
         JMenuItem aboutMenuItem = new JMenuItem("À propos", aboutIcon);
-        aboutMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(ConsoleWindow.this, "M2 UBO TILL\nDépartement Informatique UBO", "À propos", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+        aboutMenuItem.addActionListener(e -> JOptionPane.showMessageDialog(ConsoleWindow.this, "M2 UBO TILL\nDépartement Informatique UBO", "À propos", JOptionPane.INFORMATION_MESSAGE));
         helpMenu.add(aboutMenuItem);
 
         JMenuBar menuBar = new JMenuBar();

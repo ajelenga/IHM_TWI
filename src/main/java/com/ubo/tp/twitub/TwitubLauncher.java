@@ -1,4 +1,4 @@
-package main.java.com.ubo.tp.twitub;
+package com.ubo.tp.twitub;
 
 import main.java.com.ubo.tp.twitub.core.Twitub;
 

@@ -5,13 +5,13 @@ Projet tweet
 **IHM M2-TIIL**
 ###Spécifications de l'application
 
-Sample commands:
+Sample commands macOS (Homebrew):
 
-- Install the latest Weekly version: brew install jenkins
-- Install a specific Weekly version: brew install jenkins@YOUR_VERSION
-- Start the Jenkins service: brew services start jenkins
-- Restart the Jenkins service: brew services restart jenkins
-- Update the Jenkins version: brew upgrade jenkins
+- Install the latest LTS version: brew install jenkins-lts
+- Install a specific LTS version: brew install jenkins-lts@YOUR_VERSION
+- Start the Jenkins service: brew services start jenkins-lts
+- Restart the Jenkins service: brew services restart jenkins-lts
+- Update the Jenkins version: brew upgrade jenkins-lts
 
 # Gestion des utilisateurs
 
