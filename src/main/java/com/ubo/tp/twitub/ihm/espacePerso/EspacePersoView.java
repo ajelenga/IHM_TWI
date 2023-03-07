@@ -114,9 +114,9 @@ public class EspacePersoView {
 
     private void afficherTweet() {
         previousPanel = this.getjPanel(); // On stocke la JPanel précédente
-        this.listViewT = new ListViewT(this.twits, new JPanel(), this.user, previousPanel);
+        this.listViewT = new ListViewT(this.twits, new JPanel(), this.user, previousPanel, this.espacePersoControler.getmEntityManager());
         JPanel tweetsPanel = listViewT.getJPanel();
-        this.espacePersoControler.database.addObserver(this.listViewT);
+        this.espacePersoControler.database.addObserver(this.listViewT); // abonne à la base
 
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(jPanel);
         frame.setContentPane(tweetsPanel);

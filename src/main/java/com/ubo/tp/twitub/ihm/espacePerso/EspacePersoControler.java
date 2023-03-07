@@ -1,27 +1,36 @@
 package main.java.com.ubo.tp.twitub.ihm.espacePerso;
 
+import main.java.com.ubo.tp.twitub.core.EntityManager;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabase;
-import main.java.com.ubo.tp.twitub.ihm.formulaire.UserCreateControler;
 import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionControler;
-import main.java.com.ubo.tp.twitub.ihm.inscription.UserConnexionView;
 import main.java.com.ubo.tp.twitub.ihm.interf.IObserversControler;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EspacePersoControler  {
+public class EspacePersoControler {
 
     protected final Set<IObserversControler> mObservers;
+    private EntityManager mEntityManager;
+
+    public EntityManager getmEntityManager() {
+        return mEntityManager;
+    }
+
+    public void setmEntityManager(EntityManager mEntityManager) {
+        this.mEntityManager = mEntityManager;
+    }
 
     UserConnexionControler userConnexionControler;
     IDatabase database;
 
     JPanel jpanel;
-    public EspacePersoControler(IDatabase database) {
+
+    public EspacePersoControler(IDatabase database, EntityManager mEntityManager) {
         this.database = database;
         this.mObservers = new HashSet<>();
+        this.mEntityManager = mEntityManager;
 
     }
 

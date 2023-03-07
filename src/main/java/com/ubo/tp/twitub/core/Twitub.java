@@ -90,7 +90,7 @@ public class Twitub implements IObserversControler {
         this.userCreateControler = new UserCreateControler(mDatabase, this.mEntityManager);
 
 
-        this.espacePersoControler = new EspacePersoControler(mDatabase);
+        this.espacePersoControler = new EspacePersoControler(mDatabase, this.mEntityManager);
 
         this.userConnexionControler = new UserConnexionControler(mDatabase, espacePersoControler);
 

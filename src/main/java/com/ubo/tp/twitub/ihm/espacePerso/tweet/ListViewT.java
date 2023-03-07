@@ -1,5 +1,6 @@
 package main.java.com.ubo.tp.twitub.ihm.espacePerso.tweet;
 
+import main.java.com.ubo.tp.twitub.core.EntityManager;
 import main.java.com.ubo.tp.twitub.datamodel.IDatabaseObserver;
 import main.java.com.ubo.tp.twitub.datamodel.Twit;
 import main.java.com.ubo.tp.twitub.datamodel.User;
@@ -23,6 +24,7 @@ public class ListViewT implements IDatabaseObserver {
     private JPanel jpanel;
     private JPanel previousJpanel;
     User user;
+    EntityManager mEntityManager;
 
     public JPanel getJpanel() {
         return jpanel;
@@ -84,12 +86,13 @@ public class ListViewT implements IDatabaseObserver {
         tweetsPanel.add(cc, gbc);
     }
 
-    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user, JPanel previousJpanel) {
+    public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user, JPanel previousJpanel, EntityManager mEntityManager) {
         this.user = user;
         this.listFollows = listFollows;
         this.jpanel = jPanel;
         this.jpanel.setBackground(new Color(255, 250, 240));
         this.jpanel.setLayout(new GridBagLayout());
+        this.mEntityManager = mEntityManager;
         this.previousJpanel = previousJpanel;
 
         // Ajouter un titre au JPanel
@@ -185,7 +188,17 @@ public class ListViewT implements IDatabaseObserver {
                 for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
                     Twit f = it.next();
                     if (f.getText().contains(searchText)) {
-                        constructionAtweet(f, tweetsPanel);
+                        if (searchText.charAt(0) == '@') {
+                            System.out.println("########  search twit ##########");
+                            if (f.getUserTags().equals(ListViewT.this.user.getUserTag())) {
+                                System.out.println("@@@ search twit @@@");
+                                constructionAtweet(f, tweetsPanel);
+                            }
+
+                        } else {
+                            constructionAtweet(f, tweetsPanel);
+                        }
+
                     }
                 }
                 jpanel.revalidate();
@@ -200,24 +213,37 @@ public class ListViewT implements IDatabaseObserver {
                 if (tweetText != null && !tweetText.isEmpty()) {
                     String message = publishField.getText();
                     Twit twit = new Twit(user, message);
-                    listFollows.add(twit);
-                    JOptionPane.showMessageDialog(jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
-                    int count = 0;
-                    for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
-                        Twit f = it.next();
-                        if (f.getText().contains(searchField.getText())) {
-
-                            constructionAtweet(f, tweetsPanel);
-                            count++;
+                    if (tweetText.toString().length() < 250) {
+                        listFollows.add(twit);
+                        JOptionPane.showMessageDialog(jPanel, "Tweet publié " + tweetText.toString().length() + "   " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
+                        int count = 0;
+                        for (Twit f : listFollows) {
+                            if (f.getText().contains(searchField.getText())) {
+                                constructionAtweet(f, tweetsPanel);
+                                ListViewT.this.mEntityManager.sendTwit(f);
+                                count++;
+                            }
                         }
+                        tweetCountLabel.setText("(" + count + " tweets)");
+                        jpanel.revalidate();
+                        jpanel.repaint();
+                    } else {
+                        JOptionPane.showMessageDialog(jPanel, "Tweet " + message + " non publié sa taille est sup à 250", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        int count = 0;
+                        for (Twit f : listFollows) {
+                            if (f.getText().contains(searchField.getText())) {
+                                constructionAtweet(f, tweetsPanel);
+                                count++;
+                            }
+                        }
+                        tweetCountLabel.setText("(" + count + " tweets)");
+                        jpanel.revalidate();
+                        jpanel.repaint();
                     }
-                    tweetCountLabel.setText("(" + count + " tweets)");
-                    tweetsPanel.revalidate();
-                    tweetsPanel.repaint();
+
                 }
             }
         });
-
 
         // Créer un JLabel pour afficher le nombre de tweets
         this.tweetCountLabel = new JLabel("(" + listFollows.size() + " tweets)");
@@ -248,11 +274,25 @@ public class ListViewT implements IDatabaseObserver {
                 String searchText = searchField.getText();
                 tweetsPanel.removeAll();
                 int count = 0;
-                for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
-                    Twit f = it.next();
-                    if (f.getText().contains(searchText)) {
-                        constructionAtweet(f, tweetsPanel);
-                        count++;
+                for (Twit f : listFollows) {
+                    System.out.println(f.getText().contains(searchText));
+                    char c = 0;
+                    if (searchText.length() > 0) {
+                        c = searchText.charAt(0);
+                    }
+                    String searchTextWithOutSpecialCara = recherche(searchText);
+                    if (f.getText().contains(searchTextWithOutSpecialCara) || f.getTwiter().getUserTag().contains(ListViewT.this.user.getUserTag())) {
+                        if ('@' == c) {
+                            if (f.getTwiter().getUserTag().contains(ListViewT.this.user.getUserTag()) || f.getText().contains(ListViewT.this.user.getUserTag())) {
+                                constructionAtweet(f, tweetsPanel);
+                            }
+                        } else if ('#' == c) {
+                            if (f.getText().contains(searchText)) {
+                                constructionAtweet(f, tweetsPanel);
+                            }
+                        } else {
+                            constructionAtweet(f, tweetsPanel);
+                        }
                     }
                 }
                 tweetCountLabel.setText("(" + count + " tweets)");
@@ -284,12 +324,24 @@ public class ListViewT implements IDatabaseObserver {
 
     }
 
+    private String recherche(String searchText) {
+        if (searchText.length() > 1) {
+            //StringBuilder stringBuilder = new StringBuilder(searchText);
+            searchText = searchText.replaceAll("[@,#]", "");
+            System.out.println(searchText);
+            //     stringBuilder.deleteCharAt(0);
+            return searchText;
+
+        }
+        return searchText;
+    }
+
 
     @Override
     public void notifyTwitAdded(Twit addedTwit) {
         this.jpanel.removeAll();
         this.listFollows.add(addedTwit);
-        new ListViewT(this.listFollows, this.getJPanel(), this.user, previousJpanel);
+        new ListViewT(this.listFollows, this.getJPanel(), this.user, previousJpanel, this.mEntityManager);
         this.jpanel.revalidate();
         this.jpanel.repaint();
     }
