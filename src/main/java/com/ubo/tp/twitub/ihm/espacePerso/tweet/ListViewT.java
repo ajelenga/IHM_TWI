@@ -28,6 +28,62 @@ public class ListViewT implements IDatabaseObserver {
         return jpanel;
     }
 
+    public void constructionAtweet(Twit f, JPanel tweetsPanel) {
+        JLabel tweetLabel = new JLabel(f.getText());
+        Date date = new Date(f.getEmissionDate());
+        JLabel dateLabel = new JLabel(date.toString());
+        JLabel userLabel = new JLabel("@" + f.getTwiter().getUserTag());
+        JPanel atweet = new JPanel();
+        atweet.setLayout(new GridBagLayout());
+        atweet.setPreferredSize(new Dimension(tweetsPanel.getWidth(), 100));
+        atweet.setBackground(new Color(255, 250, 240));
+
+        // Ajouter les labels avec un GridBagConstraints pour les placer en haut
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 10, 0, 10);
+        atweet.add(userLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(5, 10, 0, 10);
+        atweet.add(tweetLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.insets = new Insets(0, 0, 5, 10);
+        atweet.add(dateLabel, gbc);
+
+        // Ajouter le JPanel "atweet" dans le JPanel "tweetsPanel"
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.weightx = 1;
+        gbc.weighty = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        // Ajouter un espace entre chaque tweet
+
+
+        tweetsPanel.add(atweet, gbc);
+        Component cc = Box.createRigidArea(new Dimension(0, 10));
+        cc.setBackground(new Color(0, 0, 0));
+        tweetsPanel.add(cc, gbc);
+    }
+
     public ListViewT(Set<Twit> listFollows, JPanel jPanel, User user, JPanel previousJpanel) {
         this.user = user;
         this.listFollows = listFollows;
@@ -100,16 +156,17 @@ public class ListViewT implements IDatabaseObserver {
 
         // Créer un JPanel pour afficher les tweets dans le JScrollPane
         JPanel tweetsPanel = new JPanel();
-        tweetsPanel.setLayout(new BoxLayout(tweetsPanel, BoxLayout.PAGE_AXIS));
+        tweetsPanel.setLayout(new GridBagLayout());
 
         for (Iterator<Twit> it = this.listFollows.iterator(); it.hasNext(); ) {
             Twit f = it.next();
-            JLabel tweetLabel = new JLabel(f.getText());
-            tweetsPanel.add(tweetLabel);
+            constructionAtweet(f, tweetsPanel);
         }
 
-        // Ajouter le JPanel avec les tweets au JScrollPane
+        // Ajouter le JPanel "tweetsPanel" dans le JScrollPane
         JScrollPane scrollPane = new JScrollPane(tweetsPanel);
+
+        // Ajouter le JPanel avec les tweets au JScrollPane
         scrollPane.setBackground(Color.black);
         GridBagConstraints scrollPaneConstraints = new GridBagConstraints();
         scrollPaneConstraints.gridx = 0;
@@ -128,8 +185,7 @@ public class ListViewT implements IDatabaseObserver {
                 for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
                     Twit f = it.next();
                     if (f.getText().contains(searchText)) {
-                        JLabel tweetLabel = new JLabel(f.getText());
-                        tweetsPanel.add(tweetLabel);
+                        constructionAtweet(f, tweetsPanel);
                     }
                 }
                 jpanel.revalidate();
@@ -148,25 +204,16 @@ public class ListViewT implements IDatabaseObserver {
                     JOptionPane.showMessageDialog(jPanel, "Tweet publié " + message, "Info", JOptionPane.INFORMATION_MESSAGE);
                     int count = 0;
                     for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
-                        JPanel atweet = new JPanel();
                         Twit f = it.next();
                         if (f.getText().contains(searchField.getText())) {
 
-                            JLabel tweetLabel = new JLabel(f.getText());
-                            Date date = new Date(f.getEmissionDate());
-                            JLabel dateLabel = new JLabel(date.toString());
-                            JLabel userLabel = new JLabel(f.getTwiter().toString());
-
-                            atweet.add(tweetLabel);
-                            atweet.add(dateLabel);
-                            atweet.add(userLabel);
-                            tweetsPanel.add(atweet);
+                            constructionAtweet(f, tweetsPanel);
                             count++;
                         }
                     }
-                    tweetCountLabel.setText("(" + listFollows.size() + " tweets)");
-                    jpanel.revalidate();
-                    jpanel.repaint();
+                    tweetCountLabel.setText("(" + count + " tweets)");
+                    tweetsPanel.revalidate();
+                    tweetsPanel.repaint();
                 }
             }
         });
@@ -204,8 +251,7 @@ public class ListViewT implements IDatabaseObserver {
                 for (Iterator<Twit> it = listFollows.iterator(); it.hasNext(); ) {
                     Twit f = it.next();
                     if (f.getText().contains(searchText)) {
-                        JLabel tweetLabel = new JLabel(f.getText());
-                        tweetsPanel.add(tweetLabel);
+                        constructionAtweet(f, tweetsPanel);
                         count++;
                     }
                 }
