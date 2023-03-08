@@ -199,7 +199,7 @@ public class ListViewT implements IDatabaseObserver {
                         if (searchText.charAt(0) == '@') {
                             System.out.println("########  search twit ##########");
                             if (f.getUserTags().equals(ListViewT.this.user.getUserTag())) {
-                                System.out.println("@@@ searchs twit @@@");
+                                System.out.println("@@@ searchsss twit @@@");
                                 constructionAtweet(f, tweetsPanel);
                             }
 
