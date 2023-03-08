@@ -47,7 +47,7 @@ public class ObjectFactory {
      */
     @XmlElementDecl(namespace = "http://www.example.org/twit/", name = "User")
     public JAXBElement<main.java.com.ubo.tp.twitub.datamodel.jaxb.bean.user.UserXml> createUser(main.java.com.ubo.tp.twitub.datamodel.jaxb.bean.user.UserXml value) {
-        return new JAXBElement<main.java.com.ubo.tp.twitub.datamodel.jaxb.bean.user.UserXml>(_User_QNAME, main.java.com.ubo.tp.twitub.datamodel.jaxb.bean.user.UserXml.class, null, value);
+        return new JAXBElement<>(_User_QNAME, main.java.com.ubo.tp.twitub.datamodel.jaxb.bean.user.UserXml.class, null, value);
     }
 
 }
