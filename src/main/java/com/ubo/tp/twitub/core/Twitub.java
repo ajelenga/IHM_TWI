@@ -87,6 +87,7 @@ public class Twitub implements IObserversControler {
             // Initialisation du bouchon de travail
             this.initMock();
         }
+
         this.userCreateControler = new UserCreateControler(mDatabase, this.mEntityManager);
 
 
