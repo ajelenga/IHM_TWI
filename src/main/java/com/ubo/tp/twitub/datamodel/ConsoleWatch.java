@@ -12,7 +12,7 @@ public class ConsoleWatch implements IDatabaseObserver {
 
     @Override
     public void notifyTwitAdded(Twit addedTwit) {
-        System.out.println("Twit added: " + addedTwit);
+        System.out.println("Twit added : " + addedTwit);
         t.setText("User added: " + addedTwit);
 
     }
