@@ -1,21 +1,19 @@
 package main.java.com.ubo.tp.twitub.datamodel;
 
-import main.java.com.ubo.tp.twitub.ihm.TwitubMainView;
-
 import javax.swing.*;
 
 public class ConsoleWatch implements IDatabaseObserver {
 
     private JTextArea t;
 
-    public  ConsoleWatch(JTextArea textArea) {
-          t = textArea;
+    public ConsoleWatch(JTextArea textArea) {
+        t = textArea;
     }
 
     @Override
     public void notifyTwitAdded(Twit addedTwit) {
         System.out.println("Twit added: " + addedTwit);
-      t.setText("User added: " + addedTwit);
+        t.setText("User added: " + addedTwit);
 
     }
 
@@ -40,7 +38,7 @@ public class ConsoleWatch implements IDatabaseObserver {
 
     @Override
     public void notifyUserDeleted(User deletedUser) {
-        System.out.println("User deleted: " + deletedUser);
+        System.out.println("User  deleted: " + deletedUser);
         t.setText("User added: " + deletedUser);
     }
 
