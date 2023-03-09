@@ -156,7 +156,7 @@ public class TwitubMainView {
         menu.add(exitMenuItem);
 
         JMenu helpMenu = new JMenu("?");
-        ImageIcon aboutIconContent = new ImageIcon("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\src\\main\\resources\\images\\logo_50.jpg");
+        ImageIcon aboutIconContent = new ImageIcon(".\\IHM_TWI\\src\\main\\resources\\images\\logo_50.jpg");
         JMenuItem aboutMenuItem = new JMenuItem("À propos", aboutIcon);
 
         aboutMenuItem.addActionListener(new ActionListener() {

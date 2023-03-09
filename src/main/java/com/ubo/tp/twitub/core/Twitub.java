@@ -166,7 +166,7 @@ public class Twitub implements IObserversControler {
      * pouvoir utiliser l'application</b>
      */
     protected void initDirectory() {
-        this.initDirectory("C:\\Users\\bouaksel\\OneDrive - Capgemini\\Documents\\master_tiila\\projetIhm\\IHM_TWI\\BDD");
+        this.initDirectory(".\\IHM_TWI\\BDD");
     }
 
 
