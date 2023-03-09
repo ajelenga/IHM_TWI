@@ -12,7 +12,8 @@ Sample commands macOS (Homebrew):
 - Start the Jenkins service: brew services start jenkins-lts
 - Restart the Jenkins service: brew services restart jenkins-lts
 - Update the Jenkins version: brew upgrade jenkins-lts
-- Uninstall the Jenkins service: brew services stop jenkins-lts && brew uninstall jenkins-lts
+- Uninstall the Jenkins service: brew services stop jenkins-lts && brew uninstall jenkins-lt
+- Stop the Jenkins services : brew services stop jenkins-lts
 
 # Gestion des utilisateurs
 
